@@ -2,17 +2,19 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 from typing_extensions import Literal, TypedDict
+
+from ..._types import SequenceNotStr
 
 __all__ = ["DeepgramSttParam"]
 
 
 class DeepgramSttParam(TypedDict, total=False):
-    keyterm: Optional[List[str]]
+    keyterm: Optional[SequenceNotStr[str]]
     """Keyterm prompting to improve recall rate for important terms"""
 
-    keywords: Optional[List[str]]
+    keywords: Optional[SequenceNotStr[str]]
     """Keywords to help model pick up use-case specific words"""
 
     language: Optional[
