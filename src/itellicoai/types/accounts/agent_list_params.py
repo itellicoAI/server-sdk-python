@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 from typing_extensions import TypedDict
+
+from ..._types import SequenceNotStr
 
 __all__ = ["AgentListParams"]
 
@@ -44,5 +46,5 @@ class AgentListParams(TypedDict, total=False):
 
     search: Optional[str]
 
-    tags: Optional[List[str]]
+    tags: Optional[SequenceNotStr[str]]
     """Filter by tags. Returns agents that have ALL specified tags."""

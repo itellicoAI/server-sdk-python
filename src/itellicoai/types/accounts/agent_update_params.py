@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Union, Iterable, Optional
+from typing import Dict, Union, Iterable, Optional
 from typing_extensions import Required, TypeAlias, TypedDict
 
+from ..._types import SequenceNotStr
 from .check_in_param import CheckInParam
 from .azure_stt_param import AzureSttParam
 from .deepgram_stt_param import DeepgramSttParam
@@ -50,7 +51,7 @@ class AgentUpdateParams(TypedDict, total=False):
     response_timing: Optional[ResponseTimingParam]
     """Configuration for agent response timing and conversation flow control"""
 
-    tags: Optional[List[str]]
+    tags: Optional[SequenceNotStr[str]]
     """List of tags to categorize the agent."""
 
     transcriber: Optional[Transcriber]

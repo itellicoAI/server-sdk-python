@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Iterable, Optional
+from typing import Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
+from ..._types import SequenceNotStr
 from .check_in_param import CheckInParam
 from .azure_stt_param import AzureSttParam
 from .deepgram_stt_param import DeepgramSttParam
@@ -92,7 +93,7 @@ class AgentCreateParams(TypedDict, total=False):
     response_timing: ResponseTimingParam
     """Configuration for agent response timing and conversation flow control"""
 
-    tags: Optional[List[str]]
+    tags: Optional[SequenceNotStr[str]]
     """List of tags to categorize and organize your agents.
 
     Tags help you filter and find agents quickly. Examples: 'sales', 'support',

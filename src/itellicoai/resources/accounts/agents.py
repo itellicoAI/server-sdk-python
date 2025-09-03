@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Iterable, Optional
+from typing import Dict, Iterable, Optional
 
 import httpx
 
-from ..._types import NOT_GIVEN, Body, Query, Headers, NoneType, NotGiven
+from ..._types import NOT_GIVEN, Body, Query, Headers, NoneType, NotGiven, SequenceNotStr
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -70,7 +70,7 @@ class AgentsResource(SyncAPIResource):
         note: Optional[str] | NotGiven = NOT_GIVEN,
         pronunciation_dictionary: Optional[Iterable[PronunciationRuleParam]] | NotGiven = NOT_GIVEN,
         response_timing: ResponseTimingParam | NotGiven = NOT_GIVEN,
-        tags: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        tags: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -206,7 +206,7 @@ class AgentsResource(SyncAPIResource):
         note: Optional[str] | NotGiven = NOT_GIVEN,
         pronunciation_dictionary: Optional[Iterable[PronunciationRuleParam]] | NotGiven = NOT_GIVEN,
         response_timing: Optional[ResponseTimingParam] | NotGiven = NOT_GIVEN,
-        tags: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        tags: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         transcriber: Optional[agent_update_params.Transcriber] | NotGiven = NOT_GIVEN,
         voice: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -303,7 +303,7 @@ class AgentsResource(SyncAPIResource):
         offset: int | NotGiven = NOT_GIVEN,
         ordering: Optional[str] | NotGiven = NOT_GIVEN,
         search: Optional[str] | NotGiven = NOT_GIVEN,
-        tags: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        tags: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -453,7 +453,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         note: Optional[str] | NotGiven = NOT_GIVEN,
         pronunciation_dictionary: Optional[Iterable[PronunciationRuleParam]] | NotGiven = NOT_GIVEN,
         response_timing: ResponseTimingParam | NotGiven = NOT_GIVEN,
-        tags: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        tags: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -589,7 +589,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         note: Optional[str] | NotGiven = NOT_GIVEN,
         pronunciation_dictionary: Optional[Iterable[PronunciationRuleParam]] | NotGiven = NOT_GIVEN,
         response_timing: Optional[ResponseTimingParam] | NotGiven = NOT_GIVEN,
-        tags: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        tags: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         transcriber: Optional[agent_update_params.Transcriber] | NotGiven = NOT_GIVEN,
         voice: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -686,7 +686,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         offset: int | NotGiven = NOT_GIVEN,
         ordering: Optional[str] | NotGiven = NOT_GIVEN,
         search: Optional[str] | NotGiven = NOT_GIVEN,
-        tags: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        tags: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
