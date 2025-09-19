@@ -6,7 +6,7 @@ from typing import Dict, Iterable, Optional
 
 import httpx
 
-from ..._types import NOT_GIVEN, Body, Query, Headers, NoneType, NotGiven, SequenceNotStr
+from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -61,22 +61,22 @@ class AgentsResource(SyncAPIResource):
         model: agent_create_params.Model,
         transcriber: agent_create_params.Transcriber,
         voice: agent_create_params.Voice,
-        ambient_sound: AmbientSoundParam | NotGiven = NOT_GIVEN,
-        check_in: CheckInParam | NotGiven = NOT_GIVEN,
-        initial_message: InitialMessageParam | NotGiven = NOT_GIVEN,
-        interrupt_settings: Optional[InterruptSettingsParam] | NotGiven = NOT_GIVEN,
-        max_duration_seconds: Optional[int] | NotGiven = NOT_GIVEN,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
-        note: Optional[str] | NotGiven = NOT_GIVEN,
-        pronunciation_dictionary: Optional[Iterable[PronunciationRuleParam]] | NotGiven = NOT_GIVEN,
-        response_timing: ResponseTimingParam | NotGiven = NOT_GIVEN,
-        tags: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
+        ambient_sound: AmbientSoundParam | Omit = omit,
+        check_in: CheckInParam | Omit = omit,
+        initial_message: InitialMessageParam | Omit = omit,
+        interrupt_settings: Optional[InterruptSettingsParam] | Omit = omit,
+        max_duration_seconds: Optional[int] | Omit = omit,
+        name: Optional[str] | Omit = omit,
+        note: Optional[str] | Omit = omit,
+        pronunciation_dictionary: Optional[Iterable[PronunciationRuleParam]] | Omit = omit,
+        response_timing: ResponseTimingParam | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AgentResponse:
         """
         Create a new AI agent with specified configuration for voice conversations.
@@ -165,7 +165,7 @@ class AgentsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AgentResponse:
         """
         Retrieve detailed information about a specific agent.
@@ -196,25 +196,25 @@ class AgentsResource(SyncAPIResource):
         agent_uuid: str,
         *,
         account_id: str,
-        ambient_sound: Optional[AmbientSoundParam] | NotGiven = NOT_GIVEN,
-        check_in: Optional[CheckInParam] | NotGiven = NOT_GIVEN,
-        initial_message: Optional[InitialMessageParam] | NotGiven = NOT_GIVEN,
-        interrupt_settings: Optional[InterruptSettingsParam] | NotGiven = NOT_GIVEN,
-        max_duration_seconds: Optional[int] | NotGiven = NOT_GIVEN,
-        model: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
-        note: Optional[str] | NotGiven = NOT_GIVEN,
-        pronunciation_dictionary: Optional[Iterable[PronunciationRuleParam]] | NotGiven = NOT_GIVEN,
-        response_timing: Optional[ResponseTimingParam] | NotGiven = NOT_GIVEN,
-        tags: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
-        transcriber: Optional[agent_update_params.Transcriber] | NotGiven = NOT_GIVEN,
-        voice: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        ambient_sound: Optional[AmbientSoundParam] | Omit = omit,
+        check_in: Optional[CheckInParam] | Omit = omit,
+        initial_message: Optional[InitialMessageParam] | Omit = omit,
+        interrupt_settings: Optional[InterruptSettingsParam] | Omit = omit,
+        max_duration_seconds: Optional[int] | Omit = omit,
+        model: Optional[Dict[str, object]] | Omit = omit,
+        name: Optional[str] | Omit = omit,
+        note: Optional[str] | Omit = omit,
+        pronunciation_dictionary: Optional[Iterable[PronunciationRuleParam]] | Omit = omit,
+        response_timing: Optional[ResponseTimingParam] | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
+        transcriber: Optional[agent_update_params.Transcriber] | Omit = omit,
+        voice: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AgentResponse:
         """Update an existing agent with partial data.
 
@@ -290,26 +290,26 @@ class AgentsResource(SyncAPIResource):
         self,
         account_id: str,
         *,
-        created_ge: Optional[str] | NotGiven = NOT_GIVEN,
-        created_gt: Optional[str] | NotGiven = NOT_GIVEN,
-        created_le: Optional[str] | NotGiven = NOT_GIVEN,
-        created_lt: Optional[str] | NotGiven = NOT_GIVEN,
-        limit: int | NotGiven = NOT_GIVEN,
-        modified_ge: Optional[str] | NotGiven = NOT_GIVEN,
-        modified_gt: Optional[str] | NotGiven = NOT_GIVEN,
-        modified_le: Optional[str] | NotGiven = NOT_GIVEN,
-        modified_lt: Optional[str] | NotGiven = NOT_GIVEN,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
-        offset: int | NotGiven = NOT_GIVEN,
-        ordering: Optional[str] | NotGiven = NOT_GIVEN,
-        search: Optional[str] | NotGiven = NOT_GIVEN,
-        tags: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
+        created_ge: Optional[str] | Omit = omit,
+        created_gt: Optional[str] | Omit = omit,
+        created_le: Optional[str] | Omit = omit,
+        created_lt: Optional[str] | Omit = omit,
+        limit: int | Omit = omit,
+        modified_ge: Optional[str] | Omit = omit,
+        modified_gt: Optional[str] | Omit = omit,
+        modified_le: Optional[str] | Omit = omit,
+        modified_lt: Optional[str] | Omit = omit,
+        name: Optional[str] | Omit = omit,
+        offset: int | Omit = omit,
+        ordering: Optional[str] | Omit = omit,
+        search: Optional[str] | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AgentListResponse:
         """
         Retrieve a paginated list of AI agents for the specified account with filtering,
@@ -388,7 +388,7 @@ class AgentsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """Permanently delete an agent.
 
@@ -444,22 +444,22 @@ class AsyncAgentsResource(AsyncAPIResource):
         model: agent_create_params.Model,
         transcriber: agent_create_params.Transcriber,
         voice: agent_create_params.Voice,
-        ambient_sound: AmbientSoundParam | NotGiven = NOT_GIVEN,
-        check_in: CheckInParam | NotGiven = NOT_GIVEN,
-        initial_message: InitialMessageParam | NotGiven = NOT_GIVEN,
-        interrupt_settings: Optional[InterruptSettingsParam] | NotGiven = NOT_GIVEN,
-        max_duration_seconds: Optional[int] | NotGiven = NOT_GIVEN,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
-        note: Optional[str] | NotGiven = NOT_GIVEN,
-        pronunciation_dictionary: Optional[Iterable[PronunciationRuleParam]] | NotGiven = NOT_GIVEN,
-        response_timing: ResponseTimingParam | NotGiven = NOT_GIVEN,
-        tags: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
+        ambient_sound: AmbientSoundParam | Omit = omit,
+        check_in: CheckInParam | Omit = omit,
+        initial_message: InitialMessageParam | Omit = omit,
+        interrupt_settings: Optional[InterruptSettingsParam] | Omit = omit,
+        max_duration_seconds: Optional[int] | Omit = omit,
+        name: Optional[str] | Omit = omit,
+        note: Optional[str] | Omit = omit,
+        pronunciation_dictionary: Optional[Iterable[PronunciationRuleParam]] | Omit = omit,
+        response_timing: ResponseTimingParam | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AgentResponse:
         """
         Create a new AI agent with specified configuration for voice conversations.
@@ -548,7 +548,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AgentResponse:
         """
         Retrieve detailed information about a specific agent.
@@ -579,25 +579,25 @@ class AsyncAgentsResource(AsyncAPIResource):
         agent_uuid: str,
         *,
         account_id: str,
-        ambient_sound: Optional[AmbientSoundParam] | NotGiven = NOT_GIVEN,
-        check_in: Optional[CheckInParam] | NotGiven = NOT_GIVEN,
-        initial_message: Optional[InitialMessageParam] | NotGiven = NOT_GIVEN,
-        interrupt_settings: Optional[InterruptSettingsParam] | NotGiven = NOT_GIVEN,
-        max_duration_seconds: Optional[int] | NotGiven = NOT_GIVEN,
-        model: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
-        note: Optional[str] | NotGiven = NOT_GIVEN,
-        pronunciation_dictionary: Optional[Iterable[PronunciationRuleParam]] | NotGiven = NOT_GIVEN,
-        response_timing: Optional[ResponseTimingParam] | NotGiven = NOT_GIVEN,
-        tags: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
-        transcriber: Optional[agent_update_params.Transcriber] | NotGiven = NOT_GIVEN,
-        voice: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        ambient_sound: Optional[AmbientSoundParam] | Omit = omit,
+        check_in: Optional[CheckInParam] | Omit = omit,
+        initial_message: Optional[InitialMessageParam] | Omit = omit,
+        interrupt_settings: Optional[InterruptSettingsParam] | Omit = omit,
+        max_duration_seconds: Optional[int] | Omit = omit,
+        model: Optional[Dict[str, object]] | Omit = omit,
+        name: Optional[str] | Omit = omit,
+        note: Optional[str] | Omit = omit,
+        pronunciation_dictionary: Optional[Iterable[PronunciationRuleParam]] | Omit = omit,
+        response_timing: Optional[ResponseTimingParam] | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
+        transcriber: Optional[agent_update_params.Transcriber] | Omit = omit,
+        voice: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AgentResponse:
         """Update an existing agent with partial data.
 
@@ -673,26 +673,26 @@ class AsyncAgentsResource(AsyncAPIResource):
         self,
         account_id: str,
         *,
-        created_ge: Optional[str] | NotGiven = NOT_GIVEN,
-        created_gt: Optional[str] | NotGiven = NOT_GIVEN,
-        created_le: Optional[str] | NotGiven = NOT_GIVEN,
-        created_lt: Optional[str] | NotGiven = NOT_GIVEN,
-        limit: int | NotGiven = NOT_GIVEN,
-        modified_ge: Optional[str] | NotGiven = NOT_GIVEN,
-        modified_gt: Optional[str] | NotGiven = NOT_GIVEN,
-        modified_le: Optional[str] | NotGiven = NOT_GIVEN,
-        modified_lt: Optional[str] | NotGiven = NOT_GIVEN,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
-        offset: int | NotGiven = NOT_GIVEN,
-        ordering: Optional[str] | NotGiven = NOT_GIVEN,
-        search: Optional[str] | NotGiven = NOT_GIVEN,
-        tags: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
+        created_ge: Optional[str] | Omit = omit,
+        created_gt: Optional[str] | Omit = omit,
+        created_le: Optional[str] | Omit = omit,
+        created_lt: Optional[str] | Omit = omit,
+        limit: int | Omit = omit,
+        modified_ge: Optional[str] | Omit = omit,
+        modified_gt: Optional[str] | Omit = omit,
+        modified_le: Optional[str] | Omit = omit,
+        modified_lt: Optional[str] | Omit = omit,
+        name: Optional[str] | Omit = omit,
+        offset: int | Omit = omit,
+        ordering: Optional[str] | Omit = omit,
+        search: Optional[str] | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AgentListResponse:
         """
         Retrieve a paginated list of AI agents for the specified account with filtering,
@@ -771,7 +771,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """Permanently delete an agent.
 
