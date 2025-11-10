@@ -3,7 +3,7 @@
 <!-- prettier-ignore -->
 [![PyPI version](https://img.shields.io/pypi/v/itellicoai.svg?label=pypi%20(stable))](https://pypi.org/project/itellicoai/)
 
-The Itellicoai Python library provides convenient access to the Itellicoai REST API from any Python 3.8+
+The Itellicoai Python library provides convenient access to the Itellicoai REST API from any Python 3.9+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -35,8 +35,19 @@ client = Itellicoai(
     api_key=os.environ.get("ITELLICOAI_API_KEY"),  # This is the default and can be omitted
 )
 
-account = client.accounts.retrieve_current()
-print(account.uuid)
+agent_response = client.accounts.agents.create(
+    account_id="account_id",
+    model={
+        "model": "gpt-5-mini",
+        "provider": "azure_openai",
+    },
+    transcriber={"provider": "deepgram"},
+    voice={
+        "voice_id": "pMsXgVXv3BLzUgSXRplE",
+        "provider": "elevenlabs",
+    },
+)
+print(agent_response.id)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -59,8 +70,19 @@ client = AsyncItellicoai(
 
 
 async def main() -> None:
-    account = await client.accounts.retrieve_current()
-    print(account.uuid)
+    agent_response = await client.accounts.agents.create(
+        account_id="account_id",
+        model={
+            "model": "gpt-5-mini",
+            "provider": "azure_openai",
+        },
+        transcriber={"provider": "deepgram"},
+        voice={
+            "voice_id": "pMsXgVXv3BLzUgSXRplE",
+            "provider": "elevenlabs",
+        },
+    )
+    print(agent_response.id)
 
 
 asyncio.run(main())
@@ -92,8 +114,19 @@ async def main() -> None:
         api_key="My API Key",
         http_client=DefaultAioHttpClient(),
     ) as client:
-        account = await client.accounts.retrieve_current()
-        print(account.uuid)
+        agent_response = await client.accounts.agents.create(
+            account_id="account_id",
+            model={
+                "model": "gpt-5-mini",
+                "provider": "azure_openai",
+            },
+            transcriber={"provider": "deepgram"},
+            voice={
+                "voice_id": "pMsXgVXv3BLzUgSXRplE",
+                "provider": "elevenlabs",
+            },
+        )
+        print(agent_response.id)
 
 
 asyncio.run(main())
@@ -120,13 +153,13 @@ client = Itellicoai()
 agent_response = client.accounts.agents.create(
     account_id="account_id",
     model={
-        "model": "gpt-4o-mini-2024-07-18",
-        "provider": "openai",
+        "model": "gpt-5-mini",
+        "provider": "azure_openai",
     },
     transcriber={"provider": "deepgram"},
     voice={
-        "voice_id": "nova",
-        "provider": "openai",
+        "voice_id": "pMsXgVXv3BLzUgSXRplE",
+        "provider": "elevenlabs",
     },
     ambient_sound={},
 )
@@ -149,7 +182,18 @@ from itellicoai import Itellicoai
 client = Itellicoai()
 
 try:
-    client.accounts.retrieve_current()
+    client.accounts.agents.create(
+        account_id="account_id",
+        model={
+            "model": "gpt-5-mini",
+            "provider": "azure_openai",
+        },
+        transcriber={"provider": "deepgram"},
+        voice={
+            "voice_id": "pMsXgVXv3BLzUgSXRplE",
+            "provider": "elevenlabs",
+        },
+    )
 except itellicoai.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -192,7 +236,18 @@ client = Itellicoai(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).accounts.retrieve_current()
+client.with_options(max_retries=5).accounts.agents.create(
+    account_id="account_id",
+    model={
+        "model": "gpt-5-mini",
+        "provider": "azure_openai",
+    },
+    transcriber={"provider": "deepgram"},
+    voice={
+        "voice_id": "pMsXgVXv3BLzUgSXRplE",
+        "provider": "elevenlabs",
+    },
+)
 ```
 
 ### Timeouts
@@ -215,7 +270,18 @@ client = Itellicoai(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).accounts.retrieve_current()
+client.with_options(timeout=5.0).accounts.agents.create(
+    account_id="account_id",
+    model={
+        "model": "gpt-5-mini",
+        "provider": "azure_openai",
+    },
+    transcriber={"provider": "deepgram"},
+    voice={
+        "voice_id": "pMsXgVXv3BLzUgSXRplE",
+        "provider": "elevenlabs",
+    },
+)
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -256,11 +322,24 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from itellicoai import Itellicoai
 
 client = Itellicoai()
-response = client.accounts.with_raw_response.retrieve_current()
+response = client.accounts.agents.with_raw_response.create(
+    account_id="account_id",
+    model={
+        "model": "gpt-5-mini",
+        "provider": "azure_openai",
+    },
+    transcriber={
+        "provider": "deepgram"
+    },
+    voice={
+        "voice_id": "pMsXgVXv3BLzUgSXRplE",
+        "provider": "elevenlabs",
+    },
+)
 print(response.headers.get('X-My-Header'))
 
-account = response.parse()  # get the object that `accounts.retrieve_current()` would have returned
-print(account.uuid)
+agent = response.parse()  # get the object that `accounts.agents.create()` would have returned
+print(agent.id)
 ```
 
 These methods return an [`APIResponse`](https://github.com/stainless-sdks/itellicoai-python/tree/main/src/itellicoai/_response.py) object.
@@ -274,7 +353,18 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.accounts.with_streaming_response.retrieve_current() as response:
+with client.accounts.agents.with_streaming_response.create(
+    account_id="account_id",
+    model={
+        "model": "gpt-5-mini",
+        "provider": "azure_openai",
+    },
+    transcriber={"provider": "deepgram"},
+    voice={
+        "voice_id": "pMsXgVXv3BLzUgSXRplE",
+        "provider": "elevenlabs",
+    },
+) as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
@@ -384,7 +474,7 @@ print(itellicoai.__version__)
 
 ## Requirements
 
-Python 3.8 or higher.
+Python 3.9 or higher.
 
 ## Contributing
 

@@ -1,38 +1,105 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Union, Optional
+from typing import Dict, List, Optional
 from datetime import datetime
-from typing_extensions import Annotated, TypeAlias
 
-from ..._utils import PropertyInfo
-from .check_in import CheckIn
 from ..._models import BaseModel
-from .azure_stt import AzureStt
-from .deepgram_stt import DeepgramStt
-from .openai_model import OpenAIModel
 from .ambient_sound import AmbientSound
-from .anthropic_model import AnthropicModel
 from .initial_message import InitialMessage
 from .response_timing import ResponseTiming
 from .interrupt_settings import InterruptSettings
-from .pronunciation_rule import PronunciationRule
 
-__all__ = ["AgentResponse", "Model", "Transcriber"]
+__all__ = ["AgentResponse", "InactivitySettings", "CaptureSettings", "Denoising", "Volume"]
 
-Model: TypeAlias = Annotated[Union[OpenAIModel, AnthropicModel, None], PropertyInfo(discriminator="provider")]
 
-Transcriber: TypeAlias = Annotated[Union[AzureStt, DeepgramStt, None], PropertyInfo(discriminator="provider")]
+class InactivitySettings(BaseModel):
+    end_call_timeout_ms: Optional[int] = None
+    """Time in milliseconds of user inactivity before ending the call.
+
+    Only used when reminders are disabled (reminder_timeout_ms is null). Set to null
+    to never auto-end calls. Minimum 10000ms (10 seconds), maximum 600000ms (10
+    minutes).
+    """
+
+    reminder_max_count: Optional[int] = None
+    """Maximum number of reminder messages to send when reminders are enabled.
+
+    Only used when reminder_timeout_ms is set.
+    """
+
+    reminder_timeout_ms: Optional[int] = None
+    """Time in milliseconds to wait before sending a reminder when user is silent.
+
+    Only used when reminder_max_count > 0. Minimum 5000ms (5 seconds), maximum
+    300000ms (5 minutes).
+    """
+
+    reset_on_activity: Optional[bool] = None
+    """Whether to reset the reminder count when the user becomes active again.
+
+    When true (default), the counter resets after user activity. When false,
+    reminders are cumulative throughout the conversation.
+    """
+
+
+class CaptureSettings(BaseModel):
+    recording_enabled: Optional[bool] = None
+    """Whether to record the agent's calls. Set to false to disable recording."""
+
+
+class Denoising(BaseModel):
+    telephony: Optional[bool] = None
+    """
+    Enable enhanced noise cancellation for telephony/SIP calls with optimized phone
+    audio processing powered by Krisp.
+    """
+
+    web: Optional[bool] = None
+    """
+    Enable enhanced noise cancellation for web-based calls powered by Krisp
+    technology.
+    """
+
+
+class Volume(BaseModel):
+    allow_adjustment: Optional[bool] = None
+    """
+    Whether to allow users to adjust volume through voice commands (e.g., 'speak
+    louder', 'speak quieter'). When enabled, adds volume control as an available
+    tool for the agent.
+    """
+
+    telephony: Optional[float] = None
+    """Volume level for telephony/SIP calls.
+
+    Range [0.0, 1.0] where 0.0 is muted, 0.5 is normal volume, and 1.0 is maximum
+    volume.
+    """
+
+    web: Optional[float] = None
+    """Volume level for web-based calls.
+
+    Range [0.0, 1.0] where 0.0 is muted, 0.5 is normal volume, and 1.0 is maximum
+    volume.
+    """
 
 
 class AgentResponse(BaseModel):
+    id: str
+    """Unique identifier for the agent.
+
+    Use this ID to reference the agent in API calls for updates, deletion, or
+    starting conversations.
+    """
+
     account_id: str
     """Unique identifier for the account that owns this agent."""
 
     ambient_sound: AmbientSound
     """Configuration for ambient background sounds during the conversation."""
 
-    check_in: CheckIn
-    """Configuration for agent check-in behavior when user is unresponsive."""
+    inactivity_settings: InactivitySettings
+    """Configuration for handling user inactivity and silence during conversations."""
 
     initial_message: InitialMessage
     """Configuration for the agent's initial message when starting a conversation."""
@@ -46,23 +113,28 @@ class AgentResponse(BaseModel):
     response_timing: ResponseTiming
     """Configuration for agent response timing and conversation flow control."""
 
-    uuid: str
-    """Unique identifier for the agent.
-
-    Use this ID to reference the agent in API calls for updates, deletion, or
-    starting conversations.
-    """
+    capture_settings: Optional[CaptureSettings] = None
+    """Agent capture settings configuration."""
 
     created: Optional[datetime] = None
     """Date-time of when the agent was created (ISO 8601 on output)."""
+
+    denoising: Optional[Denoising] = None
+    """Agent denoising/noise cancellation settings for enhanced audio quality."""
 
     interrupt_settings: Optional[InterruptSettings] = None
     """Configuration for how the agent handles user interruptions during conversation"""
 
     max_duration_seconds: Optional[int] = None
-    """The maximum conversation duration configured for this agent in seconds."""
+    """The maximum conversation duration configured for this agent in seconds.
 
-    model: Optional[Model] = None
+    Maximum allowed is 7200 seconds (2 hours).
+    """
+
+    metadata: Optional[Dict[str, object]] = None
+    """Custom metadata associated with the agent."""
+
+    model: Optional[Dict[str, object]] = None
     """Language model configuration for the agent."""
 
     modified: Optional[datetime] = None
@@ -71,11 +143,14 @@ class AgentResponse(BaseModel):
     note: Optional[str] = None
     """Internal notes about the agent for your team's reference."""
 
-    pronunciation_dictionary: Optional[List[PronunciationRule]] = None
-    """Custom pronunciation rules currently configured for the agent."""
-
     tags: Optional[List[str]] = None
     """List of tags assigned to this agent for categorization and filtering."""
 
-    transcriber: Optional[Transcriber] = None
+    transcriber: Optional[Dict[str, object]] = None
     """Speech-to-text configuration for the agent."""
+
+    voice: Optional[Dict[str, object]] = None
+    """Text-to-speech configuration for the agent."""
+
+    volume: Optional[Volume] = None
+    """Agent volume settings for audio output control."""
