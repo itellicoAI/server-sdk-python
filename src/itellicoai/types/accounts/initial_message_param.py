@@ -16,7 +16,7 @@ class InitialMessageParam(TypedDict, total=False):
     Only applies when mode is 'fixed_message' or 'dynamic_message'.
     """
 
-    interruptions_enabled: bool
+    interruptible: bool
     """Whether the user can interrupt the agent while it's speaking the initial
     message.
 
@@ -28,7 +28,8 @@ class InitialMessageParam(TypedDict, total=False):
     """The first message that the agent will say when starting a conversation.
 
     If not set, the agent will wait for the user to speak first. Use this to set a
-    friendly greeting like 'Hello! How can I help you today?'
+    friendly greeting like 'Hello! How can I help you today?'. You can add variables
+    in double curly brackets, for example: {{customer_name}} or {{company_name}}.
     """
 
     mode: Literal["fixed_message", "user_first", "dynamic_message"]

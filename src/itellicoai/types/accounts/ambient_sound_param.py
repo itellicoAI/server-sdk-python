@@ -9,7 +9,7 @@ __all__ = ["AmbientSoundParam"]
 
 
 class AmbientSoundParam(TypedDict, total=False):
-    type: Optional[
+    source: Optional[
         Literal[
             "open_plan_office", "customer_service_center", "internet_cafe", "urban_street", "rural_outdoors", "ac_fan"
         ]
@@ -19,6 +19,6 @@ class AmbientSoundParam(TypedDict, total=False):
     volume: float
     """Controls the volume of the ambient sound.
 
-    Value ranging from [-1.0, 1.0]. Lower values mean quieter ambient sound, while
-    higher values mean louder ambient sound. 0.0 is normal volume.
+    Value ranging from [0.0, 1.0]. 0.0 is muted, 1.0 is maximum volume, and 0.5 is
+    normal/default volume.
     """

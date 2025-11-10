@@ -2,60 +2,69 @@
 
 from __future__ import annotations
 
-from typing import Union, Iterable, Optional
+from typing import Dict, Union, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from ..._types import SequenceNotStr
-from .check_in_param import CheckInParam
-from .azure_stt_param import AzureSttParam
-from .deepgram_stt_param import DeepgramSttParam
 from .openai_model_param import OpenAIModelParam
 from .ambient_sound_param import AmbientSoundParam
 from .anthropic_model_param import AnthropicModelParam
 from .initial_message_param import InitialMessageParam
 from .response_timing_param import ResponseTimingParam
 from .interrupt_settings_param import InterruptSettingsParam
-from .pronunciation_rule_param import PronunciationRuleParam
 
 __all__ = [
     "AgentCreateParams",
     "Model",
+    "ModelAzureOpenAIModelSchema",
     "Transcriber",
+    "TranscriberAzureTranscriberSchema",
+    "TranscriberDeepgramTranscriberSchema",
     "Voice",
-    "VoiceAzureTtsSchema",
-    "VoiceCartesiaTtsSchema",
-    "VoiceCartesiaTtsSchemaExperimentalControls",
-    "VoiceElevenLabsTtsSchema",
-    "VoiceOpenAittsSchema",
+    "VoiceAzureVoiceSchema",
+    "VoiceCartesiaVoiceSchema",
+    "VoiceElevenLabsVoiceSchema",
+    "VoiceElevenLabsVoiceSchemaSettings",
+    "CaptureSettings",
+    "Denoising",
+    "InactivitySettings",
+    "Volume",
 ]
 
 
 class AgentCreateParams(TypedDict, total=False):
     model: Required[Model]
-    """Language model configuration for the agent.
+    """Model configuration for the agent.
 
     Defines which AI model to use (OpenAI GPT-4, Anthropic Claude, etc.) and its
     parameters like temperature and max tokens.
     """
 
     transcriber: Required[Transcriber]
-    """Speech-to-text configuration for the agent.
+    """Transcriber (speech-to-text) configuration for the agent.
 
-    Defines which STT provider to use (Azure, Deepgram) and language settings.
+    Defines which transcriber provider to use (Azure, Deepgram) and language
+    settings.
     """
 
     voice: Required[Voice]
-    """Text-to-speech configuration for the agent.
+    """Voice (text-to-speech) configuration for the agent.
 
-    Defines which TTS provider and voice to use (OpenAI, ElevenLabs, Cartesia,
-    Azure) with voice-specific settings.
+    Defines which provider and voice to use (OpenAI, ElevenLabs, Cartesia, Azure)
+    with voice-specific settings.
     """
 
     ambient_sound: AmbientSoundParam
     """Configuration for ambient background sounds during the conversation"""
 
-    check_in: CheckInParam
-    """Configuration for agent check-in behavior when user is unresponsive"""
+    capture_settings: Optional[CaptureSettings]
+    """Agent capture settings configuration."""
+
+    denoising: Optional[Denoising]
+    """Agent denoising/noise cancellation settings for enhanced audio quality."""
+
+    inactivity_settings: InactivitySettings
+    """Configuration for handling user inactivity during conversations"""
 
     initial_message: InitialMessageParam
     """Configuration for the agent's initial message when starting a conversation"""
@@ -67,6 +76,14 @@ class AgentCreateParams(TypedDict, total=False):
     """Maximum allowed length for the conversation in seconds.
 
     Default is 1200 seconds (20 minutes) if not specified.
+    """
+
+    metadata: Optional[Dict[str, object]]
+    """Custom metadata for the agent.
+
+    Store any additional key-value pairs that your application needs. This data is
+    not used by the agent itself but can be useful for integrations, tracking, or
+    custom business logic.
     """
 
     name: Optional[str]
@@ -83,13 +100,6 @@ class AgentCreateParams(TypedDict, total=False):
     Use this to document agent configuration, purpose, or any special instructions.
     """
 
-    pronunciation_dictionary: Optional[Iterable[PronunciationRuleParam]]
-    """Custom pronunciation rules for words or acronyms.
-
-    The agent will use these replacements when speaking to ensure proper
-    pronunciation.
-    """
-
     response_timing: ResponseTimingParam
     """Configuration for agent response timing and conversation flow control"""
 
@@ -100,59 +110,289 @@ class AgentCreateParams(TypedDict, total=False):
     'lead-qualification', 'appointment-booking'.
     """
 
-
-Model: TypeAlias = Union[OpenAIModelParam, AnthropicModelParam]
-
-Transcriber: TypeAlias = Union[AzureSttParam, DeepgramSttParam]
+    volume: Optional[Volume]
+    """Agent volume settings for audio output control."""
 
 
-class VoiceAzureTtsSchema(TypedDict, total=False):
+class ModelAzureOpenAIModelSchema(TypedDict, total=False):
+    model: Required[
+        Literal[
+            "gpt-5-mini",
+            "gpt-5-nano",
+            "gpt-4.1-2025-04-14",
+            "gpt-4.1-mini-2025-04-14",
+            "gpt-4.1-nano-2025-04-14",
+            "gpt-4o-2024-11-20",
+            "gpt-4o-mini-2024-07-18",
+        ]
+    ]
+    """The Azure OpenAI model to use."""
+
+    max_tokens: Optional[int]
+    """Max number of tokens the agent will be allowed to generate in each turn.
+
+    Default is 250.
+    """
+
+    provider: Literal["azure_openai"]
+
+    temperature: Optional[float]
+    """Temperature for the model. Default is 0 to leverage caching for lower latency."""
+
+
+Model: TypeAlias = Union[OpenAIModelParam, ModelAzureOpenAIModelSchema, AnthropicModelParam]
+
+
+class TranscriberAzureTranscriberSchema(TypedDict, total=False):
+    language: Optional[
+        Literal[
+            "af-ZA",
+            "am-ET",
+            "ar-AE",
+            "ar-BH",
+            "ar-DZ",
+            "ar-EG",
+            "ar-IL",
+            "ar-IQ",
+            "ar-JO",
+            "ar-KW",
+            "ar-LB",
+            "ar-LY",
+            "ar-MA",
+            "ar-OM",
+            "ar-PS",
+            "ar-QA",
+            "ar-SA",
+            "ar-SY",
+            "ar-TN",
+            "ar-YE",
+            "az-AZ",
+            "bg-BG",
+            "bn-IN",
+            "bs-BA",
+            "ca-ES",
+            "cs-CZ",
+            "cy-GB",
+            "da-DK",
+            "de-AT",
+            "de-CH",
+            "de-DE",
+            "el-GR",
+            "en-AU",
+            "en-CA",
+            "en-GB",
+            "en-GH",
+            "en-HK",
+            "en-IE",
+            "en-IN",
+            "en-KE",
+            "en-NG",
+            "en-NZ",
+            "en-PH",
+            "en-SG",
+            "en-TZ",
+            "en-US",
+            "en-ZA",
+            "es-AR",
+            "es-BO",
+            "es-CL",
+            "es-CO",
+            "es-CR",
+            "es-CU",
+            "es-DO",
+            "es-EC",
+            "es-ES",
+            "es-GQ",
+            "es-GT",
+            "es-HN",
+            "es-MX",
+            "es-NI",
+            "es-PA",
+            "es-PE",
+            "es-PR",
+            "es-PY",
+            "es-SV",
+            "es-US",
+            "es-UY",
+            "es-VE",
+            "et-EE",
+            "eu-ES",
+            "fa-IR",
+            "fi-FI",
+            "fil-PH",
+            "fr-BE",
+            "fr-CA",
+            "fr-CH",
+            "fr-FR",
+            "ga-IE",
+            "gl-ES",
+            "gu-IN",
+            "he-IL",
+            "hi-IN",
+            "hr-HR",
+            "hu-HU",
+            "hy-AM",
+            "id-ID",
+            "is-IS",
+            "it-CH",
+            "it-IT",
+            "ja-JP",
+            "jv-ID",
+            "ka-GE",
+            "kk-KZ",
+            "km-KH",
+            "kn-IN",
+            "ko-KR",
+            "lo-LA",
+            "lt-LT",
+            "lv-LV",
+            "mk-MK",
+            "ml-IN",
+            "mn-MN",
+            "mr-IN",
+            "ms-MY",
+            "mt-MT",
+            "my-MM",
+            "nb-NO",
+            "ne-NP",
+            "nl-BE",
+            "nl-NL",
+            "pa-IN",
+            "pl-PL",
+            "ps-AF",
+            "pt-BR",
+            "pt-PT",
+            "ro-RO",
+            "ru-RU",
+            "si-LK",
+            "sk-SK",
+            "sl-SI",
+            "so-SO",
+            "sq-AL",
+            "sr-RS",
+            "sv-SE",
+            "sw-KE",
+            "sw-TZ",
+            "ta-IN",
+            "te-IN",
+            "th-TH",
+            "tr-TR",
+            "uk-UA",
+            "ur-IN",
+            "uz-UZ",
+            "vi-VN",
+            "wuu-CN",
+            "yue-CN",
+            "zh-CN",
+            "zh-CN-shandong",
+            "zh-CN-sichuan",
+            "zh-HK",
+            "zh-TW",
+            "zu-ZA",
+        ]
+    ]
+    """
+    Language for transcription (see Azure Speech Service docs for supported
+    languages)
+    """
+
+    provider: Literal["azure"]
+
+
+class TranscriberDeepgramTranscriberSchema(TypedDict, total=False):
+    keywords: Optional[SequenceNotStr[str]]
+    """Keywords to help model pick up use-case specific words"""
+
+    language: Optional[
+        Literal[
+            "bg",
+            "ca",
+            "cs",
+            "da",
+            "da-DK",
+            "de",
+            "de-CH",
+            "el",
+            "en",
+            "en-AU",
+            "en-GB",
+            "en-IN",
+            "en-NZ",
+            "en-US",
+            "es",
+            "es-419",
+            "es-LATAM",
+            "et",
+            "fi",
+            "fr",
+            "fr-CA",
+            "hi",
+            "hi-Latn",
+            "hu",
+            "id",
+            "it",
+            "ja",
+            "ko",
+            "ko-KR",
+            "lt",
+            "lv",
+            "ms",
+            "multi",
+            "nl",
+            "nl-BE",
+            "no",
+            "pl",
+            "pt",
+            "pt-BR",
+            "ro",
+            "ru",
+            "sk",
+            "sv",
+            "sv-SE",
+            "ta",
+            "taq",
+            "th",
+            "th-TH",
+            "tr",
+            "uk",
+            "vi",
+            "zh",
+            "zh-CN",
+            "zh-Hans",
+            "zh-Hant",
+            "zh-TW",
+        ]
+    ]
+    """Language for transcription (see Deepgram docs for supported languages)"""
+
+    model: Optional[
+        Literal[
+            "nova-3:general",
+            "nova-3:medical",
+            "nova-2:general",
+            "nova-2:phonecall",
+            "nova-2:meeting",
+            "nova-2:conversationalai",
+        ]
+    ]
+    """Deepgram model to use (matches our YAML configuration)"""
+
+    provider: Literal["deepgram"]
+
+
+Transcriber: TypeAlias = Union[TranscriberAzureTranscriberSchema, TranscriberDeepgramTranscriberSchema]
+
+
+class VoiceAzureVoiceSchema(TypedDict, total=False):
     voice_id: Required[str]
     """Azure voice ID"""
 
     provider: Literal["azure"]
 
-    speed: Optional[float]
-    """Speed multiplier for voice output"""
 
-
-class VoiceCartesiaTtsSchemaExperimentalControls(TypedDict, total=False):
-    emotion: Optional[
-        Literal[
-            "anger:lowest",
-            "anger:low",
-            "anger:high",
-            "anger:highest",
-            "positivity:lowest",
-            "positivity:low",
-            "positivity:high",
-            "positivity:highest",
-            "surprise:lowest",
-            "surprise:low",
-            "surprise:high",
-            "surprise:highest",
-            "sadness:lowest",
-            "sadness:low",
-            "sadness:high",
-            "sadness:highest",
-            "curiosity:lowest",
-            "curiosity:low",
-            "curiosity:high",
-            "curiosity:highest",
-        ]
-    ]
-    """Emotion control with intensity level"""
-
-    speed: Union[Literal["slowest", "slow", "normal", "fast", "fastest"], float, None]
-    """Speed control - either named preset or numeric value between -1 and 1"""
-
-
-class VoiceCartesiaTtsSchema(TypedDict, total=False):
+class VoiceCartesiaVoiceSchema(TypedDict, total=False):
     voice_id: Required[str]
     """The provider-specific voice ID to use"""
-
-    experimental_controls: Optional[VoiceCartesiaTtsSchemaExperimentalControls]
-    """Experimental controls for Cartesia voice generation."""
 
     language: Optional[
         Literal["en", "es", "fr", "de", "pt", "zh", "ja", "hi", "it", "ko", "nl", "pl", "ru", "sv", "tr"]
@@ -162,14 +402,9 @@ class VoiceCartesiaTtsSchema(TypedDict, total=False):
     provider: Literal["cartesia"]
 
 
-class VoiceElevenLabsTtsSchema(TypedDict, total=False):
-    voice_id: Required[str]
-    """ElevenLabs voice ID"""
-
+class VoiceElevenLabsVoiceSchemaSettings(TypedDict, total=False):
     optimize_streaming_latency: Optional[float]
     """Optimize streaming latency setting"""
-
-    provider: Literal["elevenlabs"]
 
     similarity_boost: Optional[float]
     """Voice similarity boost setting"""
@@ -187,19 +422,86 @@ class VoiceElevenLabsTtsSchema(TypedDict, total=False):
     """Enable speaker boost"""
 
 
-class VoiceOpenAittsSchema(TypedDict, total=False):
-    voice_id: Required[
-        Literal["alloy", "echo", "fable", "onyx", "nova", "shimmer", "ash", "ballad", "coral", "sage", "verse"]
-    ]
-    """OpenAI voice ID (ash, ballad, coral, sage, verse only for realtime models)"""
+class VoiceElevenLabsVoiceSchema(TypedDict, total=False):
+    voice_id: Required[str]
+    """ElevenLabs voice ID"""
 
-    instructions: Optional[str]
-    """Prompt to control generated audio voice (not for tts-1/tts-1-hd)"""
+    provider: Literal["elevenlabs"]
 
-    provider: Literal["openai"]
-
-    speed: Optional[float]
-    """Speed multiplier for voice output"""
+    settings: Optional[VoiceElevenLabsVoiceSchemaSettings]
+    """ElevenLabs-specific voice settings."""
 
 
-Voice: TypeAlias = Union[VoiceAzureTtsSchema, VoiceCartesiaTtsSchema, VoiceElevenLabsTtsSchema, VoiceOpenAittsSchema]
+Voice: TypeAlias = Union[VoiceAzureVoiceSchema, VoiceCartesiaVoiceSchema, VoiceElevenLabsVoiceSchema]
+
+
+class CaptureSettings(TypedDict, total=False):
+    recording_enabled: Optional[bool]
+    """Whether to record the agent's calls. Set to false to disable recording."""
+
+
+class Denoising(TypedDict, total=False):
+    telephony: bool
+    """
+    Enable enhanced noise cancellation for telephony/SIP calls with optimized phone
+    audio processing powered by Krisp.
+    """
+
+    web: bool
+    """
+    Enable enhanced noise cancellation for web-based calls powered by Krisp
+    technology.
+    """
+
+
+class InactivitySettings(TypedDict, total=False):
+    end_call_timeout_ms: Optional[int]
+    """Time in milliseconds of user inactivity before ending the call.
+
+    Only used when reminders are disabled (reminder_timeout_ms is null). Set to null
+    to never auto-end calls. Minimum 10000ms (10 seconds), maximum 600000ms (10
+    minutes).
+    """
+
+    reminder_max_count: int
+    """Maximum number of reminder messages to send when reminders are enabled.
+
+    Only used when reminder_timeout_ms is set.
+    """
+
+    reminder_timeout_ms: Optional[int]
+    """Time in milliseconds to wait before sending a reminder when user is silent.
+
+    Only used when reminder_max_count > 0. Minimum 5000ms (5 seconds), maximum
+    300000ms (5 minutes).
+    """
+
+    reset_on_activity: bool
+    """Whether to reset the reminder count when the user becomes active again.
+
+    When true (default), the counter resets after user activity. When false,
+    reminders are cumulative throughout the conversation.
+    """
+
+
+class Volume(TypedDict, total=False):
+    allow_adjustment: bool
+    """
+    Whether to allow users to adjust volume through voice commands (e.g., 'speak
+    louder', 'speak quieter'). When enabled, adds volume control as an available
+    tool for the agent.
+    """
+
+    telephony: float
+    """Volume level for telephony/SIP calls.
+
+    Range [0.0, 1.0] where 0.0 is muted, 0.5 is normal volume, and 1.0 is maximum
+    volume.
+    """
+
+    web: float
+    """Volume level for web-based calls.
+
+    Range [0.0, 1.0] where 0.0 is muted, 0.5 is normal volume, and 1.0 is maximum
+    volume.
+    """
