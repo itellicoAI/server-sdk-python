@@ -7,7 +7,7 @@ from datetime import datetime
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -21,13 +21,18 @@ from ..._base_client import make_request_options
 from ...types.accounts import (
     agent_list_params,
     agent_create_params,
+    agent_update_params,
 )
+from ...types.accounts.volume_param import VolumeParam
 from ...types.accounts.agent_response import AgentResponse
+from ...types.accounts.denoising_param import DenoisingParam
 from ...types.accounts.agent_list_response import AgentListResponse
 from ...types.accounts.ambient_sound_param import AmbientSoundParam
 from ...types.accounts.initial_message_param import InitialMessageParam
 from ...types.accounts.response_timing_param import ResponseTimingParam
+from ...types.accounts.capture_settings_param import CaptureSettingsParam
 from ...types.accounts.interrupt_settings_param import InterruptSettingsParam
+from ...types.accounts.inactivity_settings_param import InactivitySettingsParam
 
 __all__ = ["AgentsResource", "AsyncAgentsResource"]
 
@@ -60,9 +65,9 @@ class AgentsResource(SyncAPIResource):
         transcriber: agent_create_params.Transcriber,
         voice: agent_create_params.Voice,
         ambient_sound: AmbientSoundParam | Omit = omit,
-        capture_settings: Optional[agent_create_params.CaptureSettings] | Omit = omit,
-        denoising: Optional[agent_create_params.Denoising] | Omit = omit,
-        inactivity_settings: agent_create_params.InactivitySettings | Omit = omit,
+        capture_settings: Optional[CaptureSettingsParam] | Omit = omit,
+        denoising: Optional[DenoisingParam] | Omit = omit,
+        inactivity_settings: InactivitySettingsParam | Omit = omit,
         initial_message: InitialMessageParam | Omit = omit,
         interrupt_settings: Optional[InterruptSettingsParam] | Omit = omit,
         max_duration_seconds: Optional[int] | Omit = omit,
@@ -71,7 +76,7 @@ class AgentsResource(SyncAPIResource):
         note: Optional[str] | Omit = omit,
         response_timing: ResponseTimingParam | Omit = omit,
         tags: Optional[SequenceNotStr[str]] | Omit = omit,
-        volume: Optional[agent_create_params.Volume] | Omit = omit,
+        volume: Optional[VolumeParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -158,6 +163,152 @@ class AgentsResource(SyncAPIResource):
                     "volume": volume,
                 },
                 agent_create_params.AgentCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AgentResponse,
+        )
+
+    def retrieve(
+        self,
+        agent_id: str,
+        *,
+        account_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AgentResponse:
+        """
+        Retrieve detailed information about a specific agent.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not account_id:
+            raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
+        if not agent_id:
+            raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
+        return self._get(
+            f"/v1/accounts/{account_id}/agents/{agent_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AgentResponse,
+        )
+
+    def update(
+        self,
+        agent_id: str,
+        *,
+        account_id: str,
+        ambient_sound: Optional[AmbientSoundParam] | Omit = omit,
+        capture_settings: Optional[CaptureSettingsParam] | Omit = omit,
+        denoising: Optional[DenoisingParam] | Omit = omit,
+        inactivity_settings: Optional[InactivitySettingsParam] | Omit = omit,
+        initial_message: Optional[InitialMessageParam] | Omit = omit,
+        interrupt_settings: Optional[InterruptSettingsParam] | Omit = omit,
+        max_duration_seconds: Optional[int] | Omit = omit,
+        metadata: Optional[Dict[str, object]] | Omit = omit,
+        model: Optional[Dict[str, object]] | Omit = omit,
+        name: Optional[str] | Omit = omit,
+        note: Optional[str] | Omit = omit,
+        response_timing: Optional[ResponseTimingParam] | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
+        transcriber: Optional[agent_update_params.Transcriber] | Omit = omit,
+        voice: Optional[Dict[str, object]] | Omit = omit,
+        volume: Optional[VolumeParam] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AgentResponse:
+        """Update an existing agent with partial data.
+
+        Only fields provided in the request
+        will be updated.
+
+        Args:
+          ambient_sound: Configuration for ambient background sounds during the conversation
+
+          capture_settings: Agent capture settings configuration.
+
+          denoising: Agent denoising/noise cancellation settings for enhanced audio quality.
+
+          inactivity_settings: Configuration for handling user inactivity during conversations
+
+          initial_message: Configuration for the agent's initial message when starting a conversation
+
+          interrupt_settings: Configuration for how the agent handles user interruptions during conversation
+
+          max_duration_seconds: Maximum allowed length for the conversation in seconds. Maximum is 7200 seconds
+              (2 hours).
+
+          metadata: Custom metadata for the agent. Store any additional key-value pairs that your
+              application needs.
+
+          model: Language model configuration for the agent. Partial updates allowed.
+
+          name: The name of the agent. Only used for your own reference.
+
+          note: Internal notes about the agent.
+
+          response_timing: Configuration for agent response timing and conversation flow control
+
+          tags: List of tags to categorize the agent.
+
+          transcriber: Transcriber (speech-to-text) configuration for the agent. Partial updates
+              allowed.
+
+          voice: Text-to-speech configuration for the agent. Partial updates allowed.
+
+          volume: Agent volume settings for audio output control.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not account_id:
+            raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
+        if not agent_id:
+            raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
+        return self._patch(
+            f"/v1/accounts/{account_id}/agents/{agent_id}",
+            body=maybe_transform(
+                {
+                    "ambient_sound": ambient_sound,
+                    "capture_settings": capture_settings,
+                    "denoising": denoising,
+                    "inactivity_settings": inactivity_settings,
+                    "initial_message": initial_message,
+                    "interrupt_settings": interrupt_settings,
+                    "max_duration_seconds": max_duration_seconds,
+                    "metadata": metadata,
+                    "model": model,
+                    "name": name,
+                    "note": note,
+                    "response_timing": response_timing,
+                    "tags": tags,
+                    "transcriber": transcriber,
+                    "voice": voice,
+                    "volume": volume,
+                },
+                agent_update_params.AgentUpdateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -257,6 +408,45 @@ class AgentsResource(SyncAPIResource):
             cast_to=AgentListResponse,
         )
 
+    def archive(
+        self,
+        agent_id: str,
+        *,
+        account_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> None:
+        """Soft-delete an agent by marking it archived.
+
+        Use list filters to view archived
+        agents and unarchive via PATCH.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not account_id:
+            raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
+        if not agent_id:
+            raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        return self._delete(
+            f"/v1/accounts/{account_id}/agents/{agent_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NoneType,
+        )
+
 
 class AsyncAgentsResource(AsyncAPIResource):
     @cached_property
@@ -286,9 +476,9 @@ class AsyncAgentsResource(AsyncAPIResource):
         transcriber: agent_create_params.Transcriber,
         voice: agent_create_params.Voice,
         ambient_sound: AmbientSoundParam | Omit = omit,
-        capture_settings: Optional[agent_create_params.CaptureSettings] | Omit = omit,
-        denoising: Optional[agent_create_params.Denoising] | Omit = omit,
-        inactivity_settings: agent_create_params.InactivitySettings | Omit = omit,
+        capture_settings: Optional[CaptureSettingsParam] | Omit = omit,
+        denoising: Optional[DenoisingParam] | Omit = omit,
+        inactivity_settings: InactivitySettingsParam | Omit = omit,
         initial_message: InitialMessageParam | Omit = omit,
         interrupt_settings: Optional[InterruptSettingsParam] | Omit = omit,
         max_duration_seconds: Optional[int] | Omit = omit,
@@ -297,7 +487,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         note: Optional[str] | Omit = omit,
         response_timing: ResponseTimingParam | Omit = omit,
         tags: Optional[SequenceNotStr[str]] | Omit = omit,
-        volume: Optional[agent_create_params.Volume] | Omit = omit,
+        volume: Optional[VolumeParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -384,6 +574,152 @@ class AsyncAgentsResource(AsyncAPIResource):
                     "volume": volume,
                 },
                 agent_create_params.AgentCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AgentResponse,
+        )
+
+    async def retrieve(
+        self,
+        agent_id: str,
+        *,
+        account_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AgentResponse:
+        """
+        Retrieve detailed information about a specific agent.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not account_id:
+            raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
+        if not agent_id:
+            raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
+        return await self._get(
+            f"/v1/accounts/{account_id}/agents/{agent_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AgentResponse,
+        )
+
+    async def update(
+        self,
+        agent_id: str,
+        *,
+        account_id: str,
+        ambient_sound: Optional[AmbientSoundParam] | Omit = omit,
+        capture_settings: Optional[CaptureSettingsParam] | Omit = omit,
+        denoising: Optional[DenoisingParam] | Omit = omit,
+        inactivity_settings: Optional[InactivitySettingsParam] | Omit = omit,
+        initial_message: Optional[InitialMessageParam] | Omit = omit,
+        interrupt_settings: Optional[InterruptSettingsParam] | Omit = omit,
+        max_duration_seconds: Optional[int] | Omit = omit,
+        metadata: Optional[Dict[str, object]] | Omit = omit,
+        model: Optional[Dict[str, object]] | Omit = omit,
+        name: Optional[str] | Omit = omit,
+        note: Optional[str] | Omit = omit,
+        response_timing: Optional[ResponseTimingParam] | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
+        transcriber: Optional[agent_update_params.Transcriber] | Omit = omit,
+        voice: Optional[Dict[str, object]] | Omit = omit,
+        volume: Optional[VolumeParam] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AgentResponse:
+        """Update an existing agent with partial data.
+
+        Only fields provided in the request
+        will be updated.
+
+        Args:
+          ambient_sound: Configuration for ambient background sounds during the conversation
+
+          capture_settings: Agent capture settings configuration.
+
+          denoising: Agent denoising/noise cancellation settings for enhanced audio quality.
+
+          inactivity_settings: Configuration for handling user inactivity during conversations
+
+          initial_message: Configuration for the agent's initial message when starting a conversation
+
+          interrupt_settings: Configuration for how the agent handles user interruptions during conversation
+
+          max_duration_seconds: Maximum allowed length for the conversation in seconds. Maximum is 7200 seconds
+              (2 hours).
+
+          metadata: Custom metadata for the agent. Store any additional key-value pairs that your
+              application needs.
+
+          model: Language model configuration for the agent. Partial updates allowed.
+
+          name: The name of the agent. Only used for your own reference.
+
+          note: Internal notes about the agent.
+
+          response_timing: Configuration for agent response timing and conversation flow control
+
+          tags: List of tags to categorize the agent.
+
+          transcriber: Transcriber (speech-to-text) configuration for the agent. Partial updates
+              allowed.
+
+          voice: Text-to-speech configuration for the agent. Partial updates allowed.
+
+          volume: Agent volume settings for audio output control.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not account_id:
+            raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
+        if not agent_id:
+            raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
+        return await self._patch(
+            f"/v1/accounts/{account_id}/agents/{agent_id}",
+            body=await async_maybe_transform(
+                {
+                    "ambient_sound": ambient_sound,
+                    "capture_settings": capture_settings,
+                    "denoising": denoising,
+                    "inactivity_settings": inactivity_settings,
+                    "initial_message": initial_message,
+                    "interrupt_settings": interrupt_settings,
+                    "max_duration_seconds": max_duration_seconds,
+                    "metadata": metadata,
+                    "model": model,
+                    "name": name,
+                    "note": note,
+                    "response_timing": response_timing,
+                    "tags": tags,
+                    "transcriber": transcriber,
+                    "voice": voice,
+                    "volume": volume,
+                },
+                agent_update_params.AgentUpdateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -483,6 +819,45 @@ class AsyncAgentsResource(AsyncAPIResource):
             cast_to=AgentListResponse,
         )
 
+    async def archive(
+        self,
+        agent_id: str,
+        *,
+        account_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> None:
+        """Soft-delete an agent by marking it archived.
+
+        Use list filters to view archived
+        agents and unarchive via PATCH.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not account_id:
+            raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
+        if not agent_id:
+            raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        return await self._delete(
+            f"/v1/accounts/{account_id}/agents/{agent_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NoneType,
+        )
+
 
 class AgentsResourceWithRawResponse:
     def __init__(self, agents: AgentsResource) -> None:
@@ -491,8 +866,17 @@ class AgentsResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             agents.create,
         )
+        self.retrieve = to_raw_response_wrapper(
+            agents.retrieve,
+        )
+        self.update = to_raw_response_wrapper(
+            agents.update,
+        )
         self.list = to_raw_response_wrapper(
             agents.list,
+        )
+        self.archive = to_raw_response_wrapper(
+            agents.archive,
         )
 
 
@@ -503,8 +887,17 @@ class AsyncAgentsResourceWithRawResponse:
         self.create = async_to_raw_response_wrapper(
             agents.create,
         )
+        self.retrieve = async_to_raw_response_wrapper(
+            agents.retrieve,
+        )
+        self.update = async_to_raw_response_wrapper(
+            agents.update,
+        )
         self.list = async_to_raw_response_wrapper(
             agents.list,
+        )
+        self.archive = async_to_raw_response_wrapper(
+            agents.archive,
         )
 
 
@@ -515,8 +908,17 @@ class AgentsResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             agents.create,
         )
+        self.retrieve = to_streamed_response_wrapper(
+            agents.retrieve,
+        )
+        self.update = to_streamed_response_wrapper(
+            agents.update,
+        )
         self.list = to_streamed_response_wrapper(
             agents.list,
+        )
+        self.archive = to_streamed_response_wrapper(
+            agents.archive,
         )
 
 
@@ -527,6 +929,15 @@ class AsyncAgentsResourceWithStreamingResponse:
         self.create = async_to_streamed_response_wrapper(
             agents.create,
         )
+        self.retrieve = async_to_streamed_response_wrapper(
+            agents.retrieve,
+        )
+        self.update = async_to_streamed_response_wrapper(
+            agents.update,
+        )
         self.list = async_to_streamed_response_wrapper(
             agents.list,
+        )
+        self.archive = async_to_streamed_response_wrapper(
+            agents.archive,
         )

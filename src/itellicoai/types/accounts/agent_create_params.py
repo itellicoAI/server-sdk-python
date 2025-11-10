@@ -6,29 +6,29 @@ from typing import Dict, Union, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from ..._types import SequenceNotStr
-from .openai_model_param import OpenAIModelParam
+from .volume_param import VolumeParam
+from .denoising_param import DenoisingParam
 from .ambient_sound_param import AmbientSoundParam
-from .anthropic_model_param import AnthropicModelParam
 from .initial_message_param import InitialMessageParam
 from .response_timing_param import ResponseTimingParam
+from .capture_settings_param import CaptureSettingsParam
+from .azure_transcriber_param import AzureTranscriberParam
 from .interrupt_settings_param import InterruptSettingsParam
+from .inactivity_settings_param import InactivitySettingsParam
+from .deepgram_transcriber_param import DeepgramTranscriberParam
 
 __all__ = [
     "AgentCreateParams",
     "Model",
+    "ModelOpenAIModelSchema",
     "ModelAzureOpenAIModelSchema",
+    "ModelAnthropicModelSchema",
     "Transcriber",
-    "TranscriberAzureTranscriberSchema",
-    "TranscriberDeepgramTranscriberSchema",
     "Voice",
     "VoiceAzureVoiceSchema",
     "VoiceCartesiaVoiceSchema",
     "VoiceElevenLabsVoiceSchema",
     "VoiceElevenLabsVoiceSchemaSettings",
-    "CaptureSettings",
-    "Denoising",
-    "InactivitySettings",
-    "Volume",
 ]
 
 
@@ -57,13 +57,13 @@ class AgentCreateParams(TypedDict, total=False):
     ambient_sound: AmbientSoundParam
     """Configuration for ambient background sounds during the conversation"""
 
-    capture_settings: Optional[CaptureSettings]
+    capture_settings: Optional[CaptureSettingsParam]
     """Agent capture settings configuration."""
 
-    denoising: Optional[Denoising]
+    denoising: Optional[DenoisingParam]
     """Agent denoising/noise cancellation settings for enhanced audio quality."""
 
-    inactivity_settings: InactivitySettings
+    inactivity_settings: InactivitySettingsParam
     """Configuration for handling user inactivity during conversations"""
 
     initial_message: InitialMessageParam
@@ -110,8 +110,26 @@ class AgentCreateParams(TypedDict, total=False):
     'lead-qualification', 'appointment-booking'.
     """
 
-    volume: Optional[Volume]
+    volume: Optional[VolumeParam]
     """Agent volume settings for audio output control."""
+
+
+class ModelOpenAIModelSchema(TypedDict, total=False):
+    model: Required[
+        Literal["gpt-5", "gpt-5-mini", "gpt-5-nano", "gpt-4.1", "gpt-4.1-mini", "gpt-4.1-nano", "gpt-4o", "gpt-4o-mini"]
+    ]
+    """The OpenAI model to use."""
+
+    max_tokens: Optional[int]
+    """Max number of tokens the agent will be allowed to generate in each turn.
+
+    Default is 250.
+    """
+
+    provider: Literal["openai"]
+
+    temperature: Optional[float]
+    """Temperature for the model. Default is 0 to leverage caching for lower latency."""
 
 
 class ModelAzureOpenAIModelSchema(TypedDict, total=False):
@@ -140,247 +158,25 @@ class ModelAzureOpenAIModelSchema(TypedDict, total=False):
     """Temperature for the model. Default is 0 to leverage caching for lower latency."""
 
 
-Model: TypeAlias = Union[OpenAIModelParam, ModelAzureOpenAIModelSchema, AnthropicModelParam]
+class ModelAnthropicModelSchema(TypedDict, total=False):
+    model: Required[Literal["claude-sonnet-4-20250514", "claude-3-7-sonnet-20250219", "claude-3-5-haiku-20241022"]]
+    """The Anthropic model to use."""
 
+    max_tokens: Optional[int]
+    """Max number of tokens the agent will be allowed to generate in each turn.
 
-class TranscriberAzureTranscriberSchema(TypedDict, total=False):
-    language: Optional[
-        Literal[
-            "af-ZA",
-            "am-ET",
-            "ar-AE",
-            "ar-BH",
-            "ar-DZ",
-            "ar-EG",
-            "ar-IL",
-            "ar-IQ",
-            "ar-JO",
-            "ar-KW",
-            "ar-LB",
-            "ar-LY",
-            "ar-MA",
-            "ar-OM",
-            "ar-PS",
-            "ar-QA",
-            "ar-SA",
-            "ar-SY",
-            "ar-TN",
-            "ar-YE",
-            "az-AZ",
-            "bg-BG",
-            "bn-IN",
-            "bs-BA",
-            "ca-ES",
-            "cs-CZ",
-            "cy-GB",
-            "da-DK",
-            "de-AT",
-            "de-CH",
-            "de-DE",
-            "el-GR",
-            "en-AU",
-            "en-CA",
-            "en-GB",
-            "en-GH",
-            "en-HK",
-            "en-IE",
-            "en-IN",
-            "en-KE",
-            "en-NG",
-            "en-NZ",
-            "en-PH",
-            "en-SG",
-            "en-TZ",
-            "en-US",
-            "en-ZA",
-            "es-AR",
-            "es-BO",
-            "es-CL",
-            "es-CO",
-            "es-CR",
-            "es-CU",
-            "es-DO",
-            "es-EC",
-            "es-ES",
-            "es-GQ",
-            "es-GT",
-            "es-HN",
-            "es-MX",
-            "es-NI",
-            "es-PA",
-            "es-PE",
-            "es-PR",
-            "es-PY",
-            "es-SV",
-            "es-US",
-            "es-UY",
-            "es-VE",
-            "et-EE",
-            "eu-ES",
-            "fa-IR",
-            "fi-FI",
-            "fil-PH",
-            "fr-BE",
-            "fr-CA",
-            "fr-CH",
-            "fr-FR",
-            "ga-IE",
-            "gl-ES",
-            "gu-IN",
-            "he-IL",
-            "hi-IN",
-            "hr-HR",
-            "hu-HU",
-            "hy-AM",
-            "id-ID",
-            "is-IS",
-            "it-CH",
-            "it-IT",
-            "ja-JP",
-            "jv-ID",
-            "ka-GE",
-            "kk-KZ",
-            "km-KH",
-            "kn-IN",
-            "ko-KR",
-            "lo-LA",
-            "lt-LT",
-            "lv-LV",
-            "mk-MK",
-            "ml-IN",
-            "mn-MN",
-            "mr-IN",
-            "ms-MY",
-            "mt-MT",
-            "my-MM",
-            "nb-NO",
-            "ne-NP",
-            "nl-BE",
-            "nl-NL",
-            "pa-IN",
-            "pl-PL",
-            "ps-AF",
-            "pt-BR",
-            "pt-PT",
-            "ro-RO",
-            "ru-RU",
-            "si-LK",
-            "sk-SK",
-            "sl-SI",
-            "so-SO",
-            "sq-AL",
-            "sr-RS",
-            "sv-SE",
-            "sw-KE",
-            "sw-TZ",
-            "ta-IN",
-            "te-IN",
-            "th-TH",
-            "tr-TR",
-            "uk-UA",
-            "ur-IN",
-            "uz-UZ",
-            "vi-VN",
-            "wuu-CN",
-            "yue-CN",
-            "zh-CN",
-            "zh-CN-shandong",
-            "zh-CN-sichuan",
-            "zh-HK",
-            "zh-TW",
-            "zu-ZA",
-        ]
-    ]
-    """
-    Language for transcription (see Azure Speech Service docs for supported
-    languages)
+    Default is 250.
     """
 
-    provider: Literal["azure"]
+    provider: Literal["anthropic"]
+
+    temperature: Optional[float]
+    """Temperature for the model. Default is 0 to leverage caching for lower latency."""
 
 
-class TranscriberDeepgramTranscriberSchema(TypedDict, total=False):
-    keywords: Optional[SequenceNotStr[str]]
-    """Keywords to help model pick up use-case specific words"""
+Model: TypeAlias = Union[ModelOpenAIModelSchema, ModelAzureOpenAIModelSchema, ModelAnthropicModelSchema]
 
-    language: Optional[
-        Literal[
-            "bg",
-            "ca",
-            "cs",
-            "da",
-            "da-DK",
-            "de",
-            "de-CH",
-            "el",
-            "en",
-            "en-AU",
-            "en-GB",
-            "en-IN",
-            "en-NZ",
-            "en-US",
-            "es",
-            "es-419",
-            "es-LATAM",
-            "et",
-            "fi",
-            "fr",
-            "fr-CA",
-            "hi",
-            "hi-Latn",
-            "hu",
-            "id",
-            "it",
-            "ja",
-            "ko",
-            "ko-KR",
-            "lt",
-            "lv",
-            "ms",
-            "multi",
-            "nl",
-            "nl-BE",
-            "no",
-            "pl",
-            "pt",
-            "pt-BR",
-            "ro",
-            "ru",
-            "sk",
-            "sv",
-            "sv-SE",
-            "ta",
-            "taq",
-            "th",
-            "th-TH",
-            "tr",
-            "uk",
-            "vi",
-            "zh",
-            "zh-CN",
-            "zh-Hans",
-            "zh-Hant",
-            "zh-TW",
-        ]
-    ]
-    """Language for transcription (see Deepgram docs for supported languages)"""
-
-    model: Optional[
-        Literal[
-            "nova-3:general",
-            "nova-3:medical",
-            "nova-2:general",
-            "nova-2:phonecall",
-            "nova-2:meeting",
-            "nova-2:conversationalai",
-        ]
-    ]
-    """Deepgram model to use (matches our YAML configuration)"""
-
-    provider: Literal["deepgram"]
-
-
-Transcriber: TypeAlias = Union[TranscriberAzureTranscriberSchema, TranscriberDeepgramTranscriberSchema]
+Transcriber: TypeAlias = Union[AzureTranscriberParam, DeepgramTranscriberParam]
 
 
 class VoiceAzureVoiceSchema(TypedDict, total=False):
@@ -433,75 +229,3 @@ class VoiceElevenLabsVoiceSchema(TypedDict, total=False):
 
 
 Voice: TypeAlias = Union[VoiceAzureVoiceSchema, VoiceCartesiaVoiceSchema, VoiceElevenLabsVoiceSchema]
-
-
-class CaptureSettings(TypedDict, total=False):
-    recording_enabled: Optional[bool]
-    """Whether to record the agent's calls. Set to false to disable recording."""
-
-
-class Denoising(TypedDict, total=False):
-    telephony: bool
-    """
-    Enable enhanced noise cancellation for telephony/SIP calls with optimized phone
-    audio processing powered by Krisp.
-    """
-
-    web: bool
-    """
-    Enable enhanced noise cancellation for web-based calls powered by Krisp
-    technology.
-    """
-
-
-class InactivitySettings(TypedDict, total=False):
-    end_call_timeout_ms: Optional[int]
-    """Time in milliseconds of user inactivity before ending the call.
-
-    Only used when reminders are disabled (reminder_timeout_ms is null). Set to null
-    to never auto-end calls. Minimum 10000ms (10 seconds), maximum 600000ms (10
-    minutes).
-    """
-
-    reminder_max_count: int
-    """Maximum number of reminder messages to send when reminders are enabled.
-
-    Only used when reminder_timeout_ms is set.
-    """
-
-    reminder_timeout_ms: Optional[int]
-    """Time in milliseconds to wait before sending a reminder when user is silent.
-
-    Only used when reminder_max_count > 0. Minimum 5000ms (5 seconds), maximum
-    300000ms (5 minutes).
-    """
-
-    reset_on_activity: bool
-    """Whether to reset the reminder count when the user becomes active again.
-
-    When true (default), the counter resets after user activity. When false,
-    reminders are cumulative throughout the conversation.
-    """
-
-
-class Volume(TypedDict, total=False):
-    allow_adjustment: bool
-    """
-    Whether to allow users to adjust volume through voice commands (e.g., 'speak
-    louder', 'speak quieter'). When enabled, adds volume control as an available
-    tool for the agent.
-    """
-
-    telephony: float
-    """Volume level for telephony/SIP calls.
-
-    Range [0.0, 1.0] where 0.0 is muted, 0.5 is normal volume, and 1.0 is maximum
-    volume.
-    """
-
-    web: float
-    """Volume level for web-based calls.
-
-    Range [0.0, 1.0] where 0.0 is muted, 0.5 is normal volume, and 1.0 is maximum
-    volume.
-    """

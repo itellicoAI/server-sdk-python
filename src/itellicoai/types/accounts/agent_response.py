@@ -3,85 +3,17 @@
 from typing import Dict, List, Optional
 from datetime import datetime
 
+from .volume import Volume
 from ..._models import BaseModel
+from .denoising import Denoising
 from .ambient_sound import AmbientSound
 from .initial_message import InitialMessage
 from .response_timing import ResponseTiming
+from .capture_settings import CaptureSettings
 from .interrupt_settings import InterruptSettings
+from .inactivity_settings import InactivitySettings
 
-__all__ = ["AgentResponse", "InactivitySettings", "CaptureSettings", "Denoising", "Volume"]
-
-
-class InactivitySettings(BaseModel):
-    end_call_timeout_ms: Optional[int] = None
-    """Time in milliseconds of user inactivity before ending the call.
-
-    Only used when reminders are disabled (reminder_timeout_ms is null). Set to null
-    to never auto-end calls. Minimum 10000ms (10 seconds), maximum 600000ms (10
-    minutes).
-    """
-
-    reminder_max_count: Optional[int] = None
-    """Maximum number of reminder messages to send when reminders are enabled.
-
-    Only used when reminder_timeout_ms is set.
-    """
-
-    reminder_timeout_ms: Optional[int] = None
-    """Time in milliseconds to wait before sending a reminder when user is silent.
-
-    Only used when reminder_max_count > 0. Minimum 5000ms (5 seconds), maximum
-    300000ms (5 minutes).
-    """
-
-    reset_on_activity: Optional[bool] = None
-    """Whether to reset the reminder count when the user becomes active again.
-
-    When true (default), the counter resets after user activity. When false,
-    reminders are cumulative throughout the conversation.
-    """
-
-
-class CaptureSettings(BaseModel):
-    recording_enabled: Optional[bool] = None
-    """Whether to record the agent's calls. Set to false to disable recording."""
-
-
-class Denoising(BaseModel):
-    telephony: Optional[bool] = None
-    """
-    Enable enhanced noise cancellation for telephony/SIP calls with optimized phone
-    audio processing powered by Krisp.
-    """
-
-    web: Optional[bool] = None
-    """
-    Enable enhanced noise cancellation for web-based calls powered by Krisp
-    technology.
-    """
-
-
-class Volume(BaseModel):
-    allow_adjustment: Optional[bool] = None
-    """
-    Whether to allow users to adjust volume through voice commands (e.g., 'speak
-    louder', 'speak quieter'). When enabled, adds volume control as an available
-    tool for the agent.
-    """
-
-    telephony: Optional[float] = None
-    """Volume level for telephony/SIP calls.
-
-    Range [0.0, 1.0] where 0.0 is muted, 0.5 is normal volume, and 1.0 is maximum
-    volume.
-    """
-
-    web: Optional[float] = None
-    """Volume level for web-based calls.
-
-    Range [0.0, 1.0] where 0.0 is muted, 0.5 is normal volume, and 1.0 is maximum
-    volume.
-    """
+__all__ = ["AgentResponse"]
 
 
 class AgentResponse(BaseModel):
