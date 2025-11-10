@@ -88,7 +88,7 @@ class Itellicoai(SyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("ITELLICOAI_BASE_URL")
         if base_url is None:
-            base_url = f"https://api.itellico.ai/v1"
+            base_url = f"https://api.itellico.ai"
 
         super().__init__(
             version=__version__,
@@ -256,7 +256,7 @@ class AsyncItellicoai(AsyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("ITELLICOAI_BASE_URL")
         if base_url is None:
-            base_url = f"https://api.itellico.ai/v1"
+            base_url = f"https://api.itellico.ai"
 
         super().__init__(
             version=__version__,
