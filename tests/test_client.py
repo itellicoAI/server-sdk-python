@@ -22,7 +22,7 @@ from itellicoai import Itellicoai, AsyncItellicoai, APIResponseValidationError
 from itellicoai._types import Omit
 from itellicoai._utils import asyncify
 from itellicoai._models import BaseModel, FinalRequestOptions
-from itellicoai._exceptions import APIStatusError, APITimeoutError, ItellicoaiError, APIResponseValidationError
+from itellicoai._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
 from itellicoai._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
@@ -345,16 +345,6 @@ class TestItellicoai:
 
         test_client.close()
         test_client2.close()
-
-    def test_validate_headers(self) -> None:
-        client = Itellicoai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
-        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        assert request.headers.get("X-API-Key") == api_key
-
-        with pytest.raises(ItellicoaiError):
-            with update_env(**{"ITELLICOAI_API_KEY": Omit()}):
-                client2 = Itellicoai(base_url=base_url, api_key=None, _strict_response_validation=True)
-            _ = client2
 
     def test_default_query_option(self) -> None:
         client = Itellicoai(
@@ -742,42 +732,20 @@ class TestItellicoai:
     @mock.patch("itellicoai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: Itellicoai) -> None:
-        respx_mock.post("/v1/accounts/account_id/agents").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.get("/v1/accounts/current").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            client.accounts.agents.with_streaming_response.create(
-                account_id="account_id",
-                model={
-                    "model": "gpt-5-mini",
-                    "provider": "azure_openai",
-                },
-                transcriber={"provider": "deepgram"},
-                voice={
-                    "voice_id": "pMsXgVXv3BLzUgSXRplE",
-                    "provider": "elevenlabs",
-                },
-            ).__enter__()
+            client.accounts.with_streaming_response.retrieve_current().__enter__()
 
         assert _get_open_connections(client) == 0
 
     @mock.patch("itellicoai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: Itellicoai) -> None:
-        respx_mock.post("/v1/accounts/account_id/agents").mock(return_value=httpx.Response(500))
+        respx_mock.get("/v1/accounts/current").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            client.accounts.agents.with_streaming_response.create(
-                account_id="account_id",
-                model={
-                    "model": "gpt-5-mini",
-                    "provider": "azure_openai",
-                },
-                transcriber={"provider": "deepgram"},
-                voice={
-                    "voice_id": "pMsXgVXv3BLzUgSXRplE",
-                    "provider": "elevenlabs",
-                },
-            ).__enter__()
+            client.accounts.with_streaming_response.retrieve_current().__enter__()
         assert _get_open_connections(client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -804,20 +772,9 @@ class TestItellicoai:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/accounts/account_id/agents").mock(side_effect=retry_handler)
+        respx_mock.get("/v1/accounts/current").mock(side_effect=retry_handler)
 
-        response = client.accounts.agents.with_raw_response.create(
-            account_id="account_id",
-            model={
-                "model": "gpt-5-mini",
-                "provider": "azure_openai",
-            },
-            transcriber={"provider": "deepgram"},
-            voice={
-                "voice_id": "pMsXgVXv3BLzUgSXRplE",
-                "provider": "elevenlabs",
-            },
-        )
+        response = client.accounts.with_raw_response.retrieve_current()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -839,21 +796,9 @@ class TestItellicoai:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/accounts/account_id/agents").mock(side_effect=retry_handler)
+        respx_mock.get("/v1/accounts/current").mock(side_effect=retry_handler)
 
-        response = client.accounts.agents.with_raw_response.create(
-            account_id="account_id",
-            model={
-                "model": "gpt-5-mini",
-                "provider": "azure_openai",
-            },
-            transcriber={"provider": "deepgram"},
-            voice={
-                "voice_id": "pMsXgVXv3BLzUgSXRplE",
-                "provider": "elevenlabs",
-            },
-            extra_headers={"x-stainless-retry-count": Omit()},
-        )
+        response = client.accounts.with_raw_response.retrieve_current(extra_headers={"x-stainless-retry-count": Omit()})
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -874,21 +819,9 @@ class TestItellicoai:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/accounts/account_id/agents").mock(side_effect=retry_handler)
+        respx_mock.get("/v1/accounts/current").mock(side_effect=retry_handler)
 
-        response = client.accounts.agents.with_raw_response.create(
-            account_id="account_id",
-            model={
-                "model": "gpt-5-mini",
-                "provider": "azure_openai",
-            },
-            transcriber={"provider": "deepgram"},
-            voice={
-                "voice_id": "pMsXgVXv3BLzUgSXRplE",
-                "provider": "elevenlabs",
-            },
-            extra_headers={"x-stainless-retry-count": "42"},
-        )
+        response = client.accounts.with_raw_response.retrieve_current(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -1229,16 +1162,6 @@ class TestAsyncItellicoai:
 
         await test_client.close()
         await test_client2.close()
-
-    def test_validate_headers(self) -> None:
-        client = AsyncItellicoai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
-        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        assert request.headers.get("X-API-Key") == api_key
-
-        with pytest.raises(ItellicoaiError):
-            with update_env(**{"ITELLICOAI_API_KEY": Omit()}):
-                client2 = AsyncItellicoai(base_url=base_url, api_key=None, _strict_response_validation=True)
-            _ = client2
 
     async def test_default_query_option(self) -> None:
         client = AsyncItellicoai(
@@ -1635,21 +1558,10 @@ class TestAsyncItellicoai:
     async def test_retrying_timeout_errors_doesnt_leak(
         self, respx_mock: MockRouter, async_client: AsyncItellicoai
     ) -> None:
-        respx_mock.post("/v1/accounts/account_id/agents").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.get("/v1/accounts/current").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            await async_client.accounts.agents.with_streaming_response.create(
-                account_id="account_id",
-                model={
-                    "model": "gpt-5-mini",
-                    "provider": "azure_openai",
-                },
-                transcriber={"provider": "deepgram"},
-                voice={
-                    "voice_id": "pMsXgVXv3BLzUgSXRplE",
-                    "provider": "elevenlabs",
-                },
-            ).__aenter__()
+            await async_client.accounts.with_streaming_response.retrieve_current().__aenter__()
 
         assert _get_open_connections(async_client) == 0
 
@@ -1658,21 +1570,10 @@ class TestAsyncItellicoai:
     async def test_retrying_status_errors_doesnt_leak(
         self, respx_mock: MockRouter, async_client: AsyncItellicoai
     ) -> None:
-        respx_mock.post("/v1/accounts/account_id/agents").mock(return_value=httpx.Response(500))
+        respx_mock.get("/v1/accounts/current").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await async_client.accounts.agents.with_streaming_response.create(
-                account_id="account_id",
-                model={
-                    "model": "gpt-5-mini",
-                    "provider": "azure_openai",
-                },
-                transcriber={"provider": "deepgram"},
-                voice={
-                    "voice_id": "pMsXgVXv3BLzUgSXRplE",
-                    "provider": "elevenlabs",
-                },
-            ).__aenter__()
+            await async_client.accounts.with_streaming_response.retrieve_current().__aenter__()
         assert _get_open_connections(async_client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -1699,20 +1600,9 @@ class TestAsyncItellicoai:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/accounts/account_id/agents").mock(side_effect=retry_handler)
+        respx_mock.get("/v1/accounts/current").mock(side_effect=retry_handler)
 
-        response = await client.accounts.agents.with_raw_response.create(
-            account_id="account_id",
-            model={
-                "model": "gpt-5-mini",
-                "provider": "azure_openai",
-            },
-            transcriber={"provider": "deepgram"},
-            voice={
-                "voice_id": "pMsXgVXv3BLzUgSXRplE",
-                "provider": "elevenlabs",
-            },
-        )
+        response = await client.accounts.with_raw_response.retrieve_current()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1734,20 +1624,10 @@ class TestAsyncItellicoai:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/accounts/account_id/agents").mock(side_effect=retry_handler)
+        respx_mock.get("/v1/accounts/current").mock(side_effect=retry_handler)
 
-        response = await client.accounts.agents.with_raw_response.create(
-            account_id="account_id",
-            model={
-                "model": "gpt-5-mini",
-                "provider": "azure_openai",
-            },
-            transcriber={"provider": "deepgram"},
-            voice={
-                "voice_id": "pMsXgVXv3BLzUgSXRplE",
-                "provider": "elevenlabs",
-            },
-            extra_headers={"x-stainless-retry-count": Omit()},
+        response = await client.accounts.with_raw_response.retrieve_current(
+            extra_headers={"x-stainless-retry-count": Omit()}
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -1769,20 +1649,10 @@ class TestAsyncItellicoai:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/accounts/account_id/agents").mock(side_effect=retry_handler)
+        respx_mock.get("/v1/accounts/current").mock(side_effect=retry_handler)
 
-        response = await client.accounts.agents.with_raw_response.create(
-            account_id="account_id",
-            model={
-                "model": "gpt-5-mini",
-                "provider": "azure_openai",
-            },
-            transcriber={"provider": "deepgram"},
-            voice={
-                "voice_id": "pMsXgVXv3BLzUgSXRplE",
-                "provider": "elevenlabs",
-            },
-            extra_headers={"x-stainless-retry-count": "42"},
+        response = await client.accounts.with_raw_response.retrieve_current(
+            extra_headers={"x-stainless-retry-count": "42"}
         )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
