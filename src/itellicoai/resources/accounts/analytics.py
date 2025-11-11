@@ -33,7 +33,7 @@ class AnalyticsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/itellicoai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/itellicoAI/server-sdk-python#accessing-raw-response-data-eg-headers
         """
         return AnalyticsResourceWithRawResponse(self)
 
@@ -42,7 +42,7 @@ class AnalyticsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/itellicoai-python#with_streaming_response
+        For more information, see https://www.github.com/itellicoAI/server-sdk-python#with_streaming_response
         """
         return AnalyticsResourceWithStreamingResponse(self)
 
@@ -122,7 +122,7 @@ class AsyncAnalyticsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/itellicoai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/itellicoAI/server-sdk-python#accessing-raw-response-data-eg-headers
         """
         return AsyncAnalyticsResourceWithRawResponse(self)
 
@@ -131,7 +131,7 @@ class AsyncAnalyticsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/itellicoai-python#with_streaming_response
+        For more information, see https://www.github.com/itellicoAI/server-sdk-python#with_streaming_response
         """
         return AsyncAnalyticsResourceWithStreamingResponse(self)
 
