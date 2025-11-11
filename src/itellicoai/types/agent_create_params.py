@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Dict, Union, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
-from ..._types import SequenceNotStr
+from .._types import SequenceNotStr
 from .volume_param import VolumeParam
 from .denoising_param import DenoisingParam
 from .ambient_sound_param import AmbientSoundParam

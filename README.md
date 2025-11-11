@@ -117,7 +117,7 @@ from itellicoai import Itellicoai
 
 client = Itellicoai()
 
-agent_response = client.accounts.agents.create(
+agent_response = client.agents.create(
     account_id="account_id",
     model={
         "model": "gpt-5-mini",

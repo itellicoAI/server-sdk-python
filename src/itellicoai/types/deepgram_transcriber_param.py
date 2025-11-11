@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import Literal, TypedDict
 
-from ..._types import SequenceNotStr
+from .._types import SequenceNotStr
 
 __all__ = ["DeepgramTranscriberParam"]
 
