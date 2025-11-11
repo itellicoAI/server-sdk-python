@@ -22,7 +22,7 @@ from itellicoai import Itellicoai, AsyncItellicoai, APIResponseValidationError
 from itellicoai._types import Omit
 from itellicoai._utils import asyncify
 from itellicoai._models import BaseModel, FinalRequestOptions
-from itellicoai._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
+from itellicoai._exceptions import APIStatusError, APITimeoutError, ItellicoaiError, APIResponseValidationError
 from itellicoai._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
@@ -345,6 +345,16 @@ class TestItellicoai:
 
         test_client.close()
         test_client2.close()
+
+    def test_validate_headers(self) -> None:
+        client = Itellicoai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        assert request.headers.get("X-API-Key") == api_key
+
+        with pytest.raises(ItellicoaiError):
+            with update_env(**{"ITELLICOAI_API_KEY": Omit()}):
+                client2 = Itellicoai(base_url=base_url, api_key=None, _strict_response_validation=True)
+            _ = client2
 
     def test_default_query_option(self) -> None:
         client = Itellicoai(
@@ -1162,6 +1172,16 @@ class TestAsyncItellicoai:
 
         await test_client.close()
         await test_client2.close()
+
+    def test_validate_headers(self) -> None:
+        client = AsyncItellicoai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        assert request.headers.get("X-API-Key") == api_key
+
+        with pytest.raises(ItellicoaiError):
+            with update_env(**{"ITELLICOAI_API_KEY": Omit()}):
+                client2 = AsyncItellicoai(base_url=base_url, api_key=None, _strict_response_validation=True)
+            _ = client2
 
     async def test_default_query_option(self) -> None:
         client = AsyncItellicoai(
