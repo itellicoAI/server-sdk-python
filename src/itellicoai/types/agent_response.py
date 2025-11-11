@@ -4,7 +4,7 @@ from typing import Dict, List, Optional
 from datetime import datetime
 
 from .volume import Volume
-from ..._models import BaseModel
+from .._models import BaseModel
 from .denoising import Denoising
 from .ambient_sound import AmbientSound
 from .initial_message import InitialMessage

@@ -2,44 +2,21 @@
 
 from __future__ import annotations
 
-from .volume import Volume as Volume
-from .denoising import Denoising as Denoising
 from .sip_trunk import SipTrunk as SipTrunk
 from .model_range import ModelRange as ModelRange
 from .phone_number import PhoneNumber as PhoneNumber
-from .volume_param import VolumeParam as VolumeParam
-from .ambient_sound import AmbientSound as AmbientSound
-from .agent_response import AgentResponse as AgentResponse
 from .usage_group_by import UsageGroupBy as UsageGroupBy
-from .denoising_param import DenoisingParam as DenoisingParam
-from .initial_message import InitialMessage as InitialMessage
-from .response_timing import ResponseTiming as ResponseTiming
-from .capture_settings import CaptureSettings as CaptureSettings
-from .agent_list_params import AgentListParams as AgentListParams
-from .interrupt_settings import InterruptSettings as InterruptSettings
-from .agent_create_params import AgentCreateParams as AgentCreateParams
-from .agent_list_response import AgentListResponse as AgentListResponse
-from .agent_update_params import AgentUpdateParams as AgentUpdateParams
-from .ambient_sound_param import AmbientSoundParam as AmbientSoundParam
-from .inactivity_settings import InactivitySettings as InactivitySettings
-from .initial_message_param import InitialMessageParam as InitialMessageParam
-from .response_timing_param import ResponseTimingParam as ResponseTimingParam
 from .sip_trunk_list_params import SipTrunkListParams as SipTrunkListParams
-from .capture_settings_param import CaptureSettingsParam as CaptureSettingsParam
 from .model_catalog_provider import ModelCatalogProvider as ModelCatalogProvider
 from .subaccount_list_params import SubaccountListParams as SubaccountListParams
-from .azure_transcriber_param import AzureTranscriberParam as AzureTranscriberParam
 from .sip_trunk_create_params import SipTrunkCreateParams as SipTrunkCreateParams
 from .sip_trunk_list_response import SipTrunkListResponse as SipTrunkListResponse
 from .sip_trunk_update_params import SipTrunkUpdateParams as SipTrunkUpdateParams
-from .interrupt_settings_param import InterruptSettingsParam as InterruptSettingsParam
 from .phone_number_list_params import PhoneNumberListParams as PhoneNumberListParams
 from .subaccount_create_params import SubaccountCreateParams as SubaccountCreateParams
 from .subaccount_list_response import SubaccountListResponse as SubaccountListResponse
 from .subaccount_update_params import SubaccountUpdateParams as SubaccountUpdateParams
-from .inactivity_settings_param import InactivitySettingsParam as InactivitySettingsParam
 from .analytics_get_usage_params import AnalyticsGetUsageParams as AnalyticsGetUsageParams
-from .deepgram_transcriber_param import DeepgramTranscriberParam as DeepgramTranscriberParam
 from .phone_number_create_params import PhoneNumberCreateParams as PhoneNumberCreateParams
 from .phone_number_list_response import PhoneNumberListResponse as PhoneNumberListResponse
 from .phone_number_update_params import PhoneNumberUpdateParams as PhoneNumberUpdateParams

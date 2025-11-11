@@ -9,11 +9,11 @@ import pytest
 
 from itellicoai import Itellicoai, AsyncItellicoai
 from tests.utils import assert_matches_type
-from itellicoai._utils import parse_datetime
-from itellicoai.types.accounts import (
+from itellicoai.types import (
     AgentResponse,
     AgentListResponse,
 )
+from itellicoai._utils import parse_datetime
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -24,7 +24,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create(self, client: Itellicoai) -> None:
-        agent = client.accounts.agents.create(
+        agent = client.agents.create(
             account_id="account_id",
             model={
                 "model": "gpt-5-mini",
@@ -41,7 +41,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: Itellicoai) -> None:
-        agent = client.accounts.agents.create(
+        agent = client.agents.create(
             account_id="account_id",
             model={
                 "model": "gpt-5-mini",
@@ -110,7 +110,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: Itellicoai) -> None:
-        response = client.accounts.agents.with_raw_response.create(
+        response = client.agents.with_raw_response.create(
             account_id="account_id",
             model={
                 "model": "gpt-5-mini",
@@ -131,7 +131,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: Itellicoai) -> None:
-        with client.accounts.agents.with_streaming_response.create(
+        with client.agents.with_streaming_response.create(
             account_id="account_id",
             model={
                 "model": "gpt-5-mini",
@@ -155,7 +155,7 @@ class TestAgents:
     @parametrize
     def test_path_params_create(self, client: Itellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
-            client.accounts.agents.with_raw_response.create(
+            client.agents.with_raw_response.create(
                 account_id="",
                 model={
                     "model": "gpt-5-mini",
@@ -171,7 +171,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: Itellicoai) -> None:
-        agent = client.accounts.agents.retrieve(
+        agent = client.agents.retrieve(
             agent_id="agent_id",
             account_id="account_id",
         )
@@ -180,7 +180,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: Itellicoai) -> None:
-        response = client.accounts.agents.with_raw_response.retrieve(
+        response = client.agents.with_raw_response.retrieve(
             agent_id="agent_id",
             account_id="account_id",
         )
@@ -193,7 +193,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: Itellicoai) -> None:
-        with client.accounts.agents.with_streaming_response.retrieve(
+        with client.agents.with_streaming_response.retrieve(
             agent_id="agent_id",
             account_id="account_id",
         ) as response:
@@ -209,13 +209,13 @@ class TestAgents:
     @parametrize
     def test_path_params_retrieve(self, client: Itellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
-            client.accounts.agents.with_raw_response.retrieve(
+            client.agents.with_raw_response.retrieve(
                 agent_id="agent_id",
                 account_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `agent_id` but received ''"):
-            client.accounts.agents.with_raw_response.retrieve(
+            client.agents.with_raw_response.retrieve(
                 agent_id="",
                 account_id="account_id",
             )
@@ -223,7 +223,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update(self, client: Itellicoai) -> None:
-        agent = client.accounts.agents.update(
+        agent = client.agents.update(
             agent_id="agent_id",
             account_id="account_id",
         )
@@ -232,7 +232,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: Itellicoai) -> None:
-        agent = client.accounts.agents.update(
+        agent = client.agents.update(
             agent_id="agent_id",
             account_id="account_id",
             ambient_sound={
@@ -284,7 +284,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: Itellicoai) -> None:
-        response = client.accounts.agents.with_raw_response.update(
+        response = client.agents.with_raw_response.update(
             agent_id="agent_id",
             account_id="account_id",
         )
@@ -297,7 +297,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: Itellicoai) -> None:
-        with client.accounts.agents.with_streaming_response.update(
+        with client.agents.with_streaming_response.update(
             agent_id="agent_id",
             account_id="account_id",
         ) as response:
@@ -313,13 +313,13 @@ class TestAgents:
     @parametrize
     def test_path_params_update(self, client: Itellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
-            client.accounts.agents.with_raw_response.update(
+            client.agents.with_raw_response.update(
                 agent_id="agent_id",
                 account_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `agent_id` but received ''"):
-            client.accounts.agents.with_raw_response.update(
+            client.agents.with_raw_response.update(
                 agent_id="",
                 account_id="account_id",
             )
@@ -327,7 +327,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list(self, client: Itellicoai) -> None:
-        agent = client.accounts.agents.list(
+        agent = client.agents.list(
             account_id="account_id",
         )
         assert_matches_type(AgentListResponse, agent, path=["response"])
@@ -335,7 +335,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Itellicoai) -> None:
-        agent = client.accounts.agents.list(
+        agent = client.agents.list(
             account_id="account_id",
             created_ge=parse_datetime("2019-12-27T18:11:19.117Z"),
             created_gt=parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -356,7 +356,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: Itellicoai) -> None:
-        response = client.accounts.agents.with_raw_response.list(
+        response = client.agents.with_raw_response.list(
             account_id="account_id",
         )
 
@@ -368,7 +368,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: Itellicoai) -> None:
-        with client.accounts.agents.with_streaming_response.list(
+        with client.agents.with_streaming_response.list(
             account_id="account_id",
         ) as response:
             assert not response.is_closed
@@ -383,14 +383,14 @@ class TestAgents:
     @parametrize
     def test_path_params_list(self, client: Itellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
-            client.accounts.agents.with_raw_response.list(
+            client.agents.with_raw_response.list(
                 account_id="",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_archive(self, client: Itellicoai) -> None:
-        agent = client.accounts.agents.archive(
+        agent = client.agents.archive(
             agent_id="agent_id",
             account_id="account_id",
         )
@@ -399,7 +399,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_archive(self, client: Itellicoai) -> None:
-        response = client.accounts.agents.with_raw_response.archive(
+        response = client.agents.with_raw_response.archive(
             agent_id="agent_id",
             account_id="account_id",
         )
@@ -412,7 +412,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_archive(self, client: Itellicoai) -> None:
-        with client.accounts.agents.with_streaming_response.archive(
+        with client.agents.with_streaming_response.archive(
             agent_id="agent_id",
             account_id="account_id",
         ) as response:
@@ -428,13 +428,13 @@ class TestAgents:
     @parametrize
     def test_path_params_archive(self, client: Itellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
-            client.accounts.agents.with_raw_response.archive(
+            client.agents.with_raw_response.archive(
                 agent_id="agent_id",
                 account_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `agent_id` but received ''"):
-            client.accounts.agents.with_raw_response.archive(
+            client.agents.with_raw_response.archive(
                 agent_id="",
                 account_id="account_id",
             )
@@ -448,7 +448,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncItellicoai) -> None:
-        agent = await async_client.accounts.agents.create(
+        agent = await async_client.agents.create(
             account_id="account_id",
             model={
                 "model": "gpt-5-mini",
@@ -465,7 +465,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncItellicoai) -> None:
-        agent = await async_client.accounts.agents.create(
+        agent = await async_client.agents.create(
             account_id="account_id",
             model={
                 "model": "gpt-5-mini",
@@ -534,7 +534,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncItellicoai) -> None:
-        response = await async_client.accounts.agents.with_raw_response.create(
+        response = await async_client.agents.with_raw_response.create(
             account_id="account_id",
             model={
                 "model": "gpt-5-mini",
@@ -555,7 +555,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncItellicoai) -> None:
-        async with async_client.accounts.agents.with_streaming_response.create(
+        async with async_client.agents.with_streaming_response.create(
             account_id="account_id",
             model={
                 "model": "gpt-5-mini",
@@ -579,7 +579,7 @@ class TestAsyncAgents:
     @parametrize
     async def test_path_params_create(self, async_client: AsyncItellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
-            await async_client.accounts.agents.with_raw_response.create(
+            await async_client.agents.with_raw_response.create(
                 account_id="",
                 model={
                     "model": "gpt-5-mini",
@@ -595,7 +595,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncItellicoai) -> None:
-        agent = await async_client.accounts.agents.retrieve(
+        agent = await async_client.agents.retrieve(
             agent_id="agent_id",
             account_id="account_id",
         )
@@ -604,7 +604,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncItellicoai) -> None:
-        response = await async_client.accounts.agents.with_raw_response.retrieve(
+        response = await async_client.agents.with_raw_response.retrieve(
             agent_id="agent_id",
             account_id="account_id",
         )
@@ -617,7 +617,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncItellicoai) -> None:
-        async with async_client.accounts.agents.with_streaming_response.retrieve(
+        async with async_client.agents.with_streaming_response.retrieve(
             agent_id="agent_id",
             account_id="account_id",
         ) as response:
@@ -633,13 +633,13 @@ class TestAsyncAgents:
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncItellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
-            await async_client.accounts.agents.with_raw_response.retrieve(
+            await async_client.agents.with_raw_response.retrieve(
                 agent_id="agent_id",
                 account_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `agent_id` but received ''"):
-            await async_client.accounts.agents.with_raw_response.retrieve(
+            await async_client.agents.with_raw_response.retrieve(
                 agent_id="",
                 account_id="account_id",
             )
@@ -647,7 +647,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncItellicoai) -> None:
-        agent = await async_client.accounts.agents.update(
+        agent = await async_client.agents.update(
             agent_id="agent_id",
             account_id="account_id",
         )
@@ -656,7 +656,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncItellicoai) -> None:
-        agent = await async_client.accounts.agents.update(
+        agent = await async_client.agents.update(
             agent_id="agent_id",
             account_id="account_id",
             ambient_sound={
@@ -708,7 +708,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncItellicoai) -> None:
-        response = await async_client.accounts.agents.with_raw_response.update(
+        response = await async_client.agents.with_raw_response.update(
             agent_id="agent_id",
             account_id="account_id",
         )
@@ -721,7 +721,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncItellicoai) -> None:
-        async with async_client.accounts.agents.with_streaming_response.update(
+        async with async_client.agents.with_streaming_response.update(
             agent_id="agent_id",
             account_id="account_id",
         ) as response:
@@ -737,13 +737,13 @@ class TestAsyncAgents:
     @parametrize
     async def test_path_params_update(self, async_client: AsyncItellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
-            await async_client.accounts.agents.with_raw_response.update(
+            await async_client.agents.with_raw_response.update(
                 agent_id="agent_id",
                 account_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `agent_id` but received ''"):
-            await async_client.accounts.agents.with_raw_response.update(
+            await async_client.agents.with_raw_response.update(
                 agent_id="",
                 account_id="account_id",
             )
@@ -751,7 +751,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncItellicoai) -> None:
-        agent = await async_client.accounts.agents.list(
+        agent = await async_client.agents.list(
             account_id="account_id",
         )
         assert_matches_type(AgentListResponse, agent, path=["response"])
@@ -759,7 +759,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncItellicoai) -> None:
-        agent = await async_client.accounts.agents.list(
+        agent = await async_client.agents.list(
             account_id="account_id",
             created_ge=parse_datetime("2019-12-27T18:11:19.117Z"),
             created_gt=parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -780,7 +780,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncItellicoai) -> None:
-        response = await async_client.accounts.agents.with_raw_response.list(
+        response = await async_client.agents.with_raw_response.list(
             account_id="account_id",
         )
 
@@ -792,7 +792,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncItellicoai) -> None:
-        async with async_client.accounts.agents.with_streaming_response.list(
+        async with async_client.agents.with_streaming_response.list(
             account_id="account_id",
         ) as response:
             assert not response.is_closed
@@ -807,14 +807,14 @@ class TestAsyncAgents:
     @parametrize
     async def test_path_params_list(self, async_client: AsyncItellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
-            await async_client.accounts.agents.with_raw_response.list(
+            await async_client.agents.with_raw_response.list(
                 account_id="",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_archive(self, async_client: AsyncItellicoai) -> None:
-        agent = await async_client.accounts.agents.archive(
+        agent = await async_client.agents.archive(
             agent_id="agent_id",
             account_id="account_id",
         )
@@ -823,7 +823,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_archive(self, async_client: AsyncItellicoai) -> None:
-        response = await async_client.accounts.agents.with_raw_response.archive(
+        response = await async_client.agents.with_raw_response.archive(
             agent_id="agent_id",
             account_id="account_id",
         )
@@ -836,7 +836,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_archive(self, async_client: AsyncItellicoai) -> None:
-        async with async_client.accounts.agents.with_streaming_response.archive(
+        async with async_client.agents.with_streaming_response.archive(
             agent_id="agent_id",
             account_id="account_id",
         ) as response:
@@ -852,13 +852,13 @@ class TestAsyncAgents:
     @parametrize
     async def test_path_params_archive(self, async_client: AsyncItellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
-            await async_client.accounts.agents.with_raw_response.archive(
+            await async_client.agents.with_raw_response.archive(
                 agent_id="agent_id",
                 account_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `agent_id` but received ''"):
-            await async_client.accounts.agents.with_raw_response.archive(
+            await async_client.agents.with_raw_response.archive(
                 agent_id="",
                 account_id="account_id",
             )
