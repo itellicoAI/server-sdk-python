@@ -7,32 +7,32 @@ from datetime import datetime
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
-from ..._compat import cached_property
-from ..._resource import SyncAPIResource, AsyncAPIResource
-from ..._response import (
+from ..types import (
+    agent_list_params,
+    agent_create_params,
+    agent_update_params,
+)
+from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
+from .._utils import maybe_transform, async_maybe_transform
+from .._compat import cached_property
+from .._resource import SyncAPIResource, AsyncAPIResource
+from .._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
-from ...types.accounts import (
-    agent_list_params,
-    agent_create_params,
-    agent_update_params,
-)
-from ...types.accounts.volume_param import VolumeParam
-from ...types.accounts.agent_response import AgentResponse
-from ...types.accounts.denoising_param import DenoisingParam
-from ...types.accounts.agent_list_response import AgentListResponse
-from ...types.accounts.ambient_sound_param import AmbientSoundParam
-from ...types.accounts.initial_message_param import InitialMessageParam
-from ...types.accounts.response_timing_param import ResponseTimingParam
-from ...types.accounts.capture_settings_param import CaptureSettingsParam
-from ...types.accounts.interrupt_settings_param import InterruptSettingsParam
-from ...types.accounts.inactivity_settings_param import InactivitySettingsParam
+from .._base_client import make_request_options
+from ..types.volume_param import VolumeParam
+from ..types.agent_response import AgentResponse
+from ..types.denoising_param import DenoisingParam
+from ..types.agent_list_response import AgentListResponse
+from ..types.ambient_sound_param import AmbientSoundParam
+from ..types.initial_message_param import InitialMessageParam
+from ..types.response_timing_param import ResponseTimingParam
+from ..types.capture_settings_param import CaptureSettingsParam
+from ..types.interrupt_settings_param import InterruptSettingsParam
+from ..types.inactivity_settings_param import InactivitySettingsParam
 
 __all__ = ["AgentsResource", "AsyncAgentsResource"]
 
@@ -44,7 +44,7 @@ class AgentsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/itellicoai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/itellicoAI/server-sdk-python#accessing-raw-response-data-eg-headers
         """
         return AgentsResourceWithRawResponse(self)
 
@@ -53,7 +53,7 @@ class AgentsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/itellicoai-python#with_streaming_response
+        For more information, see https://www.github.com/itellicoAI/server-sdk-python#with_streaming_response
         """
         return AgentsResourceWithStreamingResponse(self)
 
@@ -455,7 +455,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/itellicoai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/itellicoAI/server-sdk-python#accessing-raw-response-data-eg-headers
         """
         return AsyncAgentsResourceWithRawResponse(self)
 
@@ -464,7 +464,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/itellicoai-python#with_streaming_response
+        For more information, see https://www.github.com/itellicoAI/server-sdk-python#with_streaming_response
         """
         return AsyncAgentsResourceWithStreamingResponse(self)
 

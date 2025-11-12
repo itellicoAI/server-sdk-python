@@ -32,35 +32,6 @@ Methods:
 - <code title="patch /v1/accounts/{account_id}/subaccounts/{subaccount_id}">client.accounts.subaccounts.<a href="./src/itellicoai/resources/accounts/subaccounts.py">update</a>(subaccount_id, \*, account_id, \*\*<a href="src/itellicoai/types/accounts/subaccount_update_params.py">params</a>) -> <a href="./src/itellicoai/types/account.py">Account</a></code>
 - <code title="get /v1/accounts/{account_id}/subaccounts">client.accounts.subaccounts.<a href="./src/itellicoai/resources/accounts/subaccounts.py">list</a>(account_id, \*\*<a href="src/itellicoai/types/accounts/subaccount_list_params.py">params</a>) -> <a href="./src/itellicoai/types/accounts/subaccount_list_response.py">SubaccountListResponse</a></code>
 
-## Agents
-
-Types:
-
-```python
-from itellicoai.types.accounts import (
-    AgentResponse,
-    AmbientSound,
-    AzureTranscriber,
-    CaptureSettings,
-    DeepgramTranscriber,
-    Denoising,
-    InactivitySettings,
-    InitialMessage,
-    InterruptSettings,
-    ResponseTiming,
-    Volume,
-    AgentListResponse,
-)
-```
-
-Methods:
-
-- <code title="post /v1/accounts/{account_id}/agents">client.accounts.agents.<a href="./src/itellicoai/resources/accounts/agents.py">create</a>(account_id, \*\*<a href="src/itellicoai/types/accounts/agent_create_params.py">params</a>) -> <a href="./src/itellicoai/types/accounts/agent_response.py">AgentResponse</a></code>
-- <code title="get /v1/accounts/{account_id}/agents/{agent_id}">client.accounts.agents.<a href="./src/itellicoai/resources/accounts/agents.py">retrieve</a>(agent_id, \*, account_id) -> <a href="./src/itellicoai/types/accounts/agent_response.py">AgentResponse</a></code>
-- <code title="patch /v1/accounts/{account_id}/agents/{agent_id}">client.accounts.agents.<a href="./src/itellicoai/resources/accounts/agents.py">update</a>(agent_id, \*, account_id, \*\*<a href="src/itellicoai/types/accounts/agent_update_params.py">params</a>) -> <a href="./src/itellicoai/types/accounts/agent_response.py">AgentResponse</a></code>
-- <code title="get /v1/accounts/{account_id}/agents">client.accounts.agents.<a href="./src/itellicoai/resources/accounts/agents.py">list</a>(account_id, \*\*<a href="src/itellicoai/types/accounts/agent_list_params.py">params</a>) -> <a href="./src/itellicoai/types/accounts/agent_list_response.py">AgentListResponse</a></code>
-- <code title="delete /v1/accounts/{account_id}/agents/{agent_id}">client.accounts.agents.<a href="./src/itellicoai/resources/accounts/agents.py">archive</a>(agent_id, \*, account_id) -> None</code>
-
 ## Providers
 
 Types:
@@ -124,3 +95,32 @@ from itellicoai.types.accounts import UsageGroupBy, AnalyticsGetUsageResponse
 Methods:
 
 - <code title="get /v1/accounts/{account_id}/analytics/usage">client.accounts.analytics.<a href="./src/itellicoai/resources/accounts/analytics.py">get_usage</a>(account_id, \*\*<a href="src/itellicoai/types/accounts/analytics_get_usage_params.py">params</a>) -> <a href="./src/itellicoai/types/accounts/analytics_get_usage_response.py">AnalyticsGetUsageResponse</a></code>
+
+# Agents
+
+Types:
+
+```python
+from itellicoai.types import (
+    AgentResponse,
+    AmbientSound,
+    AzureTranscriber,
+    CaptureSettings,
+    DeepgramTranscriber,
+    Denoising,
+    InactivitySettings,
+    InitialMessage,
+    InterruptSettings,
+    ResponseTiming,
+    Volume,
+    AgentListResponse,
+)
+```
+
+Methods:
+
+- <code title="post /v1/accounts/{account_id}/agents">client.agents.<a href="./src/itellicoai/resources/agents.py">create</a>(account_id, \*\*<a href="src/itellicoai/types/agent_create_params.py">params</a>) -> <a href="./src/itellicoai/types/agent_response.py">AgentResponse</a></code>
+- <code title="get /v1/accounts/{account_id}/agents/{agent_id}">client.agents.<a href="./src/itellicoai/resources/agents.py">retrieve</a>(agent_id, \*, account_id) -> <a href="./src/itellicoai/types/agent_response.py">AgentResponse</a></code>
+- <code title="patch /v1/accounts/{account_id}/agents/{agent_id}">client.agents.<a href="./src/itellicoai/resources/agents.py">update</a>(agent_id, \*, account_id, \*\*<a href="src/itellicoai/types/agent_update_params.py">params</a>) -> <a href="./src/itellicoai/types/agent_response.py">AgentResponse</a></code>
+- <code title="get /v1/accounts/{account_id}/agents">client.agents.<a href="./src/itellicoai/resources/agents.py">list</a>(account_id, \*\*<a href="src/itellicoai/types/agent_list_params.py">params</a>) -> <a href="./src/itellicoai/types/agent_list_response.py">AgentListResponse</a></code>
+- <code title="delete /v1/accounts/{account_id}/agents/{agent_id}">client.agents.<a href="./src/itellicoai/resources/agents.py">archive</a>(agent_id, \*, account_id) -> None</code>

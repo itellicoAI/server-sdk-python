@@ -7,14 +7,6 @@ from datetime import datetime
 
 import httpx
 
-from .agents import (
-    AgentsResource,
-    AsyncAgentsResource,
-    AgentsResourceWithRawResponse,
-    AsyncAgentsResourceWithRawResponse,
-    AgentsResourceWithStreamingResponse,
-    AsyncAgentsResourceWithStreamingResponse,
-)
 from ...types import ConversationType, ConversationStatus, ConversationDirection, account_list_conversations_params
 from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
@@ -82,10 +74,6 @@ class AccountsResource(SyncAPIResource):
         return SubaccountsResource(self._client)
 
     @cached_property
-    def agents(self) -> AgentsResource:
-        return AgentsResource(self._client)
-
-    @cached_property
     def providers(self) -> ProvidersResource:
         return ProvidersResource(self._client)
 
@@ -107,7 +95,7 @@ class AccountsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/itellicoai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/itellicoAI/server-sdk-python#accessing-raw-response-data-eg-headers
         """
         return AccountsResourceWithRawResponse(self)
 
@@ -116,7 +104,7 @@ class AccountsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/itellicoai-python#with_streaming_response
+        For more information, see https://www.github.com/itellicoAI/server-sdk-python#with_streaming_response
         """
         return AccountsResourceWithStreamingResponse(self)
 
@@ -223,10 +211,6 @@ class AsyncAccountsResource(AsyncAPIResource):
         return AsyncSubaccountsResource(self._client)
 
     @cached_property
-    def agents(self) -> AsyncAgentsResource:
-        return AsyncAgentsResource(self._client)
-
-    @cached_property
     def providers(self) -> AsyncProvidersResource:
         return AsyncProvidersResource(self._client)
 
@@ -248,7 +232,7 @@ class AsyncAccountsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/itellicoai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/itellicoAI/server-sdk-python#accessing-raw-response-data-eg-headers
         """
         return AsyncAccountsResourceWithRawResponse(self)
 
@@ -257,7 +241,7 @@ class AsyncAccountsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/itellicoai-python#with_streaming_response
+        For more information, see https://www.github.com/itellicoAI/server-sdk-python#with_streaming_response
         """
         return AsyncAccountsResourceWithStreamingResponse(self)
 
@@ -374,10 +358,6 @@ class AccountsResourceWithRawResponse:
         return SubaccountsResourceWithRawResponse(self._accounts.subaccounts)
 
     @cached_property
-    def agents(self) -> AgentsResourceWithRawResponse:
-        return AgentsResourceWithRawResponse(self._accounts.agents)
-
-    @cached_property
     def providers(self) -> ProvidersResourceWithRawResponse:
         return ProvidersResourceWithRawResponse(self._accounts.providers)
 
@@ -408,10 +388,6 @@ class AsyncAccountsResourceWithRawResponse:
     @cached_property
     def subaccounts(self) -> AsyncSubaccountsResourceWithRawResponse:
         return AsyncSubaccountsResourceWithRawResponse(self._accounts.subaccounts)
-
-    @cached_property
-    def agents(self) -> AsyncAgentsResourceWithRawResponse:
-        return AsyncAgentsResourceWithRawResponse(self._accounts.agents)
 
     @cached_property
     def providers(self) -> AsyncProvidersResourceWithRawResponse:
@@ -446,10 +422,6 @@ class AccountsResourceWithStreamingResponse:
         return SubaccountsResourceWithStreamingResponse(self._accounts.subaccounts)
 
     @cached_property
-    def agents(self) -> AgentsResourceWithStreamingResponse:
-        return AgentsResourceWithStreamingResponse(self._accounts.agents)
-
-    @cached_property
     def providers(self) -> ProvidersResourceWithStreamingResponse:
         return ProvidersResourceWithStreamingResponse(self._accounts.providers)
 
@@ -480,10 +452,6 @@ class AsyncAccountsResourceWithStreamingResponse:
     @cached_property
     def subaccounts(self) -> AsyncSubaccountsResourceWithStreamingResponse:
         return AsyncSubaccountsResourceWithStreamingResponse(self._accounts.subaccounts)
-
-    @cached_property
-    def agents(self) -> AsyncAgentsResourceWithStreamingResponse:
-        return AsyncAgentsResourceWithStreamingResponse(self._accounts.agents)
 
     @cached_property
     def providers(self) -> AsyncProvidersResourceWithStreamingResponse:

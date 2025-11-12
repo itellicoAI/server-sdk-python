@@ -21,6 +21,7 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._version import __version__
+from .resources import agents
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, ItellicoaiError
 from ._base_client import (
@@ -44,6 +45,7 @@ __all__ = [
 
 class Itellicoai(SyncAPIClient):
     accounts: accounts.AccountsResource
+    agents: agents.AgentsResource
     with_raw_response: ItellicoaiWithRawResponse
     with_streaming_response: ItellicoaiWithStreamedResponse
 
@@ -102,6 +104,7 @@ class Itellicoai(SyncAPIClient):
         )
 
         self.accounts = accounts.AccountsResource(self)
+        self.agents = agents.AgentsResource(self)
         self.with_raw_response = ItellicoaiWithRawResponse(self)
         self.with_streaming_response = ItellicoaiWithStreamedResponse(self)
 
@@ -212,6 +215,7 @@ class Itellicoai(SyncAPIClient):
 
 class AsyncItellicoai(AsyncAPIClient):
     accounts: accounts.AsyncAccountsResource
+    agents: agents.AsyncAgentsResource
     with_raw_response: AsyncItellicoaiWithRawResponse
     with_streaming_response: AsyncItellicoaiWithStreamedResponse
 
@@ -270,6 +274,7 @@ class AsyncItellicoai(AsyncAPIClient):
         )
 
         self.accounts = accounts.AsyncAccountsResource(self)
+        self.agents = agents.AsyncAgentsResource(self)
         self.with_raw_response = AsyncItellicoaiWithRawResponse(self)
         self.with_streaming_response = AsyncItellicoaiWithStreamedResponse(self)
 
@@ -381,21 +386,25 @@ class AsyncItellicoai(AsyncAPIClient):
 class ItellicoaiWithRawResponse:
     def __init__(self, client: Itellicoai) -> None:
         self.accounts = accounts.AccountsResourceWithRawResponse(client.accounts)
+        self.agents = agents.AgentsResourceWithRawResponse(client.agents)
 
 
 class AsyncItellicoaiWithRawResponse:
     def __init__(self, client: AsyncItellicoai) -> None:
         self.accounts = accounts.AsyncAccountsResourceWithRawResponse(client.accounts)
+        self.agents = agents.AsyncAgentsResourceWithRawResponse(client.agents)
 
 
 class ItellicoaiWithStreamedResponse:
     def __init__(self, client: Itellicoai) -> None:
         self.accounts = accounts.AccountsResourceWithStreamingResponse(client.accounts)
+        self.agents = agents.AgentsResourceWithStreamingResponse(client.agents)
 
 
 class AsyncItellicoaiWithStreamedResponse:
     def __init__(self, client: AsyncItellicoai) -> None:
         self.accounts = accounts.AsyncAccountsResourceWithStreamingResponse(client.accounts)
+        self.agents = agents.AsyncAgentsResourceWithStreamingResponse(client.agents)
 
 
 Client = Itellicoai
