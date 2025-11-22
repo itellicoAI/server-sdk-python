@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1 (2025-11-22)
+
+Full Changelog: [v1.0.0...v1.0.1](https://github.com/itellicoAI/server-sdk-python/compare/v1.0.0...v1.0.1)
+
+### Chores
+
+* add Python 3.14 classifier and testing ([c6a062e](https://github.com/itellicoAI/server-sdk-python/commit/c6a062e34bfdf2cc97ea5be2d6683b5e417ed867))
+
 ## 1.0.0 (2025-11-12)
 
 Full Changelog: [v0.0.1...v1.0.0](https://github.com/itellicoAI/server-sdk-python/compare/v0.0.1...v1.0.0)
