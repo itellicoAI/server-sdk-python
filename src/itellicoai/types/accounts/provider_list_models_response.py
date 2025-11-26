@@ -33,6 +33,9 @@ class ProviderListModelsResponseItemModel(BaseModel):
     description: Optional[str] = None
     """Short description or guidance for the model"""
 
+    recommended: Optional[bool] = None
+    """Whether this model is recommended for most use cases"""
+
     settings: Optional[ProviderListModelsResponseItemModelSettings] = None
     """Supported configurable ranges for a model (temperature, max_tokens)."""
 

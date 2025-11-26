@@ -59,7 +59,6 @@ class TestAgents:
                 "voice_id": "pMsXgVXv3BLzUgSXRplE",
                 "provider": "elevenlabs",
                 "settings": {
-                    "optimize_streaming_latency": 0,
                     "similarity_boost": 0.7,
                     "speed": 0.7,
                     "stability": 0.7,
@@ -483,7 +482,6 @@ class TestAsyncAgents:
                 "voice_id": "pMsXgVXv3BLzUgSXRplE",
                 "provider": "elevenlabs",
                 "settings": {
-                    "optimize_streaming_latency": 0,
                     "similarity_boost": 0.7,
                     "speed": 0.7,
                     "stability": 0.7,

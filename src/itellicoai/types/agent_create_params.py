@@ -199,9 +199,6 @@ class VoiceCartesiaVoiceSchema(TypedDict, total=False):
 
 
 class VoiceElevenLabsVoiceSchemaSettings(TypedDict, total=False):
-    optimize_streaming_latency: Optional[float]
-    """Optimize streaming latency setting"""
-
     similarity_boost: Optional[float]
     """Voice similarity boost setting"""
 
