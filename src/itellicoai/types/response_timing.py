@@ -8,6 +8,8 @@ __all__ = ["ResponseTiming"]
 
 
 class ResponseTiming(BaseModel):
+    """Configuration for agent response timing and conversation flow control"""
+
     min_endpointing_delay_seconds: Optional[float] = None
     """
     Delay in seconds to wait after user stops speaking before the agent starts

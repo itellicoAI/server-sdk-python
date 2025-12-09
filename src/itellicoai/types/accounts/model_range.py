@@ -8,6 +8,8 @@ __all__ = ["ModelRange"]
 
 
 class ModelRange(BaseModel):
+    """Numeric range with optional default/min/max."""
+
     default: Optional[float] = None
     """Default value used when not specified"""
 

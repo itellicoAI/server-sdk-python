@@ -8,6 +8,8 @@ __all__ = ["Denoising"]
 
 
 class Denoising(BaseModel):
+    """Agent denoising/noise cancellation settings for enhanced audio quality."""
+
     telephony: Optional[bool] = None
     """
     Enable enhanced noise cancellation for telephony/SIP calls with optimized phone

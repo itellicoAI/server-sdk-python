@@ -9,6 +9,8 @@ __all__ = ["InactivitySettingsParam"]
 
 
 class InactivitySettingsParam(TypedDict, total=False):
+    """Configuration for handling user inactivity during conversations"""
+
     end_call_timeout_ms: Optional[int]
     """Time in milliseconds of user inactivity before ending the call.
 

@@ -8,6 +8,8 @@ __all__ = ["ResponseTimingParam"]
 
 
 class ResponseTimingParam(TypedDict, total=False):
+    """Configuration for agent response timing and conversation flow control"""
+
     min_endpointing_delay_seconds: float
     """
     Delay in seconds to wait after user stops speaking before the agent starts

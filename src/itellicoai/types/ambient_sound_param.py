@@ -9,6 +9,8 @@ __all__ = ["AmbientSoundParam"]
 
 
 class AmbientSoundParam(TypedDict, total=False):
+    """Configuration for ambient background sounds during the conversation"""
+
     source: Optional[
         Literal[
             "open_plan_office", "customer_service_center", "internet_cafe", "urban_street", "rural_outdoors", "ac_fan"
