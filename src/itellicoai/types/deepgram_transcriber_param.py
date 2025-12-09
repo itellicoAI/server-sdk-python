@@ -11,6 +11,8 @@ __all__ = ["DeepgramTranscriberParam"]
 
 
 class DeepgramTranscriberParam(TypedDict, total=False):
+    """Deepgram-specific transcriber configuration."""
+
     keywords: Optional[SequenceNotStr[str]]
     """Keywords to help model pick up use-case specific words"""
 

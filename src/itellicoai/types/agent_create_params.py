@@ -115,6 +115,8 @@ class AgentCreateParams(TypedDict, total=False):
 
 
 class ModelOpenAIModelSchema(TypedDict, total=False):
+    """OpenAI-specific model configuration."""
+
     model: Required[
         Literal["gpt-5", "gpt-5-mini", "gpt-5-nano", "gpt-4.1", "gpt-4.1-mini", "gpt-4.1-nano", "gpt-4o", "gpt-4o-mini"]
     ]
@@ -133,6 +135,8 @@ class ModelOpenAIModelSchema(TypedDict, total=False):
 
 
 class ModelAzureOpenAIModelSchema(TypedDict, total=False):
+    """Azure OpenAI-specific model configuration."""
+
     model: Required[
         Literal[
             "gpt-5-mini",
@@ -159,6 +163,8 @@ class ModelAzureOpenAIModelSchema(TypedDict, total=False):
 
 
 class ModelAnthropicModelSchema(TypedDict, total=False):
+    """Anthropic-specific model configuration."""
+
     model: Required[Literal["claude-sonnet-4-20250514", "claude-3-7-sonnet-20250219", "claude-3-5-haiku-20241022"]]
     """The Anthropic model to use."""
 
@@ -180,6 +186,8 @@ Transcriber: TypeAlias = Union[AzureTranscriberParam, DeepgramTranscriberParam]
 
 
 class VoiceAzureVoiceSchema(TypedDict, total=False):
+    """Azure-specific voice configuration."""
+
     voice_id: Required[str]
     """Azure voice ID"""
 
@@ -187,6 +195,8 @@ class VoiceAzureVoiceSchema(TypedDict, total=False):
 
 
 class VoiceCartesiaVoiceSchema(TypedDict, total=False):
+    """Cartesia-specific voice configuration."""
+
     voice_id: Required[str]
     """The provider-specific voice ID to use"""
 
@@ -199,6 +209,8 @@ class VoiceCartesiaVoiceSchema(TypedDict, total=False):
 
 
 class VoiceElevenLabsVoiceSchemaSettings(TypedDict, total=False):
+    """ElevenLabs-specific voice settings."""
+
     similarity_boost: Optional[float]
     """Voice similarity boost setting"""
 
@@ -216,6 +228,8 @@ class VoiceElevenLabsVoiceSchemaSettings(TypedDict, total=False):
 
 
 class VoiceElevenLabsVoiceSchema(TypedDict, total=False):
+    """ElevenLabs-specific voice configuration."""
+
     voice_id: Required[str]
     """ElevenLabs voice ID"""
 

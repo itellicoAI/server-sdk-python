@@ -8,6 +8,8 @@ __all__ = ["DenoisingParam"]
 
 
 class DenoisingParam(TypedDict, total=False):
+    """Agent denoising/noise cancellation settings for enhanced audio quality."""
+
     telephony: bool
     """
     Enable enhanced noise cancellation for telephony/SIP calls with optimized phone

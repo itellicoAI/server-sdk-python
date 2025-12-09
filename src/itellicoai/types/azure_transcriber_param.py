@@ -9,6 +9,8 @@ __all__ = ["AzureTranscriberParam"]
 
 
 class AzureTranscriberParam(TypedDict, total=False):
+    """Azure-specific transcriber configuration."""
+
     language: Optional[
         Literal[
             "af-ZA",

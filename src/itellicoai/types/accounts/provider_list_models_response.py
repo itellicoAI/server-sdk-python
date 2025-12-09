@@ -16,6 +16,8 @@ __all__ = [
 
 
 class ProviderListModelsResponseItemModelSettings(BaseModel):
+    """Supported configurable ranges for a model (temperature, max_tokens)."""
+
     max_tokens: Optional[ModelRange] = None
     """Numeric range with optional default/min/max."""
 
@@ -24,6 +26,8 @@ class ProviderListModelsResponseItemModelSettings(BaseModel):
 
 
 class ProviderListModelsResponseItemModel(BaseModel):
+    """Single model entry in the catalog."""
+
     id: str
     """Canonical model id without provider prefix"""
 
@@ -41,6 +45,8 @@ class ProviderListModelsResponseItemModel(BaseModel):
 
 
 class ProviderListModelsResponseItem(BaseModel):
+    """Provider with its list of models."""
+
     models: List[ProviderListModelsResponseItemModel]
 
     provider: ModelCatalogProvider

@@ -8,6 +8,8 @@ __all__ = ["InterruptSettings"]
 
 
 class InterruptSettings(BaseModel):
+    """Configuration for how the agent handles user interruptions during conversation"""
+
     enabled: Optional[bool] = None
     """Whether users can interrupt the agent while it's speaking.
 

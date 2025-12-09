@@ -11,6 +11,8 @@ __all__ = ["AnalyticsGetUsageResponse", "Meta", "Data", "DataValue"]
 
 
 class Meta(BaseModel):
+    """Metadata describing the usage response."""
+
     account_id: str
 
     end: datetime
@@ -27,6 +29,8 @@ class Meta(BaseModel):
 
 
 class DataValue(BaseModel):
+    """Metric values aggregated for a single time bucket and dimension set."""
+
     conversations: int
     """Completed conversations represented by this value."""
 
@@ -38,6 +42,8 @@ class DataValue(BaseModel):
 
 
 class Data(BaseModel):
+    """Time bucket containing one or more metric values."""
+
     ts: datetime
     """Bucket start timestamp in the requested timezone."""
 
@@ -46,6 +52,8 @@ class Data(BaseModel):
 
 
 class AnalyticsGetUsageResponse(BaseModel):
+    """Usage analytics response payload."""
+
     meta: Meta
     """Metadata describing the usage response."""
 

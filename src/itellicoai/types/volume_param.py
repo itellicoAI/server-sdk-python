@@ -8,6 +8,8 @@ __all__ = ["VolumeParam"]
 
 
 class VolumeParam(TypedDict, total=False):
+    """Agent volume settings for audio output control."""
+
     allow_adjustment: bool
     """
     Whether to allow users to adjust volume through voice commands (e.g., 'speak

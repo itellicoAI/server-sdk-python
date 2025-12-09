@@ -8,6 +8,8 @@ __all__ = ["InactivitySettings"]
 
 
 class InactivitySettings(BaseModel):
+    """Configuration for handling user inactivity during conversations"""
+
     end_call_timeout_ms: Optional[int] = None
     """Time in milliseconds of user inactivity before ending the call.
 

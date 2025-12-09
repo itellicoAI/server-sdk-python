@@ -9,6 +9,8 @@ __all__ = ["InitialMessageParam"]
 
 
 class InitialMessageParam(TypedDict, total=False):
+    """Configuration for the agent's initial message when starting a conversation"""
+
     delay_ms: int
     """
     Delay in milliseconds before the agent speaks the initial message, giving users

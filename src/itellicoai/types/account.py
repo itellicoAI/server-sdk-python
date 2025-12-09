@@ -8,6 +8,8 @@ __all__ = ["Account"]
 
 
 class Account(BaseModel):
+    """Account information"""
+
     id: str
     """Unique identifier for the account"""
 

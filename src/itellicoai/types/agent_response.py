@@ -17,6 +17,8 @@ __all__ = ["AgentResponse"]
 
 
 class AgentResponse(BaseModel):
+    """Response returned after agent operations (create, get, update)"""
+
     id: str
     """Unique identifier for the agent.
 

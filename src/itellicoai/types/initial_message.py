@@ -9,6 +9,8 @@ __all__ = ["InitialMessage"]
 
 
 class InitialMessage(BaseModel):
+    """Configuration for the agent's initial message when starting a conversation"""
+
     delay_ms: Optional[int] = None
     """
     Delay in milliseconds before the agent speaks the initial message, giving users

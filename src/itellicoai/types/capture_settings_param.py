@@ -9,5 +9,7 @@ __all__ = ["CaptureSettingsParam"]
 
 
 class CaptureSettingsParam(TypedDict, total=False):
+    """Agent capture settings configuration."""
+
     recording_enabled: Optional[bool]
     """Whether to record the agent's calls. Set to false to disable recording."""

@@ -8,6 +8,8 @@ __all__ = ["ModelCatalogProvider"]
 
 
 class ModelCatalogProvider(BaseModel):
+    """Provider metadata for a group of models."""
+
     code: str
     """Provider code (e.g., azure_openai, openai)"""
 
