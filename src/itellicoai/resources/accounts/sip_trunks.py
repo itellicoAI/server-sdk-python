@@ -7,7 +7,7 @@ from typing import Optional
 import httpx
 
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -25,6 +25,10 @@ __all__ = ["SipTrunksResource", "AsyncSipTrunksResource"]
 
 
 class SipTrunksResource(SyncAPIResource):
+    """
+    Manage BYOC SIP trunk connectivity (origination/termination endpoints and allowed IPs) used by phone numbers.
+    """
+
     @cached_property
     def with_raw_response(self) -> SipTrunksResourceWithRawResponse:
         """
@@ -77,7 +81,7 @@ class SipTrunksResource(SyncAPIResource):
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._post(
-            f"/v1/accounts/{account_id}/sip-trunks",
+            path_template("/v1/accounts/{account_id}/sip-trunks", account_id=account_id),
             body=maybe_transform(
                 {
                     "allowed_ips": allowed_ips,
@@ -121,7 +125,9 @@ class SipTrunksResource(SyncAPIResource):
         if not sip_trunk_id:
             raise ValueError(f"Expected a non-empty value for `sip_trunk_id` but received {sip_trunk_id!r}")
         return self._get(
-            f"/v1/accounts/{account_id}/sip-trunks/{sip_trunk_id}",
+            path_template(
+                "/v1/accounts/{account_id}/sip-trunks/{sip_trunk_id}", account_id=account_id, sip_trunk_id=sip_trunk_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -162,7 +168,9 @@ class SipTrunksResource(SyncAPIResource):
         if not sip_trunk_id:
             raise ValueError(f"Expected a non-empty value for `sip_trunk_id` but received {sip_trunk_id!r}")
         return self._patch(
-            f"/v1/accounts/{account_id}/sip-trunks/{sip_trunk_id}",
+            path_template(
+                "/v1/accounts/{account_id}/sip-trunks/{sip_trunk_id}", account_id=account_id, sip_trunk_id=sip_trunk_id
+            ),
             body=maybe_transform(
                 {
                     "allowed_ips": allowed_ips,
@@ -205,7 +213,7 @@ class SipTrunksResource(SyncAPIResource):
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._get(
-            f"/v1/accounts/{account_id}/sip-trunks",
+            path_template("/v1/accounts/{account_id}/sip-trunks", account_id=account_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -252,7 +260,9 @@ class SipTrunksResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `sip_trunk_id` but received {sip_trunk_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/v1/accounts/{account_id}/sip-trunks/{sip_trunk_id}",
+            path_template(
+                "/v1/accounts/{account_id}/sip-trunks/{sip_trunk_id}", account_id=account_id, sip_trunk_id=sip_trunk_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -261,6 +271,10 @@ class SipTrunksResource(SyncAPIResource):
 
 
 class AsyncSipTrunksResource(AsyncAPIResource):
+    """
+    Manage BYOC SIP trunk connectivity (origination/termination endpoints and allowed IPs) used by phone numbers.
+    """
+
     @cached_property
     def with_raw_response(self) -> AsyncSipTrunksResourceWithRawResponse:
         """
@@ -313,7 +327,7 @@ class AsyncSipTrunksResource(AsyncAPIResource):
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return await self._post(
-            f"/v1/accounts/{account_id}/sip-trunks",
+            path_template("/v1/accounts/{account_id}/sip-trunks", account_id=account_id),
             body=await async_maybe_transform(
                 {
                     "allowed_ips": allowed_ips,
@@ -357,7 +371,9 @@ class AsyncSipTrunksResource(AsyncAPIResource):
         if not sip_trunk_id:
             raise ValueError(f"Expected a non-empty value for `sip_trunk_id` but received {sip_trunk_id!r}")
         return await self._get(
-            f"/v1/accounts/{account_id}/sip-trunks/{sip_trunk_id}",
+            path_template(
+                "/v1/accounts/{account_id}/sip-trunks/{sip_trunk_id}", account_id=account_id, sip_trunk_id=sip_trunk_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -398,7 +414,9 @@ class AsyncSipTrunksResource(AsyncAPIResource):
         if not sip_trunk_id:
             raise ValueError(f"Expected a non-empty value for `sip_trunk_id` but received {sip_trunk_id!r}")
         return await self._patch(
-            f"/v1/accounts/{account_id}/sip-trunks/{sip_trunk_id}",
+            path_template(
+                "/v1/accounts/{account_id}/sip-trunks/{sip_trunk_id}", account_id=account_id, sip_trunk_id=sip_trunk_id
+            ),
             body=await async_maybe_transform(
                 {
                     "allowed_ips": allowed_ips,
@@ -441,7 +459,7 @@ class AsyncSipTrunksResource(AsyncAPIResource):
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return await self._get(
-            f"/v1/accounts/{account_id}/sip-trunks",
+            path_template("/v1/accounts/{account_id}/sip-trunks", account_id=account_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -488,7 +506,9 @@ class AsyncSipTrunksResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `sip_trunk_id` but received {sip_trunk_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/v1/accounts/{account_id}/sip-trunks/{sip_trunk_id}",
+            path_template(
+                "/v1/accounts/{account_id}/sip-trunks/{sip_trunk_id}", account_id=account_id, sip_trunk_id=sip_trunk_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
