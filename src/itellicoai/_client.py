@@ -110,6 +110,9 @@ class Itellicoai(SyncAPIClient):
 
     @cached_property
     def agents(self) -> AgentsResource:
+        """
+        Define and configure conversational agents (model, transcriber, voice, behavior) used in calls and automations.
+        """
         from .resources.agents import AgentsResource
 
         return AgentsResource(self)
@@ -290,6 +293,9 @@ class AsyncItellicoai(AsyncAPIClient):
 
     @cached_property
     def agents(self) -> AsyncAgentsResource:
+        """
+        Define and configure conversational agents (model, transcriber, voice, behavior) used in calls and automations.
+        """
         from .resources.agents import AsyncAgentsResource
 
         return AsyncAgentsResource(self)
@@ -421,6 +427,9 @@ class ItellicoaiWithRawResponse:
 
     @cached_property
     def agents(self) -> agents.AgentsResourceWithRawResponse:
+        """
+        Define and configure conversational agents (model, transcriber, voice, behavior) used in calls and automations.
+        """
         from .resources.agents import AgentsResourceWithRawResponse
 
         return AgentsResourceWithRawResponse(self._client.agents)
@@ -440,6 +449,9 @@ class AsyncItellicoaiWithRawResponse:
 
     @cached_property
     def agents(self) -> agents.AsyncAgentsResourceWithRawResponse:
+        """
+        Define and configure conversational agents (model, transcriber, voice, behavior) used in calls and automations.
+        """
         from .resources.agents import AsyncAgentsResourceWithRawResponse
 
         return AsyncAgentsResourceWithRawResponse(self._client.agents)
@@ -459,6 +471,9 @@ class ItellicoaiWithStreamedResponse:
 
     @cached_property
     def agents(self) -> agents.AgentsResourceWithStreamingResponse:
+        """
+        Define and configure conversational agents (model, transcriber, voice, behavior) used in calls and automations.
+        """
         from .resources.agents import AgentsResourceWithStreamingResponse
 
         return AgentsResourceWithStreamingResponse(self._client.agents)
@@ -478,6 +493,9 @@ class AsyncItellicoaiWithStreamedResponse:
 
     @cached_property
     def agents(self) -> agents.AsyncAgentsResourceWithStreamingResponse:
+        """
+        Define and configure conversational agents (model, transcriber, voice, behavior) used in calls and automations.
+        """
         from .resources.agents import AsyncAgentsResourceWithStreamingResponse
 
         return AsyncAgentsResourceWithStreamingResponse(self._client.agents)

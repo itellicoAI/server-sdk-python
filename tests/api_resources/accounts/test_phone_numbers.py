@@ -20,7 +20,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestPhoneNumbers:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create(self, client: Itellicoai) -> None:
         phone_number = client.accounts.phone_numbers.create(
@@ -29,7 +29,7 @@ class TestPhoneNumbers:
         )
         assert_matches_type(PhoneNumber, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: Itellicoai) -> None:
         phone_number = client.accounts.phone_numbers.create(
@@ -41,7 +41,7 @@ class TestPhoneNumbers:
         )
         assert_matches_type(PhoneNumber, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: Itellicoai) -> None:
         response = client.accounts.phone_numbers.with_raw_response.create(
@@ -54,7 +54,7 @@ class TestPhoneNumbers:
         phone_number = response.parse()
         assert_matches_type(PhoneNumber, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: Itellicoai) -> None:
         with client.accounts.phone_numbers.with_streaming_response.create(
@@ -69,7 +69,7 @@ class TestPhoneNumbers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_create(self, client: Itellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
@@ -78,7 +78,7 @@ class TestPhoneNumbers:
                 sip_trunk_id="sip_trunk_id",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: Itellicoai) -> None:
         phone_number = client.accounts.phone_numbers.retrieve(
@@ -87,7 +87,7 @@ class TestPhoneNumbers:
         )
         assert_matches_type(PhoneNumber, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: Itellicoai) -> None:
         response = client.accounts.phone_numbers.with_raw_response.retrieve(
@@ -100,7 +100,7 @@ class TestPhoneNumbers:
         phone_number = response.parse()
         assert_matches_type(PhoneNumber, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: Itellicoai) -> None:
         with client.accounts.phone_numbers.with_streaming_response.retrieve(
@@ -115,7 +115,7 @@ class TestPhoneNumbers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_retrieve(self, client: Itellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
@@ -130,7 +130,7 @@ class TestPhoneNumbers:
                 account_id="account_id",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update(self, client: Itellicoai) -> None:
         phone_number = client.accounts.phone_numbers.update(
@@ -139,7 +139,7 @@ class TestPhoneNumbers:
         )
         assert_matches_type(PhoneNumber, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: Itellicoai) -> None:
         phone_number = client.accounts.phone_numbers.update(
@@ -152,7 +152,7 @@ class TestPhoneNumbers:
         )
         assert_matches_type(PhoneNumber, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: Itellicoai) -> None:
         response = client.accounts.phone_numbers.with_raw_response.update(
@@ -165,7 +165,7 @@ class TestPhoneNumbers:
         phone_number = response.parse()
         assert_matches_type(PhoneNumber, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: Itellicoai) -> None:
         with client.accounts.phone_numbers.with_streaming_response.update(
@@ -180,7 +180,7 @@ class TestPhoneNumbers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_update(self, client: Itellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
@@ -195,7 +195,7 @@ class TestPhoneNumbers:
                 account_id="account_id",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: Itellicoai) -> None:
         phone_number = client.accounts.phone_numbers.list(
@@ -203,7 +203,7 @@ class TestPhoneNumbers:
         )
         assert_matches_type(PhoneNumberListResponse, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Itellicoai) -> None:
         phone_number = client.accounts.phone_numbers.list(
@@ -213,7 +213,7 @@ class TestPhoneNumbers:
         )
         assert_matches_type(PhoneNumberListResponse, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: Itellicoai) -> None:
         response = client.accounts.phone_numbers.with_raw_response.list(
@@ -225,7 +225,7 @@ class TestPhoneNumbers:
         phone_number = response.parse()
         assert_matches_type(PhoneNumberListResponse, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: Itellicoai) -> None:
         with client.accounts.phone_numbers.with_streaming_response.list(
@@ -239,7 +239,7 @@ class TestPhoneNumbers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_list(self, client: Itellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
@@ -247,7 +247,7 @@ class TestPhoneNumbers:
                 account_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_delete(self, client: Itellicoai) -> None:
         phone_number = client.accounts.phone_numbers.delete(
@@ -256,7 +256,7 @@ class TestPhoneNumbers:
         )
         assert phone_number is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: Itellicoai) -> None:
         response = client.accounts.phone_numbers.with_raw_response.delete(
@@ -269,7 +269,7 @@ class TestPhoneNumbers:
         phone_number = response.parse()
         assert phone_number is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: Itellicoai) -> None:
         with client.accounts.phone_numbers.with_streaming_response.delete(
@@ -284,7 +284,7 @@ class TestPhoneNumbers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: Itellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
@@ -305,7 +305,7 @@ class TestAsyncPhoneNumbers:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncItellicoai) -> None:
         phone_number = await async_client.accounts.phone_numbers.create(
@@ -314,7 +314,7 @@ class TestAsyncPhoneNumbers:
         )
         assert_matches_type(PhoneNumber, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncItellicoai) -> None:
         phone_number = await async_client.accounts.phone_numbers.create(
@@ -326,7 +326,7 @@ class TestAsyncPhoneNumbers:
         )
         assert_matches_type(PhoneNumber, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncItellicoai) -> None:
         response = await async_client.accounts.phone_numbers.with_raw_response.create(
@@ -339,7 +339,7 @@ class TestAsyncPhoneNumbers:
         phone_number = await response.parse()
         assert_matches_type(PhoneNumber, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncItellicoai) -> None:
         async with async_client.accounts.phone_numbers.with_streaming_response.create(
@@ -354,7 +354,7 @@ class TestAsyncPhoneNumbers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_create(self, async_client: AsyncItellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
@@ -363,7 +363,7 @@ class TestAsyncPhoneNumbers:
                 sip_trunk_id="sip_trunk_id",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncItellicoai) -> None:
         phone_number = await async_client.accounts.phone_numbers.retrieve(
@@ -372,7 +372,7 @@ class TestAsyncPhoneNumbers:
         )
         assert_matches_type(PhoneNumber, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncItellicoai) -> None:
         response = await async_client.accounts.phone_numbers.with_raw_response.retrieve(
@@ -385,7 +385,7 @@ class TestAsyncPhoneNumbers:
         phone_number = await response.parse()
         assert_matches_type(PhoneNumber, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncItellicoai) -> None:
         async with async_client.accounts.phone_numbers.with_streaming_response.retrieve(
@@ -400,7 +400,7 @@ class TestAsyncPhoneNumbers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncItellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
@@ -415,7 +415,7 @@ class TestAsyncPhoneNumbers:
                 account_id="account_id",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncItellicoai) -> None:
         phone_number = await async_client.accounts.phone_numbers.update(
@@ -424,7 +424,7 @@ class TestAsyncPhoneNumbers:
         )
         assert_matches_type(PhoneNumber, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncItellicoai) -> None:
         phone_number = await async_client.accounts.phone_numbers.update(
@@ -437,7 +437,7 @@ class TestAsyncPhoneNumbers:
         )
         assert_matches_type(PhoneNumber, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncItellicoai) -> None:
         response = await async_client.accounts.phone_numbers.with_raw_response.update(
@@ -450,7 +450,7 @@ class TestAsyncPhoneNumbers:
         phone_number = await response.parse()
         assert_matches_type(PhoneNumber, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncItellicoai) -> None:
         async with async_client.accounts.phone_numbers.with_streaming_response.update(
@@ -465,7 +465,7 @@ class TestAsyncPhoneNumbers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_update(self, async_client: AsyncItellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
@@ -480,7 +480,7 @@ class TestAsyncPhoneNumbers:
                 account_id="account_id",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncItellicoai) -> None:
         phone_number = await async_client.accounts.phone_numbers.list(
@@ -488,7 +488,7 @@ class TestAsyncPhoneNumbers:
         )
         assert_matches_type(PhoneNumberListResponse, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncItellicoai) -> None:
         phone_number = await async_client.accounts.phone_numbers.list(
@@ -498,7 +498,7 @@ class TestAsyncPhoneNumbers:
         )
         assert_matches_type(PhoneNumberListResponse, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncItellicoai) -> None:
         response = await async_client.accounts.phone_numbers.with_raw_response.list(
@@ -510,7 +510,7 @@ class TestAsyncPhoneNumbers:
         phone_number = await response.parse()
         assert_matches_type(PhoneNumberListResponse, phone_number, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncItellicoai) -> None:
         async with async_client.accounts.phone_numbers.with_streaming_response.list(
@@ -524,7 +524,7 @@ class TestAsyncPhoneNumbers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_list(self, async_client: AsyncItellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
@@ -532,7 +532,7 @@ class TestAsyncPhoneNumbers:
                 account_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncItellicoai) -> None:
         phone_number = await async_client.accounts.phone_numbers.delete(
@@ -541,7 +541,7 @@ class TestAsyncPhoneNumbers:
         )
         assert phone_number is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncItellicoai) -> None:
         response = await async_client.accounts.phone_numbers.with_raw_response.delete(
@@ -554,7 +554,7 @@ class TestAsyncPhoneNumbers:
         phone_number = await response.parse()
         assert phone_number is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncItellicoai) -> None:
         async with async_client.accounts.phone_numbers.with_streaming_response.delete(
@@ -569,7 +569,7 @@ class TestAsyncPhoneNumbers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncItellicoai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):

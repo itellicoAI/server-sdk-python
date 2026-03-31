@@ -7,7 +7,7 @@ from typing import Optional
 import httpx
 
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -25,6 +25,10 @@ __all__ = ["PhoneNumbersResource", "AsyncPhoneNumbersResource"]
 
 
 class PhoneNumbersResource(SyncAPIResource):
+    """
+    Manage BYOC phone numbers bound to your account; route inbound calls to agents and enable outbound calling.
+    """
+
     @cached_property
     def with_raw_response(self) -> PhoneNumbersResourceWithRawResponse:
         """
@@ -84,7 +88,7 @@ class PhoneNumbersResource(SyncAPIResource):
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._post(
-            f"/v1/accounts/{account_id}/phone-numbers",
+            path_template("/v1/accounts/{account_id}/phone-numbers", account_id=account_id),
             body=maybe_transform(
                 {
                     "sip_trunk_id": sip_trunk_id,
@@ -129,7 +133,11 @@ class PhoneNumbersResource(SyncAPIResource):
         if not phone_number_id:
             raise ValueError(f"Expected a non-empty value for `phone_number_id` but received {phone_number_id!r}")
         return self._get(
-            f"/v1/accounts/{account_id}/phone-numbers/{phone_number_id}",
+            path_template(
+                "/v1/accounts/{account_id}/phone-numbers/{phone_number_id}",
+                account_id=account_id,
+                phone_number_id=phone_number_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -178,7 +186,11 @@ class PhoneNumbersResource(SyncAPIResource):
         if not phone_number_id:
             raise ValueError(f"Expected a non-empty value for `phone_number_id` but received {phone_number_id!r}")
         return self._patch(
-            f"/v1/accounts/{account_id}/phone-numbers/{phone_number_id}",
+            path_template(
+                "/v1/accounts/{account_id}/phone-numbers/{phone_number_id}",
+                account_id=account_id,
+                phone_number_id=phone_number_id,
+            ),
             body=maybe_transform(
                 {
                     "inbound_agent_id": inbound_agent_id,
@@ -222,7 +234,7 @@ class PhoneNumbersResource(SyncAPIResource):
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._get(
-            f"/v1/accounts/{account_id}/phone-numbers",
+            path_template("/v1/accounts/{account_id}/phone-numbers", account_id=account_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -271,7 +283,11 @@ class PhoneNumbersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `phone_number_id` but received {phone_number_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/v1/accounts/{account_id}/phone-numbers/{phone_number_id}",
+            path_template(
+                "/v1/accounts/{account_id}/phone-numbers/{phone_number_id}",
+                account_id=account_id,
+                phone_number_id=phone_number_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -280,6 +296,10 @@ class PhoneNumbersResource(SyncAPIResource):
 
 
 class AsyncPhoneNumbersResource(AsyncAPIResource):
+    """
+    Manage BYOC phone numbers bound to your account; route inbound calls to agents and enable outbound calling.
+    """
+
     @cached_property
     def with_raw_response(self) -> AsyncPhoneNumbersResourceWithRawResponse:
         """
@@ -339,7 +359,7 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return await self._post(
-            f"/v1/accounts/{account_id}/phone-numbers",
+            path_template("/v1/accounts/{account_id}/phone-numbers", account_id=account_id),
             body=await async_maybe_transform(
                 {
                     "sip_trunk_id": sip_trunk_id,
@@ -384,7 +404,11 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
         if not phone_number_id:
             raise ValueError(f"Expected a non-empty value for `phone_number_id` but received {phone_number_id!r}")
         return await self._get(
-            f"/v1/accounts/{account_id}/phone-numbers/{phone_number_id}",
+            path_template(
+                "/v1/accounts/{account_id}/phone-numbers/{phone_number_id}",
+                account_id=account_id,
+                phone_number_id=phone_number_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -433,7 +457,11 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
         if not phone_number_id:
             raise ValueError(f"Expected a non-empty value for `phone_number_id` but received {phone_number_id!r}")
         return await self._patch(
-            f"/v1/accounts/{account_id}/phone-numbers/{phone_number_id}",
+            path_template(
+                "/v1/accounts/{account_id}/phone-numbers/{phone_number_id}",
+                account_id=account_id,
+                phone_number_id=phone_number_id,
+            ),
             body=await async_maybe_transform(
                 {
                     "inbound_agent_id": inbound_agent_id,
@@ -477,7 +505,7 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return await self._get(
-            f"/v1/accounts/{account_id}/phone-numbers",
+            path_template("/v1/accounts/{account_id}/phone-numbers", account_id=account_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -526,7 +554,11 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `phone_number_id` but received {phone_number_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/v1/accounts/{account_id}/phone-numbers/{phone_number_id}",
+            path_template(
+                "/v1/accounts/{account_id}/phone-numbers/{phone_number_id}",
+                account_id=account_id,
+                phone_number_id=phone_number_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
