@@ -263,9 +263,9 @@ class PhoneNumbersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
-        """Delete a phone number and clean up LiveKit trunks.
-
-        If managed by FusionPBX, the
+        """
+        Release purchased numbers with the provider, remove them from future billing,
+        archive the local record, and disable campaign use. If managed by FusionPBX, the
         route is unlinked first.
 
         Args:
@@ -534,9 +534,9 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
-        """Delete a phone number and clean up LiveKit trunks.
-
-        If managed by FusionPBX, the
+        """
+        Release purchased numbers with the provider, remove them from future billing,
+        archive the local record, and disable campaign use. If managed by FusionPBX, the
         route is unlinked first.
 
         Args:

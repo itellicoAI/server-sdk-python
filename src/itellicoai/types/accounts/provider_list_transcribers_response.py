@@ -21,12 +21,6 @@ class ProviderListTranscribersResponseItemModelSupportedLanguage(BaseModel):
     name: str
     """Display label for the language"""
 
-    description: Optional[str] = None
-    """Optional description (typically for 'multi')"""
-
-    includes: Optional[List[str]] = None
-    """For 'multi', optional list of included languages (codes)"""
-
 
 class ProviderListTranscribersResponseItemModel(BaseModel):
     id: str

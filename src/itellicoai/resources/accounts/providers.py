@@ -64,6 +64,7 @@ class ProvidersResource(SyncAPIResource):
 
         Each provider entry includes its
         code, name, an EU-hosted flag, and a list of models with id, name, description,
+        recommendation metadata, pricing, latency/intelligence ratings, latency ranges,
         and supported configuration ranges (temperature, max_tokens).
 
         Args:
@@ -228,6 +229,7 @@ class AsyncProvidersResource(AsyncAPIResource):
 
         Each provider entry includes its
         code, name, an EU-hosted flag, and a list of models with id, name, description,
+        recommendation metadata, pricing, latency/intelligence ratings, latency ranges,
         and supported configuration ranges (temperature, max_tokens).
 
         Args:
