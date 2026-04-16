@@ -11,13 +11,27 @@ __all__ = ["AnalyticsGetUsageResponse", "Meta", "Data", "DataValue"]
 
 
 class Meta(BaseModel):
-    """Metadata describing the usage response."""
+    """Metadata describing the usage analytics response.
+
+    Attributes:
+        account_id: UUID of the account for this usage data.
+        start: Start datetime of the query range.
+        end: End datetime of the query range.
+        granularity: Time bucket granularity used.
+        group_by: Grouping dimensions requested.
+        tz: Timezone applied to bucket boundaries.
+    """
 
     account_id: str
 
     end: datetime
 
     granularity: Literal["hour", "day", "month"]
+    """Time bucket granularity for usage aggregation.
+
+    Attributes: HOUR: Aggregate data by hour. DAY: Aggregate data by day. MONTH:
+    Aggregate data by month.
+    """
 
     start: datetime
 
@@ -29,7 +43,13 @@ class Meta(BaseModel):
 
 
 class DataValue(BaseModel):
-    """Metric values aggregated for a single time bucket and dimension set."""
+    """Metric values aggregated for a single time bucket and dimension set.
+
+    Attributes:
+        seconds: Total conversation seconds for this value.
+        conversations: Number of completed conversations.
+        dimensions: Optional grouping dimension key/value pairs.
+    """
 
     conversations: int
     """Completed conversations represented by this value."""
@@ -42,7 +62,12 @@ class DataValue(BaseModel):
 
 
 class Data(BaseModel):
-    """Time bucket containing one or more metric values."""
+    """Time bucket containing aggregated metric values.
+
+    Attributes:
+        ts: Bucket start timestamp in the requested timezone.
+        values: List of metric values for this bucket.
+    """
 
     ts: datetime
     """Bucket start timestamp in the requested timezone."""
@@ -52,9 +77,20 @@ class Data(BaseModel):
 
 
 class AnalyticsGetUsageResponse(BaseModel):
-    """Usage analytics response payload."""
+    """Complete usage analytics response payload.
+
+    Attributes:
+        meta: Metadata about the query and response.
+        data: List of time buckets with aggregated usage values.
+    """
 
     meta: Meta
-    """Metadata describing the usage response."""
+    """Metadata describing the usage analytics response.
+
+    Attributes: account_id: UUID of the account for this usage data. start: Start
+    datetime of the query range. end: End datetime of the query range. granularity:
+    Time bucket granularity used. group_by: Grouping dimensions requested. tz:
+    Timezone applied to bucket boundaries.
+    """
 
     data: Optional[List[Data]] = None

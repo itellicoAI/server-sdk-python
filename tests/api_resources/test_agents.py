@@ -66,6 +66,8 @@ class TestAgents:
                     "use_speaker_boost": True,
                 },
             },
+            allow_auto_hangup=True,
+            allow_caller_recording_opt_out=True,
             ambient_sound={
                 "source": "open_plan_office",
                 "volume": 0,
@@ -234,6 +236,8 @@ class TestAgents:
         agent = client.agents.update(
             agent_id="agent_id",
             account_id="account_id",
+            allow_auto_hangup=True,
+            allow_caller_recording_opt_out=True,
             ambient_sound={
                 "source": "open_plan_office",
                 "volume": 0,
@@ -340,6 +344,7 @@ class TestAgents:
             created_gt=parse_datetime("2019-12-27T18:11:19.117Z"),
             created_le=parse_datetime("2019-12-27T18:11:19.117Z"),
             created_lt=parse_datetime("2019-12-27T18:11:19.117Z"),
+            include_archived=True,
             is_archived=True,
             limit=1,
             modified_ge=parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -489,6 +494,8 @@ class TestAsyncAgents:
                     "use_speaker_boost": True,
                 },
             },
+            allow_auto_hangup=True,
+            allow_caller_recording_opt_out=True,
             ambient_sound={
                 "source": "open_plan_office",
                 "volume": 0,
@@ -657,6 +664,8 @@ class TestAsyncAgents:
         agent = await async_client.agents.update(
             agent_id="agent_id",
             account_id="account_id",
+            allow_auto_hangup=True,
+            allow_caller_recording_opt_out=True,
             ambient_sound={
                 "source": "open_plan_office",
                 "volume": 0,
@@ -763,6 +772,7 @@ class TestAsyncAgents:
             created_gt=parse_datetime("2019-12-27T18:11:19.117Z"),
             created_le=parse_datetime("2019-12-27T18:11:19.117Z"),
             created_lt=parse_datetime("2019-12-27T18:11:19.117Z"),
+            include_archived=True,
             is_archived=True,
             limit=1,
             modified_ge=parse_datetime("2019-12-27T18:11:19.117Z"),

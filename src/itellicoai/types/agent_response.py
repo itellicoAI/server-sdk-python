@@ -29,6 +29,15 @@ class AgentResponse(BaseModel):
     account_id: str
     """Unique identifier for the account that owns this agent."""
 
+    allow_auto_hangup: bool
+    """
+    Whether the AI may automatically end the call when the conversation has
+    concluded.
+    """
+
+    allow_caller_recording_opt_out: bool
+    """Whether callers may request that recording stop and captured audio be deleted."""
+
     ambient_sound: AmbientSound
     """Configuration for ambient background sounds during the conversation."""
 
