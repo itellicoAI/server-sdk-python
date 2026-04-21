@@ -24,6 +24,8 @@ __all__ = [
 
 
 class ItemCapture(BaseModel):
+    """Capture artifacts associated with a conversation."""
+
     recording_url: Optional[str] = None
     """URL or path to the conversation recording, when available."""
 
@@ -90,6 +92,8 @@ ItemMessage: TypeAlias = Annotated[
 
 
 class Item(BaseModel):
+    """Single conversation row returned by the list endpoint."""
+
     conversation_id: str
 
     start_timestamp: datetime

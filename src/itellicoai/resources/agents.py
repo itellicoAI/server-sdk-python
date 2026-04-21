@@ -13,7 +13,7 @@ from ..types import (
     agent_update_params,
 )
 from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
-from .._utils import maybe_transform, async_maybe_transform
+from .._utils import path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -38,6 +38,10 @@ __all__ = ["AgentsResource", "AsyncAgentsResource"]
 
 
 class AgentsResource(SyncAPIResource):
+    """
+    Define and configure conversational agents (model, transcriber, voice, behavior) used in calls and automations.
+    """
+
     @cached_property
     def with_raw_response(self) -> AgentsResourceWithRawResponse:
         """
@@ -64,6 +68,8 @@ class AgentsResource(SyncAPIResource):
         model: agent_create_params.Model,
         transcriber: agent_create_params.Transcriber,
         voice: agent_create_params.Voice,
+        allow_auto_hangup: Optional[bool] | Omit = omit,
+        allow_caller_recording_opt_out: Optional[bool] | Omit = omit,
         ambient_sound: AmbientSoundParam | Omit = omit,
         capture_settings: Optional[CaptureSettingsParam] | Omit = omit,
         denoising: Optional[DenoisingParam] | Omit = omit,
@@ -96,6 +102,11 @@ class AgentsResource(SyncAPIResource):
 
           voice: Voice (text-to-speech) configuration for the agent. Defines which provider and
               voice to use (OpenAI, ElevenLabs, Cartesia, Azure) with voice-specific settings.
+
+          allow_auto_hangup: Whether the AI may automatically end the call when the conversation has
+              concluded.
+
+          allow_caller_recording_opt_out: Whether callers may request that recording stop and captured audio be deleted.
 
           ambient_sound: Configuration for ambient background sounds during the conversation
 
@@ -142,12 +153,14 @@ class AgentsResource(SyncAPIResource):
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._post(
-            f"/v1/accounts/{account_id}/agents",
+            path_template("/v1/accounts/{account_id}/agents", account_id=account_id),
             body=maybe_transform(
                 {
                     "model": model,
                     "transcriber": transcriber,
                     "voice": voice,
+                    "allow_auto_hangup": allow_auto_hangup,
+                    "allow_caller_recording_opt_out": allow_caller_recording_opt_out,
                     "ambient_sound": ambient_sound,
                     "capture_settings": capture_settings,
                     "denoising": denoising,
@@ -199,7 +212,7 @@ class AgentsResource(SyncAPIResource):
         if not agent_id:
             raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
         return self._get(
-            f"/v1/accounts/{account_id}/agents/{agent_id}",
+            path_template("/v1/accounts/{account_id}/agents/{agent_id}", account_id=account_id, agent_id=agent_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -211,6 +224,8 @@ class AgentsResource(SyncAPIResource):
         agent_id: str,
         *,
         account_id: str,
+        allow_auto_hangup: Optional[bool] | Omit = omit,
+        allow_caller_recording_opt_out: Optional[bool] | Omit = omit,
         ambient_sound: Optional[AmbientSoundParam] | Omit = omit,
         capture_settings: Optional[CaptureSettingsParam] | Omit = omit,
         denoising: Optional[DenoisingParam] | Omit = omit,
@@ -240,6 +255,11 @@ class AgentsResource(SyncAPIResource):
         will be updated.
 
         Args:
+          allow_auto_hangup: Whether the AI may automatically end the call when the conversation has
+              concluded.
+
+          allow_caller_recording_opt_out: Whether callers may request that recording stop and captured audio be deleted.
+
           ambient_sound: Configuration for ambient background sounds during the conversation
 
           capture_settings: Agent capture settings configuration.
@@ -288,9 +308,11 @@ class AgentsResource(SyncAPIResource):
         if not agent_id:
             raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
         return self._patch(
-            f"/v1/accounts/{account_id}/agents/{agent_id}",
+            path_template("/v1/accounts/{account_id}/agents/{agent_id}", account_id=account_id, agent_id=agent_id),
             body=maybe_transform(
                 {
+                    "allow_auto_hangup": allow_auto_hangup,
+                    "allow_caller_recording_opt_out": allow_caller_recording_opt_out,
                     "ambient_sound": ambient_sound,
                     "capture_settings": capture_settings,
                     "denoising": denoising,
@@ -324,6 +346,7 @@ class AgentsResource(SyncAPIResource):
         created_gt: Union[str, datetime, None] | Omit = omit,
         created_le: Union[str, datetime, None] | Omit = omit,
         created_lt: Union[str, datetime, None] | Omit = omit,
+        include_archived: Optional[bool] | Omit = omit,
         is_archived: Optional[bool] | Omit = omit,
         limit: int | Omit = omit,
         modified_ge: Union[str, datetime, None] | Omit = omit,
@@ -355,6 +378,8 @@ class AgentsResource(SyncAPIResource):
 
           created_lt: Filter agents created before this datetime (ISO 8601, timezone-aware).
 
+          include_archived: When true, include archived agents alongside active ones.
+
           is_archived: Filter by archived status. If omitted, archived are excluded by default.
 
           modified_ge: Filter agents modified on or after this datetime (ISO 8601, timezone-aware).
@@ -380,7 +405,7 @@ class AgentsResource(SyncAPIResource):
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._get(
-            f"/v1/accounts/{account_id}/agents",
+            path_template("/v1/accounts/{account_id}/agents", account_id=account_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -392,6 +417,7 @@ class AgentsResource(SyncAPIResource):
                         "created_gt": created_gt,
                         "created_le": created_le,
                         "created_lt": created_lt,
+                        "include_archived": include_archived,
                         "is_archived": is_archived,
                         "limit": limit,
                         "modified_ge": modified_ge,
@@ -440,7 +466,7 @@ class AgentsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/v1/accounts/{account_id}/agents/{agent_id}",
+            path_template("/v1/accounts/{account_id}/agents/{agent_id}", account_id=account_id, agent_id=agent_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -449,6 +475,10 @@ class AgentsResource(SyncAPIResource):
 
 
 class AsyncAgentsResource(AsyncAPIResource):
+    """
+    Define and configure conversational agents (model, transcriber, voice, behavior) used in calls and automations.
+    """
+
     @cached_property
     def with_raw_response(self) -> AsyncAgentsResourceWithRawResponse:
         """
@@ -475,6 +505,8 @@ class AsyncAgentsResource(AsyncAPIResource):
         model: agent_create_params.Model,
         transcriber: agent_create_params.Transcriber,
         voice: agent_create_params.Voice,
+        allow_auto_hangup: Optional[bool] | Omit = omit,
+        allow_caller_recording_opt_out: Optional[bool] | Omit = omit,
         ambient_sound: AmbientSoundParam | Omit = omit,
         capture_settings: Optional[CaptureSettingsParam] | Omit = omit,
         denoising: Optional[DenoisingParam] | Omit = omit,
@@ -507,6 +539,11 @@ class AsyncAgentsResource(AsyncAPIResource):
 
           voice: Voice (text-to-speech) configuration for the agent. Defines which provider and
               voice to use (OpenAI, ElevenLabs, Cartesia, Azure) with voice-specific settings.
+
+          allow_auto_hangup: Whether the AI may automatically end the call when the conversation has
+              concluded.
+
+          allow_caller_recording_opt_out: Whether callers may request that recording stop and captured audio be deleted.
 
           ambient_sound: Configuration for ambient background sounds during the conversation
 
@@ -553,12 +590,14 @@ class AsyncAgentsResource(AsyncAPIResource):
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return await self._post(
-            f"/v1/accounts/{account_id}/agents",
+            path_template("/v1/accounts/{account_id}/agents", account_id=account_id),
             body=await async_maybe_transform(
                 {
                     "model": model,
                     "transcriber": transcriber,
                     "voice": voice,
+                    "allow_auto_hangup": allow_auto_hangup,
+                    "allow_caller_recording_opt_out": allow_caller_recording_opt_out,
                     "ambient_sound": ambient_sound,
                     "capture_settings": capture_settings,
                     "denoising": denoising,
@@ -610,7 +649,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         if not agent_id:
             raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
         return await self._get(
-            f"/v1/accounts/{account_id}/agents/{agent_id}",
+            path_template("/v1/accounts/{account_id}/agents/{agent_id}", account_id=account_id, agent_id=agent_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -622,6 +661,8 @@ class AsyncAgentsResource(AsyncAPIResource):
         agent_id: str,
         *,
         account_id: str,
+        allow_auto_hangup: Optional[bool] | Omit = omit,
+        allow_caller_recording_opt_out: Optional[bool] | Omit = omit,
         ambient_sound: Optional[AmbientSoundParam] | Omit = omit,
         capture_settings: Optional[CaptureSettingsParam] | Omit = omit,
         denoising: Optional[DenoisingParam] | Omit = omit,
@@ -651,6 +692,11 @@ class AsyncAgentsResource(AsyncAPIResource):
         will be updated.
 
         Args:
+          allow_auto_hangup: Whether the AI may automatically end the call when the conversation has
+              concluded.
+
+          allow_caller_recording_opt_out: Whether callers may request that recording stop and captured audio be deleted.
+
           ambient_sound: Configuration for ambient background sounds during the conversation
 
           capture_settings: Agent capture settings configuration.
@@ -699,9 +745,11 @@ class AsyncAgentsResource(AsyncAPIResource):
         if not agent_id:
             raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
         return await self._patch(
-            f"/v1/accounts/{account_id}/agents/{agent_id}",
+            path_template("/v1/accounts/{account_id}/agents/{agent_id}", account_id=account_id, agent_id=agent_id),
             body=await async_maybe_transform(
                 {
+                    "allow_auto_hangup": allow_auto_hangup,
+                    "allow_caller_recording_opt_out": allow_caller_recording_opt_out,
                     "ambient_sound": ambient_sound,
                     "capture_settings": capture_settings,
                     "denoising": denoising,
@@ -735,6 +783,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         created_gt: Union[str, datetime, None] | Omit = omit,
         created_le: Union[str, datetime, None] | Omit = omit,
         created_lt: Union[str, datetime, None] | Omit = omit,
+        include_archived: Optional[bool] | Omit = omit,
         is_archived: Optional[bool] | Omit = omit,
         limit: int | Omit = omit,
         modified_ge: Union[str, datetime, None] | Omit = omit,
@@ -766,6 +815,8 @@ class AsyncAgentsResource(AsyncAPIResource):
 
           created_lt: Filter agents created before this datetime (ISO 8601, timezone-aware).
 
+          include_archived: When true, include archived agents alongside active ones.
+
           is_archived: Filter by archived status. If omitted, archived are excluded by default.
 
           modified_ge: Filter agents modified on or after this datetime (ISO 8601, timezone-aware).
@@ -791,7 +842,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return await self._get(
-            f"/v1/accounts/{account_id}/agents",
+            path_template("/v1/accounts/{account_id}/agents", account_id=account_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -803,6 +854,7 @@ class AsyncAgentsResource(AsyncAPIResource):
                         "created_gt": created_gt,
                         "created_le": created_le,
                         "created_lt": created_lt,
+                        "include_archived": include_archived,
                         "is_archived": is_archived,
                         "limit": limit,
                         "modified_ge": modified_ge,
@@ -851,7 +903,7 @@ class AsyncAgentsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/v1/accounts/{account_id}/agents/{agent_id}",
+            path_template("/v1/accounts/{account_id}/agents/{agent_id}", account_id=account_id, agent_id=agent_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

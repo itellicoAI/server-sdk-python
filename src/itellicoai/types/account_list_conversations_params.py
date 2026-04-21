@@ -28,13 +28,13 @@ class AccountListConversationsParams(TypedDict, total=False):
     """Return conversations created before this timestamp."""
 
     direction: Optional[ConversationDirection]
-    """Directionality of a conversation."""
+    """Filter by conversation direction (inbound or outbound)."""
 
     status: Optional[ConversationStatus]
-    """High-level lifecycle statuses reported by the conversations API."""
+    """Filter by lifecycle status (in_progress, completed, failed, transferred)."""
 
     type: Optional[ConversationType]
-    """High-level conversation types exposed via the v1 API."""
+    """Filter by conversation type (phone, web, or test)."""
 
     updated_after: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
     """Return conversations updated on/after this timestamp."""

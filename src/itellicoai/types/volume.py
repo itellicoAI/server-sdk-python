@@ -8,6 +8,8 @@ __all__ = ["Volume"]
 
 
 class Volume(BaseModel):
+    """Agent volume settings for audio output control."""
+
     allow_adjustment: Optional[bool] = None
     """
     Whether to allow users to adjust volume through voice commands (e.g., 'speak

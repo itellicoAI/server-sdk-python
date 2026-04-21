@@ -25,6 +25,9 @@ class AgentListParams(TypedDict, total=False):
     created_lt: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
     """Filter agents created before this datetime (ISO 8601, timezone-aware)."""
 
+    include_archived: Optional[bool]
+    """When true, include archived agents alongside active ones."""
+
     is_archived: Optional[bool]
     """Filter by archived status. If omitted, archived are excluded by default."""
 

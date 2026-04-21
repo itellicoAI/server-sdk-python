@@ -8,6 +8,8 @@ __all__ = ["InterruptSettingsParam"]
 
 
 class InterruptSettingsParam(TypedDict, total=False):
+    """Configuration for how the agent handles user interruptions during conversation"""
+
     enabled: bool
     """Whether users can interrupt the agent while it's speaking.
 

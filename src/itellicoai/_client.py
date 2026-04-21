@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Mapping
+from typing import TYPE_CHECKING, Any, Mapping
 from typing_extensions import Self, override
 
 import httpx
@@ -20,8 +20,8 @@ from ._types import (
     not_given,
 )
 from ._utils import is_given, get_async_library
+from ._compat import cached_property
 from ._version import __version__
-from .resources import agents
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, ItellicoaiError
 from ._base_client import (
@@ -29,7 +29,11 @@ from ._base_client import (
     SyncAPIClient,
     AsyncAPIClient,
 )
-from .resources.accounts import accounts
+
+if TYPE_CHECKING:
+    from .resources import agents, accounts
+    from .resources.agents import AgentsResource, AsyncAgentsResource
+    from .resources.accounts.accounts import AccountsResource, AsyncAccountsResource
 
 __all__ = [
     "Timeout",
@@ -44,11 +48,6 @@ __all__ = [
 
 
 class Itellicoai(SyncAPIClient):
-    accounts: accounts.AccountsResource
-    agents: agents.AgentsResource
-    with_raw_response: ItellicoaiWithRawResponse
-    with_streaming_response: ItellicoaiWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -103,10 +102,28 @@ class Itellicoai(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.accounts = accounts.AccountsResource(self)
-        self.agents = agents.AgentsResource(self)
-        self.with_raw_response = ItellicoaiWithRawResponse(self)
-        self.with_streaming_response = ItellicoaiWithStreamedResponse(self)
+    @cached_property
+    def accounts(self) -> AccountsResource:
+        from .resources.accounts import AccountsResource
+
+        return AccountsResource(self)
+
+    @cached_property
+    def agents(self) -> AgentsResource:
+        """
+        Define and configure conversational agents (model, transcriber, voice, behavior) used in calls and automations.
+        """
+        from .resources.agents import AgentsResource
+
+        return AgentsResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> ItellicoaiWithRawResponse:
+        return ItellicoaiWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> ItellicoaiWithStreamedResponse:
+        return ItellicoaiWithStreamedResponse(self)
 
     @property
     @override
@@ -214,11 +231,6 @@ class Itellicoai(SyncAPIClient):
 
 
 class AsyncItellicoai(AsyncAPIClient):
-    accounts: accounts.AsyncAccountsResource
-    agents: agents.AsyncAgentsResource
-    with_raw_response: AsyncItellicoaiWithRawResponse
-    with_streaming_response: AsyncItellicoaiWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -273,10 +285,28 @@ class AsyncItellicoai(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.accounts = accounts.AsyncAccountsResource(self)
-        self.agents = agents.AsyncAgentsResource(self)
-        self.with_raw_response = AsyncItellicoaiWithRawResponse(self)
-        self.with_streaming_response = AsyncItellicoaiWithStreamedResponse(self)
+    @cached_property
+    def accounts(self) -> AsyncAccountsResource:
+        from .resources.accounts import AsyncAccountsResource
+
+        return AsyncAccountsResource(self)
+
+    @cached_property
+    def agents(self) -> AsyncAgentsResource:
+        """
+        Define and configure conversational agents (model, transcriber, voice, behavior) used in calls and automations.
+        """
+        from .resources.agents import AsyncAgentsResource
+
+        return AsyncAgentsResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncItellicoaiWithRawResponse:
+        return AsyncItellicoaiWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncItellicoaiWithStreamedResponse:
+        return AsyncItellicoaiWithStreamedResponse(self)
 
     @property
     @override
@@ -384,27 +414,91 @@ class AsyncItellicoai(AsyncAPIClient):
 
 
 class ItellicoaiWithRawResponse:
+    _client: Itellicoai
+
     def __init__(self, client: Itellicoai) -> None:
-        self.accounts = accounts.AccountsResourceWithRawResponse(client.accounts)
-        self.agents = agents.AgentsResourceWithRawResponse(client.agents)
+        self._client = client
+
+    @cached_property
+    def accounts(self) -> accounts.AccountsResourceWithRawResponse:
+        from .resources.accounts import AccountsResourceWithRawResponse
+
+        return AccountsResourceWithRawResponse(self._client.accounts)
+
+    @cached_property
+    def agents(self) -> agents.AgentsResourceWithRawResponse:
+        """
+        Define and configure conversational agents (model, transcriber, voice, behavior) used in calls and automations.
+        """
+        from .resources.agents import AgentsResourceWithRawResponse
+
+        return AgentsResourceWithRawResponse(self._client.agents)
 
 
 class AsyncItellicoaiWithRawResponse:
+    _client: AsyncItellicoai
+
     def __init__(self, client: AsyncItellicoai) -> None:
-        self.accounts = accounts.AsyncAccountsResourceWithRawResponse(client.accounts)
-        self.agents = agents.AsyncAgentsResourceWithRawResponse(client.agents)
+        self._client = client
+
+    @cached_property
+    def accounts(self) -> accounts.AsyncAccountsResourceWithRawResponse:
+        from .resources.accounts import AsyncAccountsResourceWithRawResponse
+
+        return AsyncAccountsResourceWithRawResponse(self._client.accounts)
+
+    @cached_property
+    def agents(self) -> agents.AsyncAgentsResourceWithRawResponse:
+        """
+        Define and configure conversational agents (model, transcriber, voice, behavior) used in calls and automations.
+        """
+        from .resources.agents import AsyncAgentsResourceWithRawResponse
+
+        return AsyncAgentsResourceWithRawResponse(self._client.agents)
 
 
 class ItellicoaiWithStreamedResponse:
+    _client: Itellicoai
+
     def __init__(self, client: Itellicoai) -> None:
-        self.accounts = accounts.AccountsResourceWithStreamingResponse(client.accounts)
-        self.agents = agents.AgentsResourceWithStreamingResponse(client.agents)
+        self._client = client
+
+    @cached_property
+    def accounts(self) -> accounts.AccountsResourceWithStreamingResponse:
+        from .resources.accounts import AccountsResourceWithStreamingResponse
+
+        return AccountsResourceWithStreamingResponse(self._client.accounts)
+
+    @cached_property
+    def agents(self) -> agents.AgentsResourceWithStreamingResponse:
+        """
+        Define and configure conversational agents (model, transcriber, voice, behavior) used in calls and automations.
+        """
+        from .resources.agents import AgentsResourceWithStreamingResponse
+
+        return AgentsResourceWithStreamingResponse(self._client.agents)
 
 
 class AsyncItellicoaiWithStreamedResponse:
+    _client: AsyncItellicoai
+
     def __init__(self, client: AsyncItellicoai) -> None:
-        self.accounts = accounts.AsyncAccountsResourceWithStreamingResponse(client.accounts)
-        self.agents = agents.AsyncAgentsResourceWithStreamingResponse(client.agents)
+        self._client = client
+
+    @cached_property
+    def accounts(self) -> accounts.AsyncAccountsResourceWithStreamingResponse:
+        from .resources.accounts import AsyncAccountsResourceWithStreamingResponse
+
+        return AsyncAccountsResourceWithStreamingResponse(self._client.accounts)
+
+    @cached_property
+    def agents(self) -> agents.AsyncAgentsResourceWithStreamingResponse:
+        """
+        Define and configure conversational agents (model, transcriber, voice, behavior) used in calls and automations.
+        """
+        from .resources.agents import AsyncAgentsResourceWithStreamingResponse
+
+        return AsyncAgentsResourceWithStreamingResponse(self._client.agents)
 
 
 Client = Itellicoai

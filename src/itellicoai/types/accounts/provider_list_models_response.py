@@ -11,11 +11,35 @@ __all__ = [
     "ProviderListModelsResponse",
     "ProviderListModelsResponseItem",
     "ProviderListModelsResponseItemModel",
+    "ProviderListModelsResponseItemModelLatencyRange",
+    "ProviderListModelsResponseItemModelPricing",
     "ProviderListModelsResponseItemModelSettings",
 ]
 
 
+class ProviderListModelsResponseItemModelLatencyRange(BaseModel):
+    """Observed latency range for a model in milliseconds."""
+
+    max_ms: Optional[float] = None
+    """Upper bound of observed latency in milliseconds"""
+
+    min_ms: Optional[float] = None
+    """Lower bound of observed latency in milliseconds"""
+
+
+class ProviderListModelsResponseItemModelPricing(BaseModel):
+    """Optional pricing metadata for a model."""
+
+    additional_cost_per_minute: Optional[float] = None
+    """Extra cost per minute for this model tier"""
+
+    tier: Optional[str] = None
+    """Pricing tier label"""
+
+
 class ProviderListModelsResponseItemModelSettings(BaseModel):
+    """Supported configurable ranges for a model (temperature, max_tokens)."""
+
     max_tokens: Optional[ModelRange] = None
     """Numeric range with optional default/min/max."""
 
@@ -24,6 +48,8 @@ class ProviderListModelsResponseItemModelSettings(BaseModel):
 
 
 class ProviderListModelsResponseItemModel(BaseModel):
+    """Single model entry in the catalog."""
+
     id: str
     """Canonical model id without provider prefix"""
 
@@ -33,11 +59,28 @@ class ProviderListModelsResponseItemModel(BaseModel):
     description: Optional[str] = None
     """Short description or guidance for the model"""
 
+    intelligence_rating: Optional[float] = None
+    """Relative intelligence rating on a 1-5 scale"""
+
+    latency_range: Optional[ProviderListModelsResponseItemModelLatencyRange] = None
+    """Observed latency range for a model in milliseconds."""
+
+    latency_rating: Optional[float] = None
+    """Relative latency rating on a 1-5 scale"""
+
+    pricing: Optional[ProviderListModelsResponseItemModelPricing] = None
+    """Optional pricing metadata for a model."""
+
+    recommended: Optional[bool] = None
+    """Whether this model is recommended for most use cases"""
+
     settings: Optional[ProviderListModelsResponseItemModelSettings] = None
     """Supported configurable ranges for a model (temperature, max_tokens)."""
 
 
 class ProviderListModelsResponseItem(BaseModel):
+    """Provider with its list of models."""
+
     models: List[ProviderListModelsResponseItemModel]
 
     provider: ModelCatalogProvider

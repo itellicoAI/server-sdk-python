@@ -79,6 +79,7 @@ pip install itellicoai[aiohttp]
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from itellicoai import DefaultAioHttpClient
 from itellicoai import AsyncItellicoai
@@ -86,7 +87,7 @@ from itellicoai import AsyncItellicoai
 
 async def main() -> None:
     async with AsyncItellicoai(
-        api_key="My API Key",
+        api_key=os.environ.get("ITELLICOAI_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         account = await client.accounts.retrieve_current()

@@ -8,5 +8,7 @@ __all__ = ["CaptureSettings"]
 
 
 class CaptureSettings(BaseModel):
+    """Agent capture settings configuration."""
+
     recording_enabled: Optional[bool] = None
     """Whether to record the agent's calls. Set to false to disable recording."""

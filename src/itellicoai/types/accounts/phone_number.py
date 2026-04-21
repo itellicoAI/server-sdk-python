@@ -18,6 +18,8 @@ class InboundAgent(BaseModel):
 class SipTrunk(BaseModel):
     id: str
 
+    is_managed: bool
+
     name: str
     """Display name for this SIP trunk"""
 

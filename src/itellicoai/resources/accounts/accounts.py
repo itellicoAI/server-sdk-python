@@ -9,7 +9,7 @@ import httpx
 
 from ...types import ConversationType, ConversationStatus, ConversationDirection, account_list_conversations_params
 from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from .analytics import (
     AnalyticsResource,
@@ -71,22 +71,35 @@ __all__ = ["AccountsResource", "AsyncAccountsResource"]
 class AccountsResource(SyncAPIResource):
     @cached_property
     def subaccounts(self) -> SubaccountsResource:
+        """
+        Create and manage child accounts under a parent to model tenant hierarchies and delegated access.
+        """
         return SubaccountsResource(self._client)
 
     @cached_property
     def providers(self) -> ProvidersResource:
+        """
+        Discover available AI model, transcriber, and voice catalogs for the current account when configuring agents.
+        """
         return ProvidersResource(self._client)
 
     @cached_property
     def phone_numbers(self) -> PhoneNumbersResource:
+        """
+        Manage BYOC phone numbers bound to your account; route inbound calls to agents and enable outbound calling.
+        """
         return PhoneNumbersResource(self._client)
 
     @cached_property
     def sip_trunks(self) -> SipTrunksResource:
+        """
+        Manage BYOC SIP trunk connectivity (origination/termination endpoints and allowed IPs) used by phone numbers.
+        """
         return SipTrunksResource(self._client)
 
     @cached_property
     def analytics(self) -> AnalyticsResource:
+        """Usage analytics and reporting endpoints for conversation activity."""
         return AnalyticsResource(self._client)
 
     @cached_property
@@ -140,11 +153,11 @@ class AccountsResource(SyncAPIResource):
 
           created_before: Return conversations created before this timestamp.
 
-          direction: Directionality of a conversation.
+          direction: Filter by conversation direction (inbound or outbound).
 
-          status: High-level lifecycle statuses reported by the conversations API.
+          status: Filter by lifecycle status (in_progress, completed, failed, transferred).
 
-          type: High-level conversation types exposed via the v1 API.
+          type: Filter by conversation type (phone, web, or test).
 
           updated_after: Return conversations updated on/after this timestamp.
 
@@ -161,7 +174,7 @@ class AccountsResource(SyncAPIResource):
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._get(
-            f"/v1/accounts/{account_id}/conversations",
+            path_template("/v1/accounts/{account_id}/conversations", account_id=account_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -208,22 +221,35 @@ class AccountsResource(SyncAPIResource):
 class AsyncAccountsResource(AsyncAPIResource):
     @cached_property
     def subaccounts(self) -> AsyncSubaccountsResource:
+        """
+        Create and manage child accounts under a parent to model tenant hierarchies and delegated access.
+        """
         return AsyncSubaccountsResource(self._client)
 
     @cached_property
     def providers(self) -> AsyncProvidersResource:
+        """
+        Discover available AI model, transcriber, and voice catalogs for the current account when configuring agents.
+        """
         return AsyncProvidersResource(self._client)
 
     @cached_property
     def phone_numbers(self) -> AsyncPhoneNumbersResource:
+        """
+        Manage BYOC phone numbers bound to your account; route inbound calls to agents and enable outbound calling.
+        """
         return AsyncPhoneNumbersResource(self._client)
 
     @cached_property
     def sip_trunks(self) -> AsyncSipTrunksResource:
+        """
+        Manage BYOC SIP trunk connectivity (origination/termination endpoints and allowed IPs) used by phone numbers.
+        """
         return AsyncSipTrunksResource(self._client)
 
     @cached_property
     def analytics(self) -> AsyncAnalyticsResource:
+        """Usage analytics and reporting endpoints for conversation activity."""
         return AsyncAnalyticsResource(self._client)
 
     @cached_property
@@ -277,11 +303,11 @@ class AsyncAccountsResource(AsyncAPIResource):
 
           created_before: Return conversations created before this timestamp.
 
-          direction: Directionality of a conversation.
+          direction: Filter by conversation direction (inbound or outbound).
 
-          status: High-level lifecycle statuses reported by the conversations API.
+          status: Filter by lifecycle status (in_progress, completed, failed, transferred).
 
-          type: High-level conversation types exposed via the v1 API.
+          type: Filter by conversation type (phone, web, or test).
 
           updated_after: Return conversations updated on/after this timestamp.
 
@@ -298,7 +324,7 @@ class AsyncAccountsResource(AsyncAPIResource):
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return await self._get(
-            f"/v1/accounts/{account_id}/conversations",
+            path_template("/v1/accounts/{account_id}/conversations", account_id=account_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -355,22 +381,35 @@ class AccountsResourceWithRawResponse:
 
     @cached_property
     def subaccounts(self) -> SubaccountsResourceWithRawResponse:
+        """
+        Create and manage child accounts under a parent to model tenant hierarchies and delegated access.
+        """
         return SubaccountsResourceWithRawResponse(self._accounts.subaccounts)
 
     @cached_property
     def providers(self) -> ProvidersResourceWithRawResponse:
+        """
+        Discover available AI model, transcriber, and voice catalogs for the current account when configuring agents.
+        """
         return ProvidersResourceWithRawResponse(self._accounts.providers)
 
     @cached_property
     def phone_numbers(self) -> PhoneNumbersResourceWithRawResponse:
+        """
+        Manage BYOC phone numbers bound to your account; route inbound calls to agents and enable outbound calling.
+        """
         return PhoneNumbersResourceWithRawResponse(self._accounts.phone_numbers)
 
     @cached_property
     def sip_trunks(self) -> SipTrunksResourceWithRawResponse:
+        """
+        Manage BYOC SIP trunk connectivity (origination/termination endpoints and allowed IPs) used by phone numbers.
+        """
         return SipTrunksResourceWithRawResponse(self._accounts.sip_trunks)
 
     @cached_property
     def analytics(self) -> AnalyticsResourceWithRawResponse:
+        """Usage analytics and reporting endpoints for conversation activity."""
         return AnalyticsResourceWithRawResponse(self._accounts.analytics)
 
 
@@ -387,22 +426,35 @@ class AsyncAccountsResourceWithRawResponse:
 
     @cached_property
     def subaccounts(self) -> AsyncSubaccountsResourceWithRawResponse:
+        """
+        Create and manage child accounts under a parent to model tenant hierarchies and delegated access.
+        """
         return AsyncSubaccountsResourceWithRawResponse(self._accounts.subaccounts)
 
     @cached_property
     def providers(self) -> AsyncProvidersResourceWithRawResponse:
+        """
+        Discover available AI model, transcriber, and voice catalogs for the current account when configuring agents.
+        """
         return AsyncProvidersResourceWithRawResponse(self._accounts.providers)
 
     @cached_property
     def phone_numbers(self) -> AsyncPhoneNumbersResourceWithRawResponse:
+        """
+        Manage BYOC phone numbers bound to your account; route inbound calls to agents and enable outbound calling.
+        """
         return AsyncPhoneNumbersResourceWithRawResponse(self._accounts.phone_numbers)
 
     @cached_property
     def sip_trunks(self) -> AsyncSipTrunksResourceWithRawResponse:
+        """
+        Manage BYOC SIP trunk connectivity (origination/termination endpoints and allowed IPs) used by phone numbers.
+        """
         return AsyncSipTrunksResourceWithRawResponse(self._accounts.sip_trunks)
 
     @cached_property
     def analytics(self) -> AsyncAnalyticsResourceWithRawResponse:
+        """Usage analytics and reporting endpoints for conversation activity."""
         return AsyncAnalyticsResourceWithRawResponse(self._accounts.analytics)
 
 
@@ -419,22 +471,35 @@ class AccountsResourceWithStreamingResponse:
 
     @cached_property
     def subaccounts(self) -> SubaccountsResourceWithStreamingResponse:
+        """
+        Create and manage child accounts under a parent to model tenant hierarchies and delegated access.
+        """
         return SubaccountsResourceWithStreamingResponse(self._accounts.subaccounts)
 
     @cached_property
     def providers(self) -> ProvidersResourceWithStreamingResponse:
+        """
+        Discover available AI model, transcriber, and voice catalogs for the current account when configuring agents.
+        """
         return ProvidersResourceWithStreamingResponse(self._accounts.providers)
 
     @cached_property
     def phone_numbers(self) -> PhoneNumbersResourceWithStreamingResponse:
+        """
+        Manage BYOC phone numbers bound to your account; route inbound calls to agents and enable outbound calling.
+        """
         return PhoneNumbersResourceWithStreamingResponse(self._accounts.phone_numbers)
 
     @cached_property
     def sip_trunks(self) -> SipTrunksResourceWithStreamingResponse:
+        """
+        Manage BYOC SIP trunk connectivity (origination/termination endpoints and allowed IPs) used by phone numbers.
+        """
         return SipTrunksResourceWithStreamingResponse(self._accounts.sip_trunks)
 
     @cached_property
     def analytics(self) -> AnalyticsResourceWithStreamingResponse:
+        """Usage analytics and reporting endpoints for conversation activity."""
         return AnalyticsResourceWithStreamingResponse(self._accounts.analytics)
 
 
@@ -451,20 +516,33 @@ class AsyncAccountsResourceWithStreamingResponse:
 
     @cached_property
     def subaccounts(self) -> AsyncSubaccountsResourceWithStreamingResponse:
+        """
+        Create and manage child accounts under a parent to model tenant hierarchies and delegated access.
+        """
         return AsyncSubaccountsResourceWithStreamingResponse(self._accounts.subaccounts)
 
     @cached_property
     def providers(self) -> AsyncProvidersResourceWithStreamingResponse:
+        """
+        Discover available AI model, transcriber, and voice catalogs for the current account when configuring agents.
+        """
         return AsyncProvidersResourceWithStreamingResponse(self._accounts.providers)
 
     @cached_property
     def phone_numbers(self) -> AsyncPhoneNumbersResourceWithStreamingResponse:
+        """
+        Manage BYOC phone numbers bound to your account; route inbound calls to agents and enable outbound calling.
+        """
         return AsyncPhoneNumbersResourceWithStreamingResponse(self._accounts.phone_numbers)
 
     @cached_property
     def sip_trunks(self) -> AsyncSipTrunksResourceWithStreamingResponse:
+        """
+        Manage BYOC SIP trunk connectivity (origination/termination endpoints and allowed IPs) used by phone numbers.
+        """
         return AsyncSipTrunksResourceWithStreamingResponse(self._accounts.sip_trunks)
 
     @cached_property
     def analytics(self) -> AsyncAnalyticsResourceWithStreamingResponse:
+        """Usage analytics and reporting endpoints for conversation activity."""
         return AsyncAnalyticsResourceWithStreamingResponse(self._accounts.analytics)
