@@ -51,8 +51,9 @@ class TestAgents:
             },
             transcriber={
                 "keywords": ["string"],
-                "language": "multi",
-                "model": "nova-3:general",
+                "language": "bg",
+                "languages": ["string"],
+                "model": "flux-general-multi",
                 "provider": "deepgram",
             },
             voice={
@@ -479,8 +480,9 @@ class TestAsyncAgents:
             },
             transcriber={
                 "keywords": ["string"],
-                "language": "multi",
-                "model": "nova-3:general",
+                "language": "bg",
+                "languages": ["string"],
+                "model": "flux-general-multi",
                 "provider": "deepgram",
             },
             voice={
