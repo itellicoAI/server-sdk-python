@@ -78,8 +78,17 @@ class DeepgramTranscriberParam(TypedDict, total=False):
     ]
     """Language for transcription (see Deepgram docs for supported languages)"""
 
+    languages: Optional[SequenceNotStr[str]]
+    """Optional Deepgram Flux multilingual language hints.
+
+    Used with model='flux-general-multi'; omit or send an empty list to let Flux
+    auto-detect across all supported languages.
+    """
+
     model: Optional[
         Literal[
+            "flux-general-en",
+            "flux-general-multi",
             "nova-3:general",
             "nova-3:medical",
             "nova-2:general",
