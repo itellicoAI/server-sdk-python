@@ -174,7 +174,7 @@ class ModelAzureOpenAIModelSchema(TypedDict, total=False):
 class ModelAnthropicModelSchema(TypedDict, total=False):
     """Anthropic-specific model configuration."""
 
-    model: Required[Literal["claude-sonnet-4-20250514", "claude-3-7-sonnet-20250219", "claude-3-5-haiku-20241022"]]
+    model: Required[str]
     """The Anthropic model to use."""
 
     max_tokens: Optional[int]
