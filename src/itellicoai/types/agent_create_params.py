@@ -24,6 +24,8 @@ __all__ = [
     "ModelAzureOpenAIModelSchema",
     "ModelAnthropicModelSchema",
     "Transcriber",
+    "TranscriberCartesiaTranscriberSchema",
+    "TranscriberElevenLabsTranscriberSchema",
     "Voice",
     "VoiceAzureVoiceSchema",
     "VoiceCartesiaVoiceSchema",
@@ -43,8 +45,8 @@ class AgentCreateParams(TypedDict, total=False):
     transcriber: Required[Transcriber]
     """Transcriber (speech-to-text) configuration for the agent.
 
-    Defines which transcriber provider to use (Azure, Deepgram) and language
-    settings.
+    Defines which transcriber provider to use (Azure, Deepgram, Cartesia,
+    ElevenLabs) and language settings.
     """
 
     voice: Required[Voice]
@@ -191,7 +193,147 @@ class ModelAnthropicModelSchema(TypedDict, total=False):
 
 Model: TypeAlias = Union[ModelOpenAIModelSchema, ModelAzureOpenAIModelSchema, ModelAnthropicModelSchema]
 
-Transcriber: TypeAlias = Union[AzureTranscriberParam, DeepgramTranscriberParam]
+
+class TranscriberCartesiaTranscriberSchema(TypedDict, total=False):
+    """Cartesia-specific transcriber configuration."""
+
+    language: Optional[
+        Literal[
+            "en",
+            "zh",
+            "de",
+            "es",
+            "ru",
+            "ko",
+            "fr",
+            "ja",
+            "pt",
+            "tr",
+            "pl",
+            "ca",
+            "nl",
+            "ar",
+            "sv",
+            "it",
+            "id",
+            "hi",
+            "fi",
+            "vi",
+            "he",
+            "uk",
+            "el",
+            "ms",
+            "cs",
+            "ro",
+            "da",
+            "hu",
+            "ta",
+            "no",
+            "th",
+            "ur",
+            "hr",
+            "bg",
+            "lt",
+            "la",
+            "mi",
+            "ml",
+            "cy",
+            "sk",
+            "te",
+            "fa",
+            "lv",
+            "bn",
+            "sr",
+            "az",
+            "sl",
+            "kn",
+            "et",
+            "mk",
+            "br",
+            "eu",
+            "is",
+            "hy",
+            "ne",
+            "mn",
+            "bs",
+            "kk",
+            "sq",
+            "sw",
+            "gl",
+            "mr",
+            "pa",
+            "si",
+            "km",
+            "sn",
+            "yo",
+            "so",
+            "af",
+            "oc",
+            "ka",
+            "be",
+            "tg",
+            "sd",
+            "gu",
+            "am",
+            "yi",
+            "lo",
+            "uz",
+            "fo",
+            "ht",
+            "ps",
+            "tk",
+            "nn",
+            "mt",
+            "sa",
+            "lb",
+            "my",
+            "bo",
+            "tl",
+            "mg",
+            "as",
+            "tt",
+            "haw",
+            "ln",
+            "ha",
+            "ba",
+            "jw",
+            "su",
+            "yue",
+        ]
+    ]
+    """
+    Language for transcription (ISO-639-1 code; defaults to Cartesia's provider
+    default)
+    """
+
+    model: Optional[Literal["ink-whisper"]]
+    """Cartesia Ink Whisper streaming STT model"""
+
+    provider: Literal["cartesia"]
+
+
+class TranscriberElevenLabsTranscriberSchema(TypedDict, total=False):
+    """ElevenLabs Scribe realtime transcriber configuration."""
+
+    language: Optional[str]
+    """Language for transcription.
+
+    Scribe accepts ISO-639-1 or ISO-639-3 codes; use the catalog for supported
+    values.
+    """
+
+    model: Optional[Literal["scribe_v2_realtime"]]
+    """ElevenLabs Scribe v2 Realtime streaming STT model"""
+
+    provider: Literal["elevenlabs"]
+
+
+Transcriber: TypeAlias = Union[
+    AzureTranscriberParam,
+    DeepgramTranscriberParam,
+    TranscriberCartesiaTranscriberSchema,
+    TranscriberElevenLabsTranscriberSchema,
+]
 
 
 class VoiceAzureVoiceSchema(TypedDict, total=False):
