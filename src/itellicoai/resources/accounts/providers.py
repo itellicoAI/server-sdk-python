@@ -101,7 +101,7 @@ class ProvidersResource(SyncAPIResource):
 
         Each provider entry
         includes its code, name, EU-hosted flag, and models with id, name, description,
-        and supported_languages (code/name).
+        and supported_languages.
 
         Args:
           extra_headers: Send extra headers
@@ -266,7 +266,7 @@ class AsyncProvidersResource(AsyncAPIResource):
 
         Each provider entry
         includes its code, name, EU-hosted flag, and models with id, name, description,
-        and supported_languages (code/name).
+        and supported_languages.
 
         Args:
           extra_headers: Send extra headers

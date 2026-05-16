@@ -98,7 +98,8 @@ class AgentsResource(SyncAPIResource):
               Anthropic Claude, etc.) and its parameters like temperature and max tokens.
 
           transcriber: Transcriber (speech-to-text) configuration for the agent. Defines which
-              transcriber provider to use (Azure, Deepgram) and language settings.
+              transcriber provider to use (Azure, Deepgram, Cartesia, ElevenLabs) and language
+              settings.
 
           voice: Voice (text-to-speech) configuration for the agent. Defines which provider and
               voice to use (OpenAI, ElevenLabs, Cartesia, Azure) with voice-specific settings.
@@ -535,7 +536,8 @@ class AsyncAgentsResource(AsyncAPIResource):
               Anthropic Claude, etc.) and its parameters like temperature and max tokens.
 
           transcriber: Transcriber (speech-to-text) configuration for the agent. Defines which
-              transcriber provider to use (Azure, Deepgram) and language settings.
+              transcriber provider to use (Azure, Deepgram, Cartesia, ElevenLabs) and language
+              settings.
 
           voice: Voice (text-to-speech) configuration for the agent. Defines which provider and
               voice to use (OpenAI, ElevenLabs, Cartesia, Azure) with voice-specific settings.
