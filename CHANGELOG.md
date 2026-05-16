@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.2.0 (2026-05-16)
+
+Full Changelog: [v1.1.0...v1.2.0](https://github.com/itellicoAI/server-sdk-python/compare/v1.1.0...v1.2.0)
+
+### Features
+
+* **api:** api update ([5497c74](https://github.com/itellicoAI/server-sdk-python/commit/5497c747d92fe666cacf6136fbbc5ce9d1656446))
+* **api:** api update ([0e51dd9](https://github.com/itellicoAI/server-sdk-python/commit/0e51dd93a77ab9c364c4366cd4aef48bdb66e799))
+* **api:** api update ([7734372](https://github.com/itellicoAI/server-sdk-python/commit/7734372d62a748301c69f620ef861fcc78763766))
+* **internal/types:** support eagerly validating pydantic iterators ([c26be36](https://github.com/itellicoAI/server-sdk-python/commit/c26be36a2a0f4c0f2fd611052f0459cd12ffe066))
+* support setting headers via env ([95716e7](https://github.com/itellicoAI/server-sdk-python/commit/95716e7b72e63ffd7a4cc33d466408a0e18cc3a6))
+
+
+### Bug Fixes
+
+* **client:** add missing f-string prefix in file type error message ([1dc033b](https://github.com/itellicoAI/server-sdk-python/commit/1dc033bfcab4ee79feace1be405a3650314e704c))
+* use correct field name format for multipart file arrays ([30de1ca](https://github.com/itellicoAI/server-sdk-python/commit/30de1ca3d004b75d616a97b328d56a0933066fb8))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([cd44ef0](https://github.com/itellicoAI/server-sdk-python/commit/cd44ef011e95ea82e804f335ef744bd21df09308))
+* **internal:** reformat pyproject.toml ([b2ce92d](https://github.com/itellicoAI/server-sdk-python/commit/b2ce92db4f6edbb88e328c328f6f41f5a2d6f458))
+
 ## 1.1.0 (2026-04-21)
 
 Full Changelog: [v1.0.0...v1.1.0](https://github.com/itellicoAI/server-sdk-python/compare/v1.0.0...v1.1.0)
